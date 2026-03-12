@@ -459,7 +459,8 @@ function buildCN1(){
     else{a.aprov=a.aprov_d1&&a.aprov_d2;a.motivo=!a.aprov_d1?'Reprovado no 1º dia':!a.aprov_d2?'Reprovado no 2º dia':'';}
     return a;
   });
-  const cmp1=(a,b)=>b.gtot-a.gtot||(b.mat||0)-(a.mat||0)||(b.ing||0)-(a.ing||0)||(b.port||0)-(a.port||0)||(b.es||0)-(a.es||0)||(b.ci||0)-(a.ci||0);
+  const d1t=x=>(x.mat||0)+(x.ing||0), d2t=x=>(x.port||0)+(x.es||0)+(x.ci||0);
+  const cmp1=(a,b)=>b.gtot-a.gtot||d1t(b)-d1t(a)||d2t(b)-d2t(a)||(b.mat||0)-(a.mat||0)||(b.ing||0)-(a.ing||0)||(b.port||0)-(a.port||0)||(b.es||0)-(a.es||0)||(b.ci||0)-(a.ci||0);
   const apv=list.filter(a=>a.aprov).sort(cmp1);
   const rep=list.filter(a=>!a.aprov).sort(cmp1);
   const sorted=[...apv,...rep];
