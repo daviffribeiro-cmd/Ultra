@@ -135,6 +135,7 @@ table.dtable tbody tr:hover{background:#f0edff}
   <button class="nav-btn active" onclick="goSec('cn1',this)">🏆 CN — 1º Simulado</button>
   <button class="nav-btn" onclick="goSec('cn2',this)">📐 CN — 2º Simulado</button>
   <button class="nav-btn" onclick="goSec('epcar',this)">✈️ EPCAr — 1º Simulado</button>
+  <button class="nav-btn" onclick="goSec('epcar2',this)">✈️ EPCAr — 2º Simulado</button>
 </div>
 
 <!-- ══ CN 1º SIMULADO ══ -->
@@ -287,6 +288,37 @@ table.dtable tbody tr:hover{background:#f0edff}
       <tbody id="rankEBody"></tbody>
     </table>
     <div class="sg" id="statsE"></div>
+  </div>
+</div>
+
+<!-- ══ EPCAr 2º SIMULADO ══ -->
+<div id="epcar2Section" class="section">
+  <div class="ranking-card">
+    <div class="ranking-header">
+      <h2>✈️ EPCAr — 2º Simulado</h2>
+      <p>Português + Matemática + Inglês · 16q cada · Mín. 8/16 por matéria · Clique no aluno</p>
+    </div>
+    <input class="search-box" type="text" id="searchE2" placeholder="🔍 Buscar pelo nome..." oninput="renderE2()">
+    <div class="ranking-filters">
+      <button class="filter-btn active" onclick="setFiltroE2('todos',this)">
+        <span class="fb-icon">🏆</span><span class="fb-label"><span class="fb-title">Todos</span><span class="fb-sub">Ranking geral</span></span>
+      </button>
+      <button class="filter-btn" onclick="setFiltroE2('aprov',this)">
+        <span class="fb-icon">✅</span><span class="fb-label"><span class="fb-title">Aprovados</span><span class="fb-sub">≥8 em tudo</span></span>
+      </button>
+      <button class="filter-btn" onclick="setFiltroE2('reprov',this)">
+        <span class="fb-icon">❌</span><span class="fb-label"><span class="fb-title">Reprovados</span><span class="fb-sub">Abaixo do mínimo</span></span>
+      </button>
+    </div>
+    <table class="ranking-table">
+      <thead><tr>
+        <th style="width:60px">Pos.</th>
+        <th style="text-align:left;padding-left:14px">Aluno</th>
+        <th>Port</th><th>Mat</th><th>Ing</th><th>Total</th><th>Status</th>
+      </tr></thead>
+      <tbody id="rankE2Body"></tbody>
+    </table>
+    <div class="sg" id="statsE2"></div>
   </div>
 </div>
 
@@ -466,6 +498,52 @@ const RAW_EPCAR=[
   {n:"SUCK MA YU LAN",                     port:11, mat:7,  ing:15},
 ];
 
+// EPCAR 2º SIMULADO — 23 de Março
+const RAW_EPCAR2=[
+  {n:"ALÍCIA REIS PANTOJA",                   port:11, mat:11, ing:13},
+  {n:"ANNA CLARA DE JESUS MARINHO AMORIM",    port:11, mat:4,  ing:12},
+  {n:"ARTHUR DOS SANTOS COSTA",               port:12, mat:5,  ing:11},
+  {n:"ARTHUR PEREIRA DA CONCEIÇÃO",           port:11, mat:5,  ing:7 },
+  {n:"ARTHUR RABELO PENA PEREIRA",            port:11, mat:7,  ing:14},
+  {n:"BERNARDO JOSÉ DE GUSMÃO MONTEIRO",      port:6,  mat:7,  ing:4 },
+  {n:"BRUNO FERREIRA ROCHA",                  port:11, mat:11, ing:14},
+  {n:"DANIEL GADELHA LOPES",                  port:10, mat:2,  ing:6 },
+  {n:"DAVI ALVES DE SOUZA",                   port:10, mat:8,  ing:10},
+  {n:"DAVI GARCIA DA SILVA",                  port:11, mat:11, ing:13},
+  {n:"DAVI NOVO FREITAS DE OLIVEIRA",         port:13, mat:10, ing:13},
+  {n:"DAVI ROZENDO TAVARES",                  port:null,mat:null,ing:null},
+  {n:"DAVI VALLERIOTE FENTA",                 port:9,  mat:7,  ing:12},
+  {n:"DAVY MURILO DINIZ DE OLIVEIRA",         port:13, mat:8,  ing:12},
+  {n:"EDUARDA BRANDÃO MARQUES DOS SANTOS",    port:11, mat:9,  ing:11},
+  {n:"EDUARDO MARQUES CHAVANTE",              port:12, mat:9,  ing:11},
+  {n:"GABRIEL BITTENCOURT JORGE",             port:10, mat:8,  ing:12},
+  {n:"GABRIEL DA SILVA MACIEL",               port:15, mat:11, ing:13},
+  {n:"GABRIEL LOURENÇO CARPINELLI",           port:11, mat:14, ing:9 },
+  {n:"GABRIEL TAVARES DUARTE OLIVEIRA",       port:14, mat:12, ing:14},
+  {n:"GIOVANNA DIAS SIMÕES",                  port:9,  mat:3,  ing:5 },
+  {n:"GIOVANNA SIMOES SALOMAO",               port:11, mat:9,  ing:10},
+  {n:"GUILHERME BARRETO ROSA",                port:8,  mat:7,  ing:14},
+  {n:"ISAAC PEREIRA LAPROVITA",               port:12, mat:6,  ing:10},
+  {n:"JOÃO GABRIEL MELLO DOS SANTOS",         port:12, mat:9,  ing:11},
+  {n:"KAIKY CASTRO NASCIMENTO",               port:10, mat:7,  ing:12},
+  {n:"LARA MONTENEGRO DO MONTE DE MENEZES",   port:7,  mat:7,  ing:5 },
+  {n:"LARA PAVÃO DE MELLO FERNANDES",         port:9,  mat:10, ing:13},
+  {n:"LETÍCIA MARTINS DE OLIVEIRA",           port:8,  mat:7,  ing:15},
+  {n:"LUANA AMADI GUILHERME",                 port:11, mat:7,  ing:12},
+  {n:"LUIZ BERNARDO ALBINO RAMOS",            port:11, mat:7,  ing:8 },
+  {n:"LUKAS NUNES DA PAIXÃO PALMEIRA SILVA",  port:7,  mat:10, ing:7 },
+  {n:"MARIO THIAGO MARINI ISAIAS PEREIRA",    port:12, mat:9,  ing:11},
+  {n:"MATHEUS SCHIAVO NUNES",                 port:12, mat:8,  ing:11},
+  {n:"MIGUEL BITTENCOURT RODRIGUES",          port:9,  mat:10, ing:11},
+  {n:"MIGUEL DE SOUSA VARGAS",                port:13, mat:8,  ing:12},
+  {n:"NICOLAS SILVA CASTILHO",                port:12, mat:7,  ing:14},
+  {n:"PEDRO BAZÍLIO NUNES DE ALMEIDA",        port:10, mat:5,  ing:7 },
+  {n:"PEDRO HENRIQUE ALVES DE ALBUQUERQUE",   port:11, mat:11, ing:10},
+  {n:"PIETRO ALMEIDA FERREIRA",               port:15, mat:13, ing:11},
+  {n:"RAPHAEL FIGUEIRA RODRIGUES DE LIMA",    port:9,  mat:8,  ing:8 },
+  {n:"SUCK MA YU LAN",                        port:12, mat:8,  ing:15},
+];
+
 // CN 2º SIMULADO — 2º DIA
 const RAW_CN2D2=[
   {n:"ALÍCIA REIS PANTOJA",                 port:12, hist:3, geo:2, fis:4, qui:2, bio:3},
@@ -584,11 +662,37 @@ function buildE(){
   return sorted;
 }
 
+function buildE2(){
+  // 1ª passagem: ranking sem correção para identificar o top 3
+  const raw=RAW_EPCAR2.filter(r=>r.port!=null)
+    .map(r=>({nome:r.n,port:r.port,mat:r.mat,ing:r.ing,
+      total:r.port+r.mat+r.ing,ok_port:r.port>=8,ok_mat:r.mat>=8,ok_ing:r.ing>=8,
+      aprov:r.port>=8&&r.mat>=8&&r.ing>=8}));
+  const cmpE=(a,b)=>b.total-a.total||b.port-a.port||b.mat-a.mat||b.ing-a.ing;
+  const apv0=raw.filter(a=>a.aprov).sort(cmpE);
+  const rep0=raw.filter(a=>!a.aprov).sort(cmpE);
+  const sorted0=[...apv0,...rep0];sorted0.forEach((a,i)=>a.rank=i+1);
+  const top3=new Set(sorted0.slice(0,3).map(a=>a.nome));
+
+  // 2ª passagem: aplicar +1 Português para rank 4+
+  const list=RAW_EPCAR2.filter(r=>r.port!=null).map(r=>{
+    const portAdj=top3.has(r.n)?r.port:r.port+1;
+    return {nome:r.n,port:portAdj,mat:r.mat,ing:r.ing,
+      total:portAdj+r.mat+r.ing,ok_port:portAdj>=8,ok_mat:r.mat>=8,ok_ing:r.ing>=8,
+      aprov:portAdj>=8&&r.mat>=8&&r.ing>=8};
+  });
+  const apv=list.filter(a=>a.aprov).sort(cmpE);
+  const rep=list.filter(a=>!a.aprov).sort(cmpE);
+  const sorted=[...apv,...rep];sorted.forEach((a,i)=>a.rank=i+1);
+  return sorted;
+}
+
 const {list:CN1,map:CN1MAP,avgs:CN1AVG}=buildCN1();
 const {list:CN2,map:CN2MAP,avgs:CN2AVG}=buildCN2();
 const EPCAr=buildE();
+const EPCAr2=buildE2();
 
-let filtroCN1='todos',filtroCN2='todos',filtroE='todos',filtroCN2sub='geral';
+let filtroCN1='todos',filtroCN2='todos',filtroE='todos',filtroE2='todos',filtroCN2sub='geral';
 let activeChart=null;
 
 // ── HELPERS ──
@@ -798,6 +902,190 @@ function setFiltroE(f,btn){
 }
 
 // ══════════════════════════════════════════════════════
+// RENDER EPCAr 2º SIMULADO
+// ══════════════════════════════════════════════════════
+function renderE2(){
+  const q=(document.getElementById('searchE2').value||'').toLowerCase();
+  let lst=EPCAr2.filter(a=>!q||a.nome.toLowerCase().includes(q));
+  if(filtroE2==='aprov') lst=lst.filter(a=>a.aprov);
+  if(filtroE2==='reprov') lst=lst.filter(a=>!a.aprov);
+  document.getElementById('rankE2Body').innerHTML=lst.map(a=>{
+    const p=a.rank,pc=p===1?'g1':p===2?'g2':p===3?'g3':'',em=p===1?'🥇':p===2?'🥈':p===3?'🥉':p;
+    const rc='ranking-row'+(p<=3?' top3':'');
+    const ck=v=>v>=8?'#065f46':'#991b1b';
+    return `<tr class="${rc}" onclick="openDash('epcar2','${nm(a.nome)}')">
+      <td><span class="pos-badge ${pc}">${em}</span></td>
+      <td style="text-align:left;padding-left:14px"><span class="aluno-nome">${a.nome}</span></td>
+      <td style="font-size:20px;font-weight:900;color:${ck(a.port)}">${a.port}</td>
+      <td style="font-size:20px;font-weight:900;color:${ck(a.mat)}">${a.mat}</td>
+      <td style="font-size:20px;font-weight:900;color:${ck(a.ing)}">${a.ing}</td>
+      <td style="font-size:26px;font-weight:900;color:#1f2937">${a.total}</td>
+      <td>${a.aprov?'<span class="chip chip-a">✓ Aprovado</span>':'<span class="chip chip-r">✗ Reprovado</span>'}</td>
+    </tr>`;
+  }).join('');
+  const apv=EPCAr2.filter(a=>a.aprov).length,tot=EPCAr2.length;
+  const avg=k=>(EPCAr2.reduce((s,a)=>s+a[k],0)/tot).toFixed(1);
+  document.getElementById('statsE2').innerHTML=`
+    <div class="si"><h4>Total Alunos</h4><div class="val">${tot}</div><div class="sub">no simulado</div></div>
+    <div class="si"><h4>Aprovados</h4><div class="val" style="color:#10b981">${apv}</div><div class="sub">${Math.round(apv/tot*100)}% da turma</div></div>
+    <div class="si"><h4>Reprovados</h4><div class="val" style="color:#ef4444">${tot-apv}</div><div class="sub">${Math.round((tot-apv)/tot*100)}% da turma</div></div>
+    <div class="si"><h4>Maior Total</h4><div class="val" style="color:#667eea">${EPCAr2[0].total}</div><div class="sub">de 48 questões</div></div>
+    <div class="si"><h4>Média Port</h4><div class="val">${avg('port')}</div><div class="sub">de 16q</div></div>
+    <div class="si"><h4>Média Mat</h4><div class="val">${avg('mat')}</div><div class="sub">de 16q</div></div>
+    <div class="si"><h4>Média Ing</h4><div class="val">${avg('ing')}</div><div class="sub">de 16q</div></div>
+  `;
+}
+function setFiltroE2(f,btn){
+  filtroE2=f;
+  document.querySelectorAll('#epcar2Section .filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');renderE2();
+}
+
+// ══════════════════════════════════════════════════════
+// DASH EPCAr 2º SIMULADO — ALUNO INDIVIDUAL
+// ══════════════════════════════════════════════════════
+function buildDashE2(nome){
+  const a=EPCAr2.find(x=>x.nome===nome);if(!a)return;
+  const tot=EPCAr2.length;
+  const avg=k=>+(EPCAr2.reduce((s,x)=>s+x[k],0)/tot).toFixed(1);
+  document.getElementById('dNome').textContent=a.nome;
+  document.getElementById('dInfo').textContent=`#${a.rank}º lugar · EPCAr 2º Simulado · ${a.total}/48 questões · ${a.aprov?'✓ Aprovado':'✗ Reprovado'}`;
+
+  setDashTabs(['📊 Desempenho','🕸️ Radar vs Turma','🎯 Chances EPCAr']);
+
+  const subjs=[
+    {l:'Português',v:a.port,ok:a.ok_port,avg:avg('port')},
+    {l:'Matemática',v:a.mat,ok:a.ok_mat,avg:avg('mat')},
+    {l:'Inglês',   v:a.ing,ok:a.ok_ing,avg:avg('ing')},
+  ];
+
+  const mkCard=(d)=>{
+    const p=pct(d.v,16);
+    const dif=(d.v-d.avg).toFixed(1);
+    return `<div style="background:${d.ok?'linear-gradient(135deg,#d1fae5,#a7f3d0)':'linear-gradient(135deg,#fee2e2,#fca5a5)'};padding:18px;border-radius:12px;border:3px solid ${d.ok?'#6ee7b7':'#fca5a5'};text-align:center">
+      <div style="font-size:10px;font-weight:800;text-transform:uppercase;color:#374151;margin-bottom:4px">${d.l}</div>
+      <div style="font-size:46px;font-weight:900;color:${d.ok?'#065f46':'#991b1b'};line-height:1">${d.v}</div>
+      <div style="font-size:11px;color:#6b7280;margin-top:3px">de 16 · mín.8 · ${p.toFixed(0)}%</div>
+      <div style="font-size:11px;margin-top:3px">Média: ${d.avg} · <span class="${deltaCls(+dif)}">${(+dif>=0?'+':'')+dif} vs turma</span></div>
+      <div style="margin-top:6px">${icBadge(p)}</div>
+    </div>`;
+  };
+
+  document.getElementById('dashBody').innerHTML=`
+  <div id="dpane0" class="dpane active">
+    <div class="dcard">
+      <h3>📊 Resumo — 2º Simulado EPCAr</h3>
+      <div class="sg" style="margin-top:12px">
+        <div class="si"><h4>Classificação</h4><div class="val" style="color:#667eea">#${a.rank}º</div><div class="sub">de ${tot} alunos</div></div>
+        <div class="si"><h4>Total Acertos</h4><div class="val">${a.total}</div><div class="sub">de 48 questões</div></div>
+        <div class="si"><h4>% Acerto</h4><div class="val" style="font-size:26px;padding-top:8px">${pct(a.total,48).toFixed(1)}%</div><div class="sub">${icLabel(pct(a.total,48))}</div></div>
+        <div class="si"><h4>Status</h4><div class="val" style="font-size:24px;padding-top:8px">${a.aprov?'✅':'❌'}</div><div class="sub">${a.aprov?'Aprovado':'Reprovado'}</div></div>
+      </div>
+    </div>
+    <div class="dcard">
+      <h3>📋 Por Disciplina</h3>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:12px">
+        ${subjs.map(mkCard).join('')}
+      </div>
+    </div>
+    <div class="dcard">
+      <h3>📐 Tabela Detalhada</h3>
+      <table class="dtable" style="margin-top:12px">
+        <thead><tr>
+          <th style="text-align:left;padding-left:12px">Disciplina</th>
+          <th>Acertos</th><th>%</th><th>IC</th><th>Média Turma</th><th>Δ Turma</th>
+        </tr></thead>
+        <tbody>
+          ${subjs.map(d=>{
+            const p=pct(d.v,16),dif=(d.v-d.avg).toFixed(1);
+            return `<tr style="${!d.ok?'background:#fff5f5':''}">
+              <td style="text-align:left;padding-left:12px;font-weight:800">${d.l} <span style="font-size:10px;color:#9ca3af">mín.8</span></td>
+              <td>${d.v}/16</td>
+              <td><span class="badge ${pBadge(p)}">${p.toFixed(0)}%</span></td>
+              <td>${icBadge(p)}</td>
+              <td style="color:#6b7280;font-size:12px">${d.avg}</td>
+              <td class="${deltaCls(+dif)}">${(+dif>=0?'+':'')+dif}</td>
+            </tr>`;
+          }).join('')}
+          <tr style="background:linear-gradient(135deg,#ede9fe,#ddd6fe);font-weight:900">
+            <td style="text-align:left;padding-left:12px">⬛ TOTAL</td>
+            <td>${a.total}/48</td>
+            <td><span class="badge ${pBadge(pct(a.total,48))}">${pct(a.total,48).toFixed(0)}%</span></td>
+            <td>${icBadge(pct(a.total,48))}</td>
+            <td style="color:#6b7280;font-size:12px">${(EPCAr2.reduce((s,x)=>s+x.total,0)/tot).toFixed(1)}</td>
+            <td class="${deltaCls(a.total-(EPCAr2.reduce((s,x)=>s+x.total,0)/tot))}">${((a.total-(EPCAr2.reduce((s,x)=>s+x.total,0)/tot))>=0?'+':'')+((a.total-(EPCAr2.reduce((s,x)=>s+x.total,0)/tot)).toFixed(1))}</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="infobox" style="margin-top:12px">
+        <h5>📘 Critérios de Aprovação — EPCAr 2º Simulado</h5>
+        <ul>
+          <li><strong>Português:</strong> mínimo 8/16 · <strong>Matemática:</strong> mínimo 8/16 · <strong>Inglês:</strong> mínimo 8/16</li>
+          <li><strong>IC:</strong> 🟢 ≥70% Sólido · 🟡 50–69% Razoável · 🔴 &lt;50% Intervenção necessária</li>
+          <li>⚠️ <strong>Correção de gabarito:</strong> +1 ponto em Português aplicado a todos os alunos a partir do 4º colocado</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div id="dpane1" class="dpane">
+    <div class="dcard">
+      <h3>🕸️ Radar — Você vs Média da Turma</h3>
+      <p class="dcard-sub">Percentual de acertos por disciplina (cada matéria de 16 questões)</p>
+      <div class="chart-wrap"><canvas id="radarE2"></canvas></div>
+    </div>
+  </div>
+
+  <div id="dpane2" class="dpane">
+    <div class="dcard">
+      <h3>🎯 Chances de Aprovação — EPCAr</h3>
+      <p class="dcard-sub">Nota de corte EPCAr: <strong>7.65</strong> = 100% de chance</p>
+      ${(()=>{
+        const notaE=+(a.total/48*10).toFixed(2);
+        const corteE=7.65,chanceE=Math.min(100,+(notaE/corteE*100).toFixed(1));
+        const faltamE=Math.max(0,Math.ceil(corteE/10*48)-a.total);
+        return `
+      <div style="text-align:center;padding:28px 20px;background:${notaE>=corteE?'linear-gradient(135deg,#d1fae5,#a7f3d0)':'linear-gradient(135deg,#fee2e2,#fca5a5)'};border-radius:16px;border:3px solid ${notaE>=corteE?'#6ee7b7':'#fca5a5'};margin-bottom:20px">
+        <div style="font-size:12px;font-weight:800;color:#374151;margin-bottom:10px;text-transform:uppercase;letter-spacing:1px">Chance de Aprovação</div>
+        <div style="font-size:80px;font-weight:900;color:${notaE>=corteE?'#065f46':'#991b1b'};line-height:1">${chanceE}%</div>
+        <div style="font-size:13px;color:#6b7280;font-weight:700;margin-top:8px">${chanceE>=100?'🎉 Acima do corte!':chanceE>=85?'⭐ Muito próximo!':chanceE>=70?'💪 Continue!':'📚 Foco total!'}</div>
+        <div class="prog-outer" style="max-width:360px;margin:14px auto 6px"><div class="prog-inner" style="width:${chanceE}%;background:${notaE>=corteE?'#10b981':'#ef4444'}"></div></div>
+      </div>
+      <div class="sg">
+        <div class="si"><h4>Nota Estimada</h4><div class="val" style="color:${notaE>=corteE?'#10b981':'#ef4444'}">${notaE}</div><div class="sub">escala 0–10</div></div>
+        <div class="si"><h4>Corte EPCAr</h4><div class="val">7.65</div><div class="sub">meta mínima</div></div>
+        <div class="si"><h4>Questões Certas</h4><div class="val">${a.total}</div><div class="sub">de 48</div></div>
+        <div class="si"><h4>Faltam</h4><div class="val" style="color:${faltamE===0?'#10b981':'#ef4444'}">${faltamE===0?'✓':faltamE}</div><div class="sub">${faltamE===0?'meta atingida':'questões'}</div></div>
+      </div>`;
+      })()}
+    </div>
+  </div>
+  `;
+
+  document.getElementById('dashTabs').onclick = function(e){
+    const btn=e.target.closest('.dash-tab');if(!btn)return;
+    const idx=Array.from(this.children).indexOf(btn);
+    if(idx===1){
+      setTimeout(()=>{
+        const el=document.getElementById('radarE2');if(!el)return;
+        if(activeChart){activeChart.destroy();activeChart=null;}
+        const labs=['Português','Matemática','Inglês'];
+        const voc=[pct(a.port,16),pct(a.mat,16),pct(a.ing,16)];
+        const tur=[pct(avg('port'),16),pct(avg('mat'),16),pct(avg('ing'),16)];
+        activeChart=new Chart(el,{type:'radar',data:{labels:labs,datasets:[
+          {label:a.nome.split(' ')[0],data:voc,backgroundColor:'rgba(102,126,234,.25)',borderColor:'#667eea',borderWidth:3,pointBackgroundColor:'#667eea',pointBorderColor:'#fff',pointBorderWidth:2,pointRadius:6},
+          {label:'Média Turma',data:tur,backgroundColor:'rgba(156,163,175,.1)',borderColor:'#9ca3af',borderWidth:2,borderDash:[5,4],pointBackgroundColor:'#9ca3af',pointRadius:4}
+        ]},options:{responsive:true,maintainAspectRatio:false,
+          scales:{r:{beginAtZero:true,max:100,ticks:{stepSize:25,callback:v=>v+'%',font:{size:10}},pointLabels:{font:{size:13,weight:'bold'}},grid:{color:'#e5e7eb'}}},
+          plugins:{legend:{position:'bottom',labels:{font:{size:12,weight:'bold'},padding:14,usePointStyle:true}},
+            tooltip:{backgroundColor:'rgba(0,0,0,.82)',callbacks:{label:c=>c.dataset.label+': '+c.parsed.r.toFixed(1)+'%'}}}
+        }});
+      },80);
+    }
+  };
+}
+
+// ══════════════════════════════════════════════════════
 // DASH INDIVIDUAL — ABRIR
 // ══════════════════════════════════════════════════════
 let _lastSection='cn1';
@@ -811,6 +1099,7 @@ function openDash(ctx,nome){
   document.getElementById('alunoSection').style.display='block';
   if(ctx==='cn1') buildDashCN1(nome);
   else if(ctx==='cn2') buildDashCN2(nome);
+  else if(ctx==='epcar2') buildDashE2(nome);
   else buildDashE(nome);
 }
 function voltarLista(){
@@ -1438,18 +1727,36 @@ function buildDashE(nome){
   </div>
 
   <div id="dpane2" class="dpane">
+    <div class="dcard">
+      <h3>🎯 Chances de Aprovação — EPCAr</h3>
+      <p class="dcard-sub">Nota de corte EPCAr: <strong>7.65</strong> = 100% de chance</p>
+      ${(()=>{
+        const notaE=+(a.total/48*10).toFixed(2);
+        const corteE=7.65,chanceE=Math.min(100,+(notaE/corteE*100).toFixed(1));
+        const faltamE=Math.max(0,Math.ceil(corteE/10*48)-a.total);
+        return `
+      <div style="text-align:center;padding:28px 20px;background:${notaE>=corteE?'linear-gradient(135deg,#d1fae5,#a7f3d0)':'linear-gradient(135deg,#fee2e2,#fca5a5)'};border-radius:16px;border:3px solid ${notaE>=corteE?'#6ee7b7':'#fca5a5'};margin-bottom:20px">
+        <div style="font-size:12px;font-weight:800;color:#374151;margin-bottom:10px;text-transform:uppercase;letter-spacing:1px">Chance de Aprovação</div>
+        <div style="font-size:80px;font-weight:900;color:${notaE>=corteE?'#065f46':'#991b1b'};line-height:1">${chanceE}%</div>
+        <div style="font-size:13px;color:#6b7280;font-weight:700;margin-top:8px">${chanceE>=100?'🎉 Acima do corte!':chanceE>=85?'⭐ Muito próximo!':chanceE>=70?'💪 Continue!':'📚 Foco total!'}</div>
+        <div class="prog-outer" style="max-width:360px;margin:14px auto 6px"><div class="prog-inner" style="width:${chanceE}%;background:${notaE>=corteE?'#10b981':'#ef4444'}"></div></div>
+      </div>
+      <div class="sg">
+        <div class="si"><h4>Nota Estimada</h4><div class="val" style="color:${notaE>=corteE?'#10b981':'#ef4444'}">${notaE}</div><div class="sub">escala 0–10</div></div>
+        <div class="si"><h4>Corte EPCAr</h4><div class="val">7.65</div><div class="sub">meta mínima</div></div>
+        <div class="si"><h4>Questões Certas</h4><div class="val">${a.total}</div><div class="sub">de 48</div></div>
+        <div class="si"><h4>Faltam</h4><div class="val" style="color:${faltamE===0?'#10b981':'#ef4444'}">${faltamE===0?'✓':faltamE}</div><div class="sub">${faltamE===0?'meta atingida':'questões'}</div></div>
+      </div>`;
+      })()}
+    </div>
   </div>
   `;
-  // Preencher Chances EPCAr após innerHTML estar no DOM
-  _buildChanceE(a);
 
-  // Radar: usar setTimeout para garantir que o canvas existe, e checar qual aba está ativa
   document.getElementById('dashTabs').onclick = function(e){
     const btn = e.target.closest('.dash-tab');
     if(!btn) return;
     const idx = Array.from(this.children).indexOf(btn);
     if(idx === 1){
-      // Radar
       setTimeout(()=>{
         const el=document.getElementById('radarE');
         if(!el) return;
@@ -1466,9 +1773,6 @@ function buildDashE(nome){
             tooltip:{backgroundColor:'rgba(0,0,0,.82)',callbacks:{label:c=>c.dataset.label+': '+c.parsed.r.toFixed(1)+'%'}}}
         }});
       }, 80);
-    } else if(idx === 2){
-      // Chances — rerender caso não tenha sido preenchido
-      _buildChanceE(a);
     }
   };
 }
@@ -1484,7 +1788,7 @@ function goSec(s,btn){
 }
 
 // INIT
-renderCN1();renderCN2();renderE();
+renderCN1();renderCN2();renderE();renderE2();
 </script>
 </body>
 </html>
