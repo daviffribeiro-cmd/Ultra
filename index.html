@@ -265,8 +265,8 @@ table.dtable tbody tr:hover{background:#f0edff}
 <div id="cn3Section" class="section">
   <div class="ranking-card">
     <div class="ranking-header">
-      <h2>🎯 CN — 3º Simulado · 1º Dia</h2>
-      <p>Matemática + Inglês (40q) · 30 de Março · Clique no aluno para ver o relatório</p>
+      <h2>🎯 CN — 3º Simulado · Ranking Geral</h2>
+      <p>Clique no nome do aluno para ver o relatório completo · Mat+Ing+Port+ES+CI (90q)</p>
     </div>
     <input class="search-box" type="text" id="searchCN3" placeholder="🔍 Buscar pelo nome..." oninput="renderCN3()">
     <div class="ranking-filters">
@@ -274,21 +274,51 @@ table.dtable tbody tr:hover{background:#f0edff}
         <span class="fb-icon">🏆</span><span class="fb-label"><span class="fb-title">Todos</span><span class="fb-sub">Ranking geral</span></span>
       </button>
       <button class="filter-btn" onclick="setFiltroCN3('aprov',this)">
-        <span class="fb-icon">✅</span><span class="fb-label"><span class="fb-title">Aprovados</span><span class="fb-sub">≥10 em tudo</span></span>
+        <span class="fb-icon">✅</span><span class="fb-label"><span class="fb-title">Aprovados</span><span class="fb-sub">Passaram em tudo</span></span>
       </button>
       <button class="filter-btn" onclick="setFiltroCN3('reprov',this)">
         <span class="fb-icon">❌</span><span class="fb-label"><span class="fb-title">Reprovados</span><span class="fb-sub">Precisam melhorar</span></span>
       </button>
+      <button class="filter-btn" onclick="setFiltroCN3('d1',this)">
+        <span class="fb-icon">📐</span><span class="fb-label"><span class="fb-title">1º Dia</span><span class="fb-sub">Mat + Inglês</span></span>
+      </button>
+      <button class="filter-btn" onclick="setFiltroCN3('d2',this)">
+        <span class="fb-icon">📚</span><span class="fb-label"><span class="fb-title">2º Dia</span><span class="fb-sub">Port + ES + CI</span></span>
+      </button>
     </div>
-    <table class="ranking-table">
-      <thead><tr>
-        <th style="width:60px">Pos.</th>
-        <th style="text-align:left;padding-left:14px">Aluno</th>
-        <th>Mat</th><th>Ing</th><th>Total</th><th>Status D1</th>
-      </tr></thead>
-      <tbody id="rankCN3Body"></tbody>
-    </table>
-    <div class="sg" id="statsCN3"></div>
+    <div id="cn3GeralWrap">
+      <table class="ranking-table">
+        <thead><tr>
+          <th style="width:60px">Pos.</th>
+          <th style="text-align:left;padding-left:14px">Aluno</th>
+          <th>Total</th><th>Status</th>
+        </tr></thead>
+        <tbody id="rankCN3Body"></tbody>
+      </table>
+      <div class="sg" id="statsCN3"></div>
+    </div>
+    <div id="cn3D1Wrap" style="display:none">
+      <h3 style="font-size:16px;font-weight:800;color:#1f2937;margin-bottom:14px">📋 1º Dia — Matemática + Inglês (40q)</h3>
+      <table class="ranking-table">
+        <thead><tr>
+          <th style="width:60px">Pos.</th>
+          <th style="text-align:left;padding-left:14px">Aluno</th>
+          <th>Mat</th><th>Ing</th><th>Total</th><th>Status D1</th>
+        </tr></thead>
+        <tbody id="rankCN3D1Body"></tbody>
+      </table>
+    </div>
+    <div id="cn3D2Wrap" style="display:none">
+      <h3 style="font-size:16px;font-weight:800;color:#1f2937;margin-bottom:14px">📋 2º Dia — Port + Est. Sociais + Ciências (50q)</h3>
+      <table class="ranking-table">
+        <thead><tr>
+          <th style="width:60px">Pos.</th>
+          <th style="text-align:left;padding-left:14px">Aluno</th>
+          <th>Port</th><th>ES</th><th>CI</th><th>Total</th><th>Status D2</th>
+        </tr></thead>
+        <tbody id="rankCN3D2Body"></tbody>
+      </table>
+    </div>
   </div>
 </div>
 
@@ -527,6 +557,49 @@ const RAW_CN3D1=[
   {n:"SUCK MA YU LAN",                       mat:11, ing:15},
 ];
 
+// CN 3º SIMULADO — 2º DIA (13 de Abril)
+const RAW_CN3D2=[
+  {n:"ALÍCIA REIS PANTOJA",                  port:11, hist:4, geo:4, fis:1, qui:1, bio:2},
+  {n:"ANNA CLARA DE JESUS MARINHO AMORIM",   port:9,  hist:5, geo:0, fis:2, qui:2, bio:2},
+  {n:"ARTHUR DOS SANTOS COSTA",              port:8,  hist:2, geo:2, fis:2, qui:0, bio:2},
+  {n:"ARTHUR PEREIRA DA CONCEIÇÃO",          port:12, hist:3, geo:3, fis:1, qui:3, bio:3},
+  {n:"ARTHUR RABELO PENA PEREIRA",           port:19, hist:3, geo:2, fis:2, qui:1, bio:1},
+  {n:"BERNARDO JOSÉ DE GUSMÃO MONTEIRO",     port:13, hist:2, geo:2, fis:3, qui:2, bio:4},
+  {n:"BRUNO FERREIRA ROCHA",                 port:16, hist:4, geo:5, fis:6, qui:3, bio:5},
+  {n:"DANIEL GADELHA LOPES",                 port:8,  hist:3, geo:2, fis:3, qui:2, bio:2},
+  {n:"DAVI ALVES DE SOUZA",                  port:11, hist:3, geo:2, fis:2, qui:2, bio:2},
+  {n:"DAVI GARCIA DA SILVA",                 port:17, hist:6, geo:3, fis:2, qui:2, bio:5},
+  {n:"DAVI NOVO FREITAS DE OLIVEIRA",        port:16, hist:4, geo:6, fis:2, qui:3, bio:2},
+  {n:"DAVI VALLERIOTE FENTA",                port:8,  hist:5, geo:5, fis:1, qui:1, bio:1},
+  {n:"EDUARDA BRANDÃO MARQUES DOS SANTOS",   port:10, hist:3, geo:2, fis:0, qui:3, bio:3},
+  {n:"EDUARDO MARQUES CHAVANTE",             port:13, hist:2, geo:1, fis:2, qui:1, bio:0},
+  {n:"GIOVANNA SIMÕES SALOMÃO",              port:14, hist:4, geo:2, fis:1, qui:3, bio:1},
+  {n:"GABRIEL BITTENCOURT JORGE",            port:10, hist:3, geo:3, fis:2, qui:3, bio:3},
+  {n:"GABRIEL DA SILVA MACIEL",              port:18, hist:2, geo:0, fis:2, qui:3, bio:2},
+  {n:"GABRIEL LOURENÇO CARPINELLI",          port:12, hist:4, geo:2, fis:4, qui:3, bio:2},
+  {n:"GABRIEL TAVARES DUARTE OLIVEIRA",      port:15, hist:6, geo:6, fis:5, qui:3, bio:4},
+  {n:"GUILHERME BARRETO ROSA",               port:14, hist:4, geo:3, fis:1, qui:2, bio:4},
+  {n:"GIOVANNA DIAS SIMÕES",                 port:3,  hist:1, geo:2, fis:0, qui:2, bio:1},
+  {n:"ISAAC PEREIRA LAPROVITA",              port:12, hist:4, geo:2, fis:2, qui:3, bio:2},
+  {n:"JOÃO GABRIEL MELLO DOS SANTOS",        port:2,  hist:1, geo:0, fis:1, qui:0, bio:0},
+  {n:"KAIKY CASTRO NASCIMENTO",              port:14, hist:2, geo:2, fis:2, qui:3, bio:3},
+  {n:"LARA MONTENEGRO DO MONTE DE MENEZES",  port:7,  hist:4, geo:1, fis:0, qui:2, bio:2},
+  {n:"LARA PAVÃO DE MELLO FERNANDES",        port:17, hist:2, geo:5, fis:2, qui:3, bio:3},
+  {n:"LETÍCIA MARTINS DE OLIVEIRA",          port:18, hist:4, geo:3, fis:1, qui:2, bio:4},
+  {n:"LUANA AMADI GUILHERME",                port:8,  hist:3, geo:4, fis:4, qui:3, bio:3},
+  {n:"LUIZ BERNARDO ALBINO RAMOS",           port:13, hist:3, geo:2, fis:1, qui:3, bio:4},
+  {n:"LUKAS NUNES DA PAIXÃO PALMEIRA SILVA", port:2,  hist:0, geo:0, fis:1, qui:1, bio:1},
+  {n:"MARIO THIAGO MARINI ISAIAS PEREIRA",   port:14, hist:3, geo:4, fis:3, qui:4, bio:2},
+  {n:"MATHEUS SCHIAVO NUNES",                port:12, hist:3, geo:3, fis:4, qui:3, bio:4},
+  {n:"MIGUEL BITTENCOURT RODRIGUES",         port:9,  hist:4, geo:4, fis:3, qui:3, bio:5},
+  {n:"MIGUEL DE SOUSA VARGAS",               port:16, hist:1, geo:3, fis:4, qui:1, bio:0},
+  {n:"NICOLAS SILVA CASTILHO",               port:16, hist:3, geo:4, fis:3, qui:2, bio:4},
+  {n:"PEDRO BAZÍLIO NUNES DE ALMEIDA",       port:10, hist:3, geo:3, fis:1, qui:2, bio:0},
+  {n:"PEDRO HENRIQUE ALVES DE ALBUQUERQUE",  port:19, hist:4, geo:1, fis:4, qui:3, bio:3},
+  {n:"RAPHAEL FIGUEIRA RODRIGUES DE LIMA",   port:7,  hist:3, geo:1, fis:1, qui:3, bio:4},
+  {n:"SUCK MA YU LAN",                       port:17, hist:3, geo:5, fis:3, qui:3, bio:4},
+];
+
 // EPCAR 1º SIMULADO
 const RAW_EPCAR=[
   {n:"ALÍCIA REIS PANTOJA",                port:12, mat:5,  ing:10},
@@ -722,18 +795,35 @@ function buildCN2(){
 }
 
 function buildCN3(){
-  const list=RAW_CN3D1.map(r=>({
-    nome:r.n, mat:r.mat, ing:r.ing,
-    total:r.mat+r.ing,
-    ok_mat:r.mat>=10, ok_ing:r.ing>=10,
-    aprov:r.mat>=10&&r.ing>=10
-  }));
-  const cmp=(a,b)=>b.total-a.total||b.mat-a.mat||b.ing-a.ing;
+  const m={};
+  RAW_CN3D1.forEach(r=>{
+    m[r.n]={nome:r.n,mat:r.mat,ing:r.ing,ok_mat:r.mat>=10,ok_ing:r.ing>=10,aprov_d1:r.mat>=10&&r.ing>=10};
+  });
+  RAW_CN3D2.forEach(r=>{
+    const es=r.hist+r.geo, ci=r.fis+r.qui+r.bio;
+    const ok_p=r.port>=10, ok_es=es>=6, ok_ci=ci>=9;
+    if(!m[r.n]) m[r.n]={nome:r.n};
+    Object.assign(m[r.n],{port:r.port,hist:r.hist,geo:r.geo,fis:r.fis,qui:r.qui,bio:r.bio,
+      es,ci,d2tot:r.port+es+ci,ok_p,ok_es,ok_ci,aprov_d2:ok_p&&ok_es&&ok_ci});
+  });
+  const list=Object.values(m).map(a=>{
+    a.gtot=(a.mat||0)+(a.ing||0)+(a.port||0)+(a.hist||0)+(a.geo||0)+(a.fis||0)+(a.qui||0)+(a.bio||0);
+    const fezD1=a.aprov_d1!=null, fezD2=a.aprov_d2!=null;
+    if(!fezD1){a.aprov=false;a.motivo='Não realizou o 1º dia';}
+    else if(!fezD2){a.aprov=false;a.motivo='Não realizou o 2º dia';}
+    else{a.aprov=a.aprov_d1&&a.aprov_d2;a.motivo=!a.aprov_d1?'Reprovado no 1º dia':!a.aprov_d2?'Reprovado no 2º dia':'';}
+    return a;
+  });
+  const d1t=x=>(x.mat||0)+(x.ing||0), d2t=x=>(x.port||0)+(x.es||0)+(x.ci||0);
+  const cmp=(a,b)=>b.gtot-a.gtot||d1t(b)-d1t(a)||d2t(b)-d2t(a)||(b.mat||0)-(a.mat||0)||(b.ing||0)-(a.ing||0)||(b.port||0)-(a.port||0)||(b.es||0)-(a.es||0)||(b.ci||0)-(a.ci||0);
   const apv=list.filter(a=>a.aprov).sort(cmp);
   const rep=list.filter(a=>!a.aprov).sort(cmp);
   const sorted=[...apv,...rep];
   sorted.forEach((a,i)=>a.rank=i+1);
-  return sorted;
+  const avg=k=>{const v=list.map(x=>x[k]).filter(x=>x!=null&&!isNaN(x));return v.length?v.reduce((s,x)=>s+x,0)/v.length:0;};
+  const avgs={};
+  ['mat','ing','port','hist','geo','fis','qui','bio','es','ci','d2tot','gtot'].forEach(k=>avgs[k]=avg(k));
+  return{list:sorted,map:m,avgs};
 }
 
 function buildE(){
@@ -774,12 +864,13 @@ function buildE2(){
 
 const {list:CN1,map:CN1MAP,avgs:CN1AVG}=buildCN1();
 const {list:CN2,map:CN2MAP,avgs:CN2AVG}=buildCN2();
-const CN3=buildCN3();
+const {list:CN3,map:CN3MAP,avgs:CN3AVG}=buildCN3();
 const EPCAr=buildE();
 const EPCAr2=buildE2();
 
 let filtroCN1='todos',filtroCN2='todos',filtroCN3='todos',filtroE='todos',filtroE2='todos',filtroCN2sub='geral';
 let activeChart=null;
+let evoChartCN=null,evoChartEP=null;
 
 // ── HELPERS ──
 const pct=(v,t)=>t?+(v/t*100).toFixed(1):0;
@@ -954,33 +1045,75 @@ function renderCN3(){
   let lst=CN3.filter(a=>!q||a.nome.toLowerCase().includes(q));
   if(filtroCN3==='aprov') lst=lst.filter(a=>a.aprov);
   if(filtroCN3==='reprov') lst=lst.filter(a=>!a.aprov);
-  const ck=v=>v>=10?'#065f46':'#991b1b';
   document.getElementById('rankCN3Body').innerHTML=lst.map(a=>{
     const p=a.rank,pc=p===1?'g1':p===2?'g2':p===3?'g3':'',em=p===1?'🥇':p===2?'🥈':p===3?'🥉':p;
     const rc='ranking-row'+(p<=3?' top3':'');
-    return '<tr class="'+rc+'" onclick="openDash(\'cn3\',\''+nm(a.nome)+'\')">'+
-      '<td><span class="pos-badge '+pc+'">'+em+'</span></td>'+
-      '<td style="text-align:left;padding-left:14px"><span class="aluno-nome">'+a.nome+'</span></td>'+
-      '<td style="font-size:20px;font-weight:900;color:'+ck(a.mat)+'">'+a.mat+'</td>'+
-      '<td style="font-size:20px;font-weight:900;color:'+ck(a.ing)+'">'+a.ing+'</td>'+
-      '<td style="font-size:26px;font-weight:900;color:#1f2937">'+a.total+'</td>'+
-      '<td>'+(a.aprov?'<span class="chip chip-a">✓ Aprovado</span>':'<span class="chip chip-r">✗ Reprovado</span>')+'</td>'+
-    '</tr>';
+    return `<tr class="${rc}" onclick="openDash('cn3','${nm(a.nome)}')">
+      <td><span class="pos-badge ${pc}">${em}</span></td>
+      <td style="text-align:left;padding-left:14px"><span class="aluno-nome">${a.nome}</span></td>
+      <td style="font-size:26px;font-weight:900;color:#1f2937">${a.gtot}</td>
+      <td>${a.aprov?'<span class="chip chip-a">✓ Aprovado</span>':'<span class="chip chip-r">✗ Reprovado</span>'}</td>
+    </tr>`;
   }).join('');
-  const tot=CN3.length,apv=CN3.filter(a=>a.aprov).length;
-  const avg=k=>(CN3.reduce((s,a)=>s+a[k],0)/tot).toFixed(1);
-  document.getElementById('statsCN3').innerHTML=
-    '<div class="si"><h4>Total Alunos</h4><div class="val">'+tot+'</div><div class="sub">no simulado</div></div>'+
-    '<div class="si"><h4>Aprovados D1</h4><div class="val" style="color:#10b981">'+apv+'</div><div class="sub">'+Math.round(apv/tot*100)+'% da turma</div></div>'+
-    '<div class="si"><h4>Reprovados</h4><div class="val" style="color:#ef4444">'+(tot-apv)+'</div><div class="sub">'+Math.round((tot-apv)/tot*100)+'% da turma</div></div>'+
-    '<div class="si"><h4>Maior Total</h4><div class="val" style="color:#667eea">'+CN3[0].total+'</div><div class="sub">de 40 questões</div></div>'+
-    '<div class="si"><h4>Média Mat</h4><div class="val">'+avg('mat')+'</div><div class="sub">de 20q</div></div>'+
-    '<div class="si"><h4>Média Ing</h4><div class="val">'+avg('ing')+'</div><div class="sub">de 20q</div></div>';
+  const apv=CN3.filter(a=>a.aprov).length,tot=CN3.length;
+  document.getElementById('statsCN3').innerHTML=`
+    <div class="si"><h4>Total Alunos</h4><div class="val">${tot}</div><div class="sub">no simulado</div></div>
+    <div class="si"><h4>Aprovados</h4><div class="val" style="color:#10b981">${apv}</div><div class="sub">${Math.round(apv/tot*100)}% da turma</div></div>
+    <div class="si"><h4>Reprovados</h4><div class="val" style="color:#ef4444">${tot-apv}</div><div class="sub">${Math.round((tot-apv)/tot*100)}% da turma</div></div>
+    <div class="si"><h4>Maior Total</h4><div class="val" style="color:#667eea">${CN3[0].gtot}</div><div class="sub">de 90 questões</div></div>
+    <div class="si"><h4>Média Turma</h4><div class="val">${CN3AVG.gtot.toFixed(1)}</div><div class="sub">questões certas</div></div>
+  `;
 }
 function setFiltroCN3(f,btn){
   filtroCN3=f;
   document.querySelectorAll('#cn3Section .filter-btn').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');renderCN3();
+  btn.classList.add('active');
+  const geral=f==='todos'||f==='aprov'||f==='reprov';
+  document.getElementById('cn3GeralWrap').style.display=geral?'block':'none';
+  document.getElementById('cn3D1Wrap').style.display=f==='d1'?'block':'none';
+  document.getElementById('cn3D2Wrap').style.display=f==='d2'?'block':'none';
+  if(geral) renderCN3();
+  if(f==='d1') renderCN3D1();
+  if(f==='d2') renderCN3D2();
+}
+function renderCN3D1(){
+  const base=CN3.filter(a=>a.mat!=null&&a.ing!=null);
+  const cmpD1=(a,b)=>(b.mat+b.ing)-(a.mat+a.ing)||b.mat-a.mat||b.ing-a.ing;
+  const apv=base.filter(a=>a.aprov_d1).sort(cmpD1);
+  const rep=base.filter(a=>!a.aprov_d1).sort(cmpD1);
+  const lst=[...apv,...rep];
+  document.getElementById('rankCN3D1Body').innerHTML=lst.map((a,i)=>{
+    const p=i+1,pc=p===1?'g1':p===2?'g2':p===3?'g3':'',em=p===1?'🥇':p===2?'🥈':p===3?'🥉':p;
+    const rc='ranking-row'+(p<=3?' top3':'');
+    return `<tr class="${rc}" onclick="openDash('cn3','${nm(a.nome)}')">
+      <td><span class="pos-badge ${pc}">${em}</span></td>
+      <td style="text-align:left;padding-left:14px"><span class="aluno-nome">${a.nome}</span></td>
+      <td style="font-size:20px;font-weight:900;color:${a.ok_mat?'#065f46':'#991b1b'}">${a.mat}</td>
+      <td style="font-size:20px;font-weight:900;color:${a.ok_ing?'#065f46':'#991b1b'}">${a.ing}</td>
+      <td style="font-size:24px;font-weight:900">${a.mat+a.ing}</td>
+      <td>${a.aprov_d1?'<span class="chip chip-a">✓ OK</span>':'<span class="chip chip-r">✗ Reprovado</span>'}</td>
+    </tr>`;
+  }).join('');
+}
+function renderCN3D2(){
+  const base=CN3.filter(a=>a.port!=null);
+  const cmpD2=(a,b)=>b.d2tot-a.d2tot||b.port-a.port||b.es-a.es||b.ci-a.ci;
+  const apv=base.filter(a=>a.aprov_d2).sort(cmpD2);
+  const rep=base.filter(a=>!a.aprov_d2).sort(cmpD2);
+  const lst=[...apv,...rep];
+  document.getElementById('rankCN3D2Body').innerHTML=lst.map((a,i)=>{
+    const p=i+1,pc=p===1?'g1':p===2?'g2':p===3?'g3':'',em=p===1?'🥇':p===2?'🥈':p===3?'🥉':p;
+    const rc='ranking-row'+(p<=3?' top3':'');
+    return `<tr class="${rc}" onclick="openDash('cn3','${nm(a.nome)}')">
+      <td><span class="pos-badge ${pc}">${em}</span></td>
+      <td style="text-align:left;padding-left:14px"><span class="aluno-nome">${a.nome}</span></td>
+      <td style="font-size:18px;font-weight:900;color:${a.ok_p?'#065f46':'#991b1b'}">${a.port}</td>
+      <td style="font-size:18px;font-weight:900;color:${a.ok_es?'#065f46':'#991b1b'}">${a.es}</td>
+      <td style="font-size:18px;font-weight:900;color:${a.ok_ci?'#065f46':'#991b1b'}">${a.ci}</td>
+      <td style="font-size:22px;font-weight:900">${a.d2tot}</td>
+      <td>${a.aprov_d2?'<span class="chip chip-a">✓ OK</span>':'<span class="chip chip-r">✗ Reprovado</span>'}</td>
+    </tr>`;
+  }).join('');
 }
 
 // ══════════════════════════════════════════════════════
@@ -1074,7 +1207,7 @@ function buildDashE2(nome){
   document.getElementById('dNome').textContent=a.nome;
   document.getElementById('dInfo').textContent=`#${a.rank}º lugar · EPCAr 2º Simulado · ${a.total}/48 questões · ${a.aprov?'✓ Aprovado':'✗ Reprovado'}`;
 
-  setDashTabs(['📊 Desempenho','🕸️ Radar vs Turma','🎯 Chances EPCAr']);
+  setDashTabs(['📊 Desempenho','🕸️ Radar vs Turma','🎯 Chances EPCAr','📈 Evolução']);
 
   const subjs=[
     {l:'Português',v:a.port,ok:a.ok_port,avg:avg('port')},
@@ -1183,6 +1316,8 @@ function buildDashE2(nome){
       })()}
     </div>
   </div>
+
+  ${getEvoPane('dpane3')}
   `;
 
   document.getElementById('dashTabs').onclick = function(e){
@@ -1204,16 +1339,84 @@ function buildDashE2(nome){
             tooltip:{backgroundColor:'rgba(0,0,0,.82)',callbacks:{label:c=>c.dataset.label+': '+c.parsed.r.toFixed(1)+'%'}}}
         }});
       },80);
-    }
+    } else if(idx===3){setupEvoCharts(a.nome);}
   };
 }
 
 // ══════════════════════════════════════════════════════
 // DASH INDIVIDUAL — ABRIR
 // ══════════════════════════════════════════════════════
+// ── EVOLUÇÃO HELPERS ──
+function normN(s){
+  return s.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase()
+    .replace(/\b(de|da|do|dos|das)\b/g,'').replace(/\s+/g,' ').trim();
+}
+function getEvoPane(paneId){
+  return `<div id="${paneId}" class="dpane">
+    <div class="dcard">
+      <h3>📈 Evolução — CN (Colégio Naval)</h3>
+      <p class="dcard-sub">Nota estimada (0–10) por simulado · linha <span style="color:#ef4444;font-weight:900">vermelha</span> = mínimo 5.0 · linha <span style="color:#10b981;font-weight:900">verde</span> = corte 7.40</p>
+      <div class="chart-wrap"><canvas id="evoCN"></canvas></div>
+    </div>
+    <div class="dcard">
+      <h3>📈 Evolução — EPCAr</h3>
+      <p class="dcard-sub">Nota estimada (0–10) por simulado · linha <span style="color:#ef4444;font-weight:900">vermelha</span> = mínimo 5.0 · linha <span style="color:#10b981;font-weight:900">verde</span> = corte 7.65</p>
+      <div class="chart-wrap"><canvas id="evoEP"></canvas></div>
+    </div>
+  </div>`;
+}
+function setupEvoCharts(nome){
+  const nn=normN(nome);
+  const findIn=list=>list.find(x=>normN(x.nome)===nn);
+  // CN notas (só se fez os dois dias)
+  const c1=findIn(CN1),c2=findIn(CN2),c3=findIn(CN3);
+  const cnNota=a=>a&&a.aprov_d1!=null&&a.aprov_d2!=null?+(a.gtot/90*10).toFixed(2):null;
+  const cnNotas=[cnNota(c1),cnNota(c2),cnNota(c3)];
+  const cn1AvgN=+(CN1AVG.gtot/90*10).toFixed(2);
+  const cn2AvgN=+(CN2AVG.gtot/90*10).toFixed(2);
+  const cn3AvgN=+(CN3AVG.gtot/90*10).toFixed(2);
+  // EPCAr notas
+  const e1=findIn(EPCAr),e2=findIn(EPCAr2);
+  const epNota=a=>a?+(a.total/48*10).toFixed(2):null;
+  const epNotas=[epNota(e1),epNota(e2)];
+  const ep1AvgN=+(EPCAr.reduce((s,x)=>s+x.total,0)/EPCAr.length/48*10).toFixed(2);
+  const ep2AvgN=+(EPCAr2.reduce((s,x)=>s+x.total,0)/EPCAr2.length/48*10).toFixed(2);
+  const chartOpts=(yMax)=>({responsive:true,maintainAspectRatio:false,
+    scales:{y:{min:0,max:yMax||10,ticks:{stepSize:1},grid:{color:'#e5e7eb'},
+      title:{display:true,text:'Nota (0–10)',font:{size:11,weight:'bold'}}}},
+    plugins:{legend:{position:'bottom',labels:{font:{size:11,weight:'bold'},padding:12,usePointStyle:true}},
+      tooltip:{backgroundColor:'rgba(0,0,0,.82)',
+        callbacks:{label:c=>c.dataset.label+': '+(c.parsed.y!=null?c.parsed.y.toFixed(2):'–')}}}
+  });
+  // CN chart
+  const elCN=document.getElementById('evoCN');
+  if(elCN){
+    if(evoChartCN){evoChartCN.destroy();evoChartCN=null;}
+    evoChartCN=new Chart(elCN,{type:'line',data:{labels:['1º Sim','2º Sim','3º Sim'],datasets:[
+      {label:nome.split(' ')[0],data:cnNotas,borderColor:'#667eea',backgroundColor:'rgba(102,126,234,.12)',borderWidth:3,pointRadius:6,pointBackgroundColor:'#667eea',pointBorderColor:'#fff',pointBorderWidth:2,tension:0.3,spanGaps:false},
+      {label:'Média Turma',data:[cn1AvgN,cn2AvgN,cn3AvgN],borderColor:'#9ca3af',backgroundColor:'rgba(156,163,175,.05)',borderWidth:2,borderDash:[5,4],pointRadius:4,pointBackgroundColor:'#9ca3af',tension:0.3,spanGaps:false},
+      {label:'Corte CN (7.40)',data:[7.4,7.4,7.4],borderColor:'#10b981',borderWidth:2,borderDash:[8,4],pointRadius:0,fill:false,tension:0},
+      {label:'Mínimo (5.0)',data:[5,5,5],borderColor:'#ef4444',borderWidth:2,borderDash:[6,4],pointRadius:0,fill:false,tension:0},
+    ]},options:chartOpts(10)});
+  }
+  // EPCAr chart
+  const elEP=document.getElementById('evoEP');
+  if(elEP){
+    if(evoChartEP){evoChartEP.destroy();evoChartEP=null;}
+    evoChartEP=new Chart(elEP,{type:'line',data:{labels:['1º Sim','2º Sim'],datasets:[
+      {label:nome.split(' ')[0],data:epNotas,borderColor:'#764ba2',backgroundColor:'rgba(118,75,162,.12)',borderWidth:3,pointRadius:6,pointBackgroundColor:'#764ba2',pointBorderColor:'#fff',pointBorderWidth:2,tension:0.3,spanGaps:false},
+      {label:'Média Turma',data:[ep1AvgN,ep2AvgN],borderColor:'#9ca3af',backgroundColor:'rgba(156,163,175,.05)',borderWidth:2,borderDash:[5,4],pointRadius:4,pointBackgroundColor:'#9ca3af',tension:0.3,spanGaps:false},
+      {label:'Corte EPCAr (7.65)',data:[7.65,7.65],borderColor:'#10b981',borderWidth:2,borderDash:[8,4],pointRadius:0,fill:false,tension:0},
+      {label:'Mínimo (5.0)',data:[5,5],borderColor:'#ef4444',borderWidth:2,borderDash:[6,4],pointRadius:0,fill:false,tension:0},
+    ]},options:chartOpts(10)});
+  }
+}
+
 let _lastSection='cn1';
 function openDash(ctx,nome){
   if(activeChart){activeChart.destroy();activeChart=null;}
+  if(evoChartCN){evoChartCN.destroy();evoChartCN=null;}
+  if(evoChartEP){evoChartEP.destroy();evoChartEP=null;}
   _lastSection=ctx;
   // Ocultar ranking sections, mostrar seção aluno
   document.querySelector('.container').style.display='none';
@@ -1228,6 +1431,8 @@ function openDash(ctx,nome){
 }
 function voltarLista(){
   if(activeChart){activeChart.destroy();activeChart=null;}
+  if(evoChartCN){evoChartCN.destroy();evoChartCN=null;}
+  if(evoChartEP){evoChartEP.destroy();evoChartEP=null;}
   document.getElementById('alunoSection').style.display='none';
   document.querySelector('.container').style.display='block';
   document.querySelector('.header').style.display='block';
@@ -1256,8 +1461,8 @@ function buildDashCN1(nome){
 
   const temAmbosDias = a.aprov_d1!=null && a.aprov_d2!=null;
   setDashTabs(temAmbosDias
-    ? ['📊 Desempenho','🕸️ Radar vs Turma','🎯 Chances CN','📚 Plano de Estudos']
-    : ['📊 Desempenho','🕸️ Radar vs Turma','📚 Plano de Estudos']);
+    ? ['📊 Desempenho','🕸️ Radar vs Turma','🎯 Chances CN','📈 Evolução','📚 Plano de Estudos']
+    : ['📊 Desempenho','🕸️ Radar vs Turma','📈 Evolução','📚 Plano de Estudos']);
 
   const discs=[
     {n:'Matemática',v:a.mat,tot:20,avg:CN1AVG.mat,min:10,ok:a.ok_mat},
@@ -1432,7 +1637,9 @@ function buildDashCN1(nome){
   </div>
   ` : ''}
 
-  <div id="${temAmbosDias?'dpane3':'dpane2'}" class="dpane">
+  ${getEvoPane(temAmbosDias?'dpane3':'dpane2')}
+
+  <div id="${temAmbosDias?'dpane4':'dpane3'}" class="dpane">
     <div class="dcard">
       <h3>📊 Prioridades por Matéria</h3>
       <table class="dtable">
@@ -1482,24 +1689,25 @@ function buildDashCN1(nome){
     const btn = e.target.closest('.dash-tab');
     if(!btn) return;
     const idx = Array.from(this.children).indexOf(btn);
-    if(idx !== 1) return;
-    setTimeout(()=>{
-      const el=document.getElementById('radarCN1');
-      if(!el) return;
-      if(activeChart){activeChart.destroy();activeChart=null;}
-      const labs=['Português','Matemática','Inglês','História','Geografia','Física','Química','Biologia'];
-      const maxs=[20,20,20,6,6,6,6,6];
-      const voc=[a.port,a.mat,a.ing,a.hist,a.geo,a.fis,a.qui,a.bio].map((v,i)=>v!=null?pct(v,maxs[i]):0);
-      const tur=[CN1AVG.port,CN1AVG.mat,CN1AVG.ing,CN1AVG.hist,CN1AVG.geo,CN1AVG.fis,CN1AVG.qui,CN1AVG.bio].map((v,i)=>pct(v,maxs[i]));
-      activeChart=new Chart(el,{type:'radar',data:{labels:labs,datasets:[
-        {label:a.nome.split(' ')[0],data:voc,backgroundColor:'rgba(102,126,234,.25)',borderColor:'#667eea',borderWidth:3,pointBackgroundColor:'#667eea',pointBorderColor:'#fff',pointBorderWidth:2,pointRadius:5},
-        {label:'Média Turma',data:tur,backgroundColor:'rgba(156,163,175,.1)',borderColor:'#9ca3af',borderWidth:2,borderDash:[5,4],pointBackgroundColor:'#9ca3af',pointRadius:4}
-      ]},options:{responsive:true,maintainAspectRatio:false,
-        scales:{r:{beginAtZero:true,max:100,ticks:{stepSize:25,font:{size:10},callback:v=>v+'%'},pointLabels:{font:{size:11,weight:'bold'}},grid:{color:'#e5e7eb'}}},
-        plugins:{legend:{position:'bottom',labels:{font:{size:12,weight:'bold'},padding:14,usePointStyle:true}},
-          tooltip:{backgroundColor:'rgba(0,0,0,.82)',callbacks:{label:c=>c.dataset.label+': '+c.parsed.r.toFixed(1)+'%'}}}
-      }});
-    }, 80);
+    if(idx===1){
+      setTimeout(()=>{
+        const el=document.getElementById('radarCN1');
+        if(!el) return;
+        if(activeChart){activeChart.destroy();activeChart=null;}
+        const labs=['Português','Matemática','Inglês','História','Geografia','Física','Química','Biologia'];
+        const maxs=[20,20,20,6,6,6,6,6];
+        const voc=[a.port,a.mat,a.ing,a.hist,a.geo,a.fis,a.qui,a.bio].map((v,i)=>v!=null?pct(v,maxs[i]):0);
+        const tur=[CN1AVG.port,CN1AVG.mat,CN1AVG.ing,CN1AVG.hist,CN1AVG.geo,CN1AVG.fis,CN1AVG.qui,CN1AVG.bio].map((v,i)=>pct(v,maxs[i]));
+        activeChart=new Chart(el,{type:'radar',data:{labels:labs,datasets:[
+          {label:a.nome.split(' ')[0],data:voc,backgroundColor:'rgba(102,126,234,.25)',borderColor:'#667eea',borderWidth:3,pointBackgroundColor:'#667eea',pointBorderColor:'#fff',pointBorderWidth:2,pointRadius:5},
+          {label:'Média Turma',data:tur,backgroundColor:'rgba(156,163,175,.1)',borderColor:'#9ca3af',borderWidth:2,borderDash:[5,4],pointBackgroundColor:'#9ca3af',pointRadius:4}
+        ]},options:{responsive:true,maintainAspectRatio:false,
+          scales:{r:{beginAtZero:true,max:100,ticks:{stepSize:25,font:{size:10},callback:v=>v+'%'},pointLabels:{font:{size:11,weight:'bold'}},grid:{color:'#e5e7eb'}}},
+          plugins:{legend:{position:'bottom',labels:{font:{size:12,weight:'bold'},padding:14,usePointStyle:true}},
+            tooltip:{backgroundColor:'rgba(0,0,0,.82)',callbacks:{label:c=>c.dataset.label+': '+c.parsed.r.toFixed(1)+'%'}}}
+        }});
+      }, 80);
+    } else if(idx===(temAmbosDias?3:2)){setupEvoCharts(a.nome);}
   };
 }
 // ══════════════════════════════════════════════════════
@@ -1511,8 +1719,8 @@ function buildDashCN2(nome){
 
   const temAmbosDias = a.aprov_d1!=null && a.aprov_d2!=null;
   setDashTabs(temAmbosDias
-    ? ['📊 Desempenho','🕸️ Radar vs Turma','🎯 Chances CN','📚 Plano de Estudos']
-    : ['📊 Desempenho','🕸️ Radar vs Turma','📚 Plano de Estudos']);
+    ? ['📊 Desempenho','🕸️ Radar vs Turma','🎯 Chances CN','📈 Evolução','📚 Plano de Estudos']
+    : ['📊 Desempenho','🕸️ Radar vs Turma','📈 Evolução','📚 Plano de Estudos']);
 
   const discs=[
     {n:'Matemática',v:a.mat, tot:20,avg:CN2AVG.mat, min:10,ok:a.ok_mat},
@@ -1686,7 +1894,9 @@ function buildDashCN2(nome){
   </div>
   ` : ''}
 
-  <div id="${temAmbosDias?'dpane3':'dpane2'}" class="dpane">
+  ${getEvoPane(temAmbosDias?'dpane3':'dpane2')}
+
+  <div id="${temAmbosDias?'dpane4':'dpane3'}" class="dpane">
     <div class="dcard">
       <h3>📊 Prioridades por Matéria</h3>
       <table class="dtable">
@@ -1751,7 +1961,7 @@ function buildDashCN2(nome){
             tooltip:{backgroundColor:'rgba(0,0,0,.82)',callbacks:{label:c=>c.dataset.label+': '+c.parsed.r.toFixed(1)+'%'}}}
         }});
       },80);
-    }
+    } else if(idx===(temAmbosDias?3:2)){setupEvoCharts(a.nome);}
   };
 }
 
@@ -1760,45 +1970,63 @@ function buildDashCN2(nome){
 // DASH CN 3º SIMULADO — ALUNO INDIVIDUAL
 // ══════════════════════════════════════════════════════
 function buildDashCN3(nome){
-  const a=CN3.find(x=>x.nome===nome);if(!a)return;
-  const tot=CN3.length;
-  const avgK=k=>+(CN3.reduce((s,x)=>s+x[k],0)/tot).toFixed(1);
-  const CN3AVG={mat:avgK('mat'),ing:avgK('ing'),total:avgK('total')};
-
+  const a=CN3MAP[nome]||CN3.find(x=>x.nome===nome);
+  if(!a) return;
   document.getElementById('dNome').textContent=a.nome;
-  document.getElementById('dInfo').textContent='#'+a.rank+'º lugar · CN 3º Simulado · 1º Dia · '+a.total+'/40 questões · '+(a.aprov?'✓ Aprovado D1':'✗ Reprovado D1');
+  document.getElementById('dInfo').textContent=`#${a.rank}º lugar · CN 3º Simulado · ${a.gtot}/90 questões · ${a.aprov?'✓ Aprovado':'✗ Reprovado'}`;
 
-  setDashTabs(['📊 Desempenho','📊 Você vs Turma','📚 Plano de Estudos']);
+  const temAmbosDias = a.aprov_d1!=null && a.aprov_d2!=null;
+  setDashTabs(temAmbosDias
+    ? ['📊 Desempenho','🕸️ Radar vs Turma','🎯 Chances CN','📈 Evolução','📚 Plano de Estudos']
+    : ['📊 Desempenho','🕸️ Radar vs Turma','📈 Evolução','📚 Plano de Estudos']);
 
   const discs=[
-    {n:'Matemática',v:a.mat,tot:20,avg:CN3AVG.mat,min:10,ok:a.ok_mat},
-    {n:'Inglês',    v:a.ing,tot:20,avg:CN3AVG.ing, min:10,ok:a.ok_ing},
-  ];
+    {n:'Matemática',v:a.mat, tot:20,avg:CN3AVG.mat, min:10,ok:a.ok_mat},
+    {n:'Inglês',    v:a.ing, tot:20,avg:CN3AVG.ing,  min:10,ok:a.ok_ing},
+    {n:'Português', v:a.port,tot:20,avg:CN3AVG.port,min:10,ok:a.ok_p},
+    {n:'História',  v:a.hist,tot:6, avg:CN3AVG.hist,min:null,grp:'Est. Sociais'},
+    {n:'Geografia', v:a.geo, tot:6, avg:CN3AVG.geo, min:null,grp:'Est. Sociais'},
+    {n:'Física',    v:a.fis, tot:6, avg:CN3AVG.fis, min:null,grp:'Ciências'},
+    {n:'Química',   v:a.qui, tot:6, avg:CN3AVG.qui, min:null,grp:'Ciências'},
+    {n:'Biologia',  v:a.bio, tot:6, avg:CN3AVG.bio, min:null,grp:'Ciências'},
+  ].filter(d=>d.v!=null);
 
   const mkDisc=d=>{
     const p=pct(d.v,d.tot),mp=pct(d.avg,d.tot),dif=(d.v-d.avg).toFixed(1);
-    const abx=d.v<d.min;
+    const abx=d.min!=null&&d.v<d.min;
     const dc=deltaCls(+dif);
-    return '<tr style="'+(abx?'background:#fff5f5':'')+'">'+
-      '<td style="text-align:left;padding-left:12px;font-weight:800;font-size:13px">'+d.n+
-        ' <span style="color:#9ca3af;font-size:10px;margin-left:3px">mín.'+d.min+'</span>'+
-      '</td>'+
-      '<td><strong>'+d.v+'/'+d.tot+'</strong></td>'+
-      '<td><span class="badge '+pBadge(p)+'">'+p.toFixed(0)+'%</span></td>'+
-      '<td>'+icBadge(p)+'</td>'+
-      '<td style="color:#6b7280;font-size:12px">'+d.avg.toFixed(1)+' ('+mp.toFixed(0)+'%)</td>'+
-      '<td class="'+dc+'">'+(+dif>=0?'+':'')+dif+'</td>'+
-    '</tr>';
+    return `<tr style="${abx?'background:#fff5f5':''}">
+      <td style="text-align:left;padding-left:12px;font-weight:800;font-size:13px">
+        ${d.n}
+        ${d.grp?`<span style="background:#ede9fe;color:#5b21b6;padding:1px 6px;border-radius:4px;font-size:9px;font-weight:700;margin-left:3px">${d.grp}</span>`:''}
+        ${d.min!=null?`<span style="color:#9ca3af;font-size:10px;margin-left:3px">mín.${d.min}</span>`:''}
+      </td>
+      <td><strong>${d.v}/${d.tot}</strong></td>
+      <td><span class="badge ${pBadge(p)}">${p.toFixed(0)}%</span></td>
+      <td>${icBadge(p)}</td>
+      <td style="color:#6b7280;font-size:12px">${d.avg.toFixed(1)} (${mp.toFixed(0)}%)</td>
+      <td class="${dc}">${(+dif>=0?'+':'')+dif}</td>
+    </tr>`;
   };
 
-  // PLANO DE ESTUDOS (só Mat + Ing)
+  const nota=+(a.gtot/90*10).toFixed(2);
+  const corte=7.4,chance=Math.min(100,+(nota/corte*100).toFixed(1));
+  const faltam=Math.max(0,Math.ceil(corte/10*90)-a.gtot);
+
+  // PLANO
   const todasP=[
-    {n:'Matemática',k:'mat',v:a.mat,tot:20,min:10},
-    {n:'Inglês',    k:'ing',v:a.ing,tot:20,min:10},
-  ].map(d=>({...d,p:pct(d.v,d.tot)}));
+    {n:'Matemática',k:'mat', v:a.mat, tot:20,min:10},
+    {n:'Português', k:'port',v:a.port,tot:20,min:10},
+    {n:'Inglês',    k:'ing', v:a.ing, tot:20,min:10},
+    {n:'História',  k:'hist',v:a.hist,tot:6, min:null},
+    {n:'Geografia', k:'geo', v:a.geo, tot:6, min:null},
+    {n:'Física',    k:'fis', v:a.fis, tot:6, min:null},
+    {n:'Química',   k:'qui', v:a.qui, tot:6, min:null},
+    {n:'Biologia',  k:'bio', v:a.bio, tot:6, min:null},
+  ].filter(d=>d.v!=null).map(d=>({...d,p:pct(d.v,d.tot)}));
   todasP.forEach(d=>{
     const base=100-d.p;
-    const pen=d.v<d.min?1.3:1.0;
+    const pen=d.min!=null&&d.v<d.min?1.3:1.0;
     const mb=d.k==='mat'?1.5:1.0;
     d.peso=Math.max(base*pen*mb,3);
   });
@@ -1807,14 +2035,13 @@ function buildDashCN3(nome){
   const matI=ord.findIndex(d=>d.k==='mat');
   if(matI>0){const[m]=ord.splice(matI,1);ord.unshift(m);}
   const DIST=[2.5,2,1.5];
-  const slots=12;
-  const spm=ord.map(d=>Math.max(1,Math.round(d.peso/totPeso*slots)));
+  const slots=18,spm=ord.map(d=>Math.max(1,Math.round(d.peso/totPeso*slots)));
   let ss=spm.reduce((s,x)=>s+x,0);
   while(ss>slots){spm[spm.indexOf(Math.max(...spm))]--;ss--;}
   while(ss<slots){spm[spm.indexOf(Math.min(...spm))]++;ss++;}
   const cnt=[...spm],sf=[];
   for(let s=0;s<slots;s++){
-    const dia=Math.floor(s/2),hoje=sf.slice(dia*2,s);
+    const dia=Math.floor(s/3),hoje=sf.slice(dia*3,s);
     let esc=-1,mx=-1;
     for(let i=0;i<ord.length;i++){if(cnt[i]>0&&!hoje.includes(i)&&cnt[i]>mx){mx=cnt[i];esc=i;}}
     if(esc===-1)for(let i=0;i<ord.length;i++){if(cnt[i]>0){esc=i;break;}}
@@ -1822,135 +2049,176 @@ function buildDashCN3(nome){
   }
   const DIAS=['Segunda','Terça','Quarta','Quinta','Sexta','Sábado'];
   const totSem=new Array(ord.length).fill(0);
-  sf.forEach((mi,i)=>{totSem[mi]=+(totSem[mi]+[3,2][i%2]).toFixed(1);});
+  sf.forEach((mi,i)=>{totSem[mi]=+(totSem[mi]+DIST[i%3]).toFixed(1);});
   const CORES={Matemática:{bg:'#dcfce7',b:'#86efac',t:'#14532d',pill:'#16a34a'},
-    Inglês:{bg:'#fef9c3',b:'#fde047',t:'#713f12',pill:'#ca8a04'}};
+    Português:{bg:'#dbeafe',b:'#93c5fd',t:'#1e3a8a',pill:'#2563eb'},
+    Inglês:{bg:'#fef9c3',b:'#fde047',t:'#713f12',pill:'#ca8a04'},
+    História:{bg:'#fee2e2',b:'#fca5a5',t:'#7f1d1d',pill:'#dc2626'},
+    Geografia:{bg:'#ffedd5',b:'#fdba74',t:'#7c2d12',pill:'#ea580c'},
+    Física:{bg:'#ede9fe',b:'#c4b5fd',t:'#3b0764',pill:'#7c3aed'},
+    Química:{bg:'#fce7f3',b:'#f9a8d4',t:'#831843',pill:'#db2777'},
+    Biologia:{bg:'#d1fae5',b:'#6ee7b7',t:'#064e3b',pill:'#059669'}};
   const gc=n=>CORES[n]||{bg:'#f3f4f6',b:'#d1d5db',t:'#111827',pill:'#6b7280'};
 
-  document.getElementById('dashBody').innerHTML=
-  '<div id="dpane0" class="dpane active">'+
-    '<div class="dcard">'+
-      '<h3>📊 Resumo</h3>'+
-      '<div class="sg" style="margin-top:12px">'+
-        '<div class="si"><h4>Classificação</h4><div class="val" style="color:#667eea">#'+a.rank+'º</div><div class="sub">de '+tot+' alunos</div></div>'+
-        '<div class="si"><h4>Total de Acertos</h4><div class="val">'+a.total+'</div><div class="sub">de 40 questões</div></div>'+
-        '<div class="si"><h4>% de Acerto</h4><div class="val" style="font-size:28px;padding-top:6px">'+pct(a.total,40).toFixed(1)+'%</div><div class="sub">'+icLabel(pct(a.total,40))+'</div></div>'+
-        '<div class="si"><h4>Resultado D1</h4><div class="val" style="font-size:26px;padding-top:8px">'+(a.aprov?'✅':'❌')+'</div><div class="sub">'+(a.aprov?'Aprovado':'Reprovado')+'</div></div>'+
-      '</div>'+
-    '</div>'+
-    '<div class="dcard">'+
-      '<h3>📋 Desempenho por Disciplina — 1º Dia</h3>'+
-      '<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px">'+
-        discs.map(d=>
-          '<div style="background:'+(d.ok?'linear-gradient(135deg,#d1fae5,#a7f3d0)':'linear-gradient(135deg,#fee2e2,#fca5a5)')+';padding:16px;border-radius:12px;border:3px solid '+(d.ok?'#6ee7b7':'#fca5a5')+';text-align:center">'+
-            '<div style="font-size:10px;font-weight:800;text-transform:uppercase;color:#374151;margin-bottom:4px">'+d.n+'</div>'+
-            '<div style="font-size:44px;font-weight:900;color:'+(d.ok?'#065f46':'#991b1b')+';line-height:1">'+d.v+'</div>'+
-            '<div style="font-size:11px;color:#6b7280;margin-top:3px">de '+d.tot+' · mín.'+d.min+' · '+pct(d.v,d.tot).toFixed(0)+'%</div>'+
-            '<div style="margin-top:6px">'+icBadge(pct(d.v,d.tot))+'</div>'+
-          '</div>'
-        ).join('')+
-      '</div>'+
-      '<h3 style="margin-bottom:10px">📐 Detalhamento por Matéria</h3>'+
-      '<table class="dtable">'+
-        '<thead><tr>'+
-          '<th style="text-align:left;padding-left:12px">Disciplina</th>'+
-          '<th>Acertos</th><th>%</th><th>IC</th><th>Média Turma</th><th>Δ Turma</th>'+
-        '</tr></thead>'+
-        '<tbody>'+discs.map(mkDisc).join('')+
-          '<tr style="background:linear-gradient(135deg,#ede9fe,#ddd6fe);font-weight:900">'+
-            '<td style="text-align:left;padding-left:12px;font-size:13px">⬛ TOTAL</td>'+
-            '<td>'+a.total+'/40</td>'+
-            '<td><span class="badge '+pBadge(pct(a.total,40))+'">'+pct(a.total,40).toFixed(0)+'%</span></td>'+
-            '<td>'+icBadge(pct(a.total,40))+'</td>'+
-            '<td style="color:#6b7280;font-size:12px">'+CN3AVG.total.toFixed(1)+'</td>'+
-            '<td class="'+deltaCls(a.total-CN3AVG.total)+'">'+(a.total-CN3AVG.total>=0?'+':'')+((a.total-CN3AVG.total).toFixed(1))+'</td>'+
-          '</tr>'+
-        '</tbody>'+
-      '</table>'+
-      '<div class="infobox" style="margin-top:14px">'+
-        '<h5>📘 Critérios de Aprovação — CN 1º Dia</h5>'+
-        '<ul>'+
-          '<li><strong>Matemática:</strong> mínimo 10/20 · <strong>Inglês:</strong> mínimo 10/20</li>'+
-          '<li><strong>IC:</strong> 🟢 ≥70% Sólido · 🟡 50–69% Razoável · 🔴 &lt;50% Intervenção necessária</li>'+
-        '</ul>'+
-      '</div>'+
-    '</div>'+
-  '</div>'+
+  document.getElementById('dashBody').innerHTML=`
+  <div id="dpane0" class="dpane active">
+    <div class="dcard">
+      <h3>📊 Resumo — 3º Simulado (Completo)</h3>
+      <div class="sg" style="margin-top:12px">
+        <div class="si"><h4>Classificação</h4><div class="val" style="color:#667eea">#${a.rank}º</div><div class="sub">de ${CN3.length} alunos</div></div>
+        <div class="si"><h4>Total de Acertos</h4><div class="val">${a.gtot}</div><div class="sub">de 90 questões</div></div>
+        <div class="si"><h4>% de Acerto</h4><div class="val" style="font-size:28px;padding-top:6px">${pct(a.gtot,90).toFixed(1)}%</div><div class="sub">${icLabel(pct(a.gtot,90))}</div></div>
+        <div class="si"><h4>Resultado</h4><div class="val" style="font-size:26px;padding-top:8px">${a.aprov?'✅':'❌'}</div><div class="sub">${a.aprov?'Aprovado':a.motivo||'Reprovado'}</div></div>
+      </div>
+    </div>
+    <div class="dcard">
+      <h3>📋 Desempenho por Disciplina — 1º Dia</h3>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px">
+        ${[{l:'Matemática',v:a.mat,tot:20,ok:a.ok_mat},{l:'Inglês',v:a.ing,tot:20,ok:a.ok_ing}].map(d=>
+          d.v!=null?`<div style="background:${d.ok?'linear-gradient(135deg,#d1fae5,#a7f3d0)':'linear-gradient(135deg,#fee2e2,#fca5a5)'};padding:16px;border-radius:12px;border:3px solid ${d.ok?'#6ee7b7':'#fca5a5'};text-align:center">
+            <div style="font-size:10px;font-weight:800;text-transform:uppercase;color:#374151;margin-bottom:4px">${d.l}</div>
+            <div style="font-size:44px;font-weight:900;color:${d.ok?'#065f46':'#991b1b'};line-height:1">${d.v}</div>
+            <div style="font-size:11px;color:#6b7280;margin-top:3px">de ${d.tot} · mín.10 · ${pct(d.v,d.tot).toFixed(0)}%</div>
+            <div style="margin-top:6px">${icBadge(pct(d.v,d.tot))}</div>
+          </div>`:''
+        ).join('')}
+      </div>
+      <h3 style="margin-bottom:12px">📋 Desempenho por Disciplina — 2º Dia</h3>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px">
+        ${[
+          {l:'Português',v:a.port,tot:20,ok:a.ok_p,min:10},
+          {l:'Est. Sociais',v:a.es,tot:12,ok:a.ok_es,min:'6 (ES)',sub:'Hist+Geo'},
+          {l:'Ciências',v:a.ci,tot:18,ok:a.ok_ci,min:'9 (CI)',sub:'Fis+Qui+Bio'},
+        ].map(d=>d.v!=null?`<div style="background:${d.ok?'linear-gradient(135deg,#d1fae5,#a7f3d0)':'linear-gradient(135deg,#fee2e2,#fca5a5)'};padding:14px;border-radius:12px;border:3px solid ${d.ok?'#6ee7b7':'#fca5a5'};text-align:center">
+          <div style="font-size:9px;font-weight:800;text-transform:uppercase;color:#374151;margin-bottom:3px">${d.l}${d.sub?'<br><span style="opacity:.7">'+d.sub+'</span>':''}</div>
+          <div style="font-size:38px;font-weight:900;color:${d.ok?'#065f46':'#991b1b'};line-height:1">${d.v}</div>
+          <div style="font-size:10px;color:#6b7280;margin-top:3px">de ${d.tot} · mín.${d.min} · ${pct(d.v,d.tot).toFixed(0)}%</div>
+          <div style="margin-top:5px">${icBadge(pct(d.v,d.tot))}</div>
+        </div>`:'').join('')}
+      </div>
+      <h3 style="margin-bottom:10px">📐 Detalhamento por Matéria</h3>
+      <table class="dtable">
+        <thead><tr>
+          <th style="text-align:left;padding-left:12px">Disciplina</th>
+          <th>Acertos</th><th>%</th><th>IC</th><th>Média Turma</th><th>Δ Turma</th>
+        </tr></thead>
+        <tbody>${discs.map(mkDisc).join('')}
+          <tr style="background:linear-gradient(135deg,#ede9fe,#ddd6fe);font-weight:900">
+            <td style="text-align:left;padding-left:12px;font-size:13px">⬛ TOTAL</td>
+            <td>${a.gtot}/90</td>
+            <td><span class="badge ${pBadge(pct(a.gtot,90))}">${pct(a.gtot,90).toFixed(0)}%</span></td>
+            <td>${icBadge(pct(a.gtot,90))}</td>
+            <td style="color:#6b7280;font-size:12px">${CN3AVG.gtot.toFixed(1)}</td>
+            <td class="${deltaCls(a.gtot-CN3AVG.gtot)}">${(a.gtot-CN3AVG.gtot>=0?'+':'')+((a.gtot-CN3AVG.gtot).toFixed(1))}</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="infobox" style="margin-top:14px">
+        <h5>📘 Critérios de Aprovação — CN 3º Simulado</h5>
+        <ul>
+          <li><strong>Matemática:</strong> mínimo 10/20 · <strong>Inglês:</strong> mínimo 10/20 · <strong>Português:</strong> mínimo 10/20</li>
+          <li><strong>Est. Sociais</strong> (Hist+Geo): mínimo 6/12 · <strong>Ciências</strong> (Fis+Qui+Bio): mínimo 9/18</li>
+          <li><strong>IC:</strong> 🟢 ≥70% Sólido · 🟡 50–69% Razoável · 🔴 &lt;50% Intervenção necessária</li>
+        </ul>
+      </div>
+    </div>
+  </div>
 
-  '<div id="dpane1" class="dpane">'+
-    '<div class="dcard">'+
-      '<h3>📊 Você vs Média da Turma</h3>'+
-      '<p class="dcard-sub">Percentual de acertos por disciplina</p>'+
-      '<div class="chart-wrap"><canvas id="barCN3"></canvas></div>'+
-    '</div>'+
-  '</div>'+
+  <div id="dpane1" class="dpane">
+    <div class="dcard">
+      <h3>🕸️ Radar — Você vs Média da Turma</h3>
+      <p class="dcard-sub">Percentual de acertos por disciplina — 3º Simulado completo</p>
+      <div class="chart-wrap"><canvas id="radarCN3"></canvas></div>
+    </div>
+  </div>
 
-  '<div id="dpane2" class="dpane">'+
-    '<div class="dcard">'+
-      '<h3>📊 Prioridades por Matéria</h3>'+
-      '<table class="dtable">'+
-        '<thead><tr><th>#</th><th style="text-align:left;padding-left:12px">Disciplina</th><th>Acertos</th><th>%</th><th>IC</th><th>Horas/Sem</th></tr></thead>'+
-        '<tbody>'+ord.map((d,i)=>{
-          const sit=d.p<50?'URGENTE':d.p<65?'ATENÇÃO':d.p<80?'BOM':'ÓTIMO';
-          const sc=d.p<50?'#ef4444':d.p<65?'#f59e0b':d.p<80?'#667eea':'#10b981';
-          const prio=i===0?'🔥 1º':'📘 2º';
-          return '<tr>'+
-            '<td style="font-weight:800;color:#374151">'+prio+'</td>'+
-            '<td style="text-align:left;padding-left:12px;font-weight:800">'+d.n+'</td>'+
-            '<td>'+d.v+'/'+d.tot+'</td>'+
-            '<td><span class="badge '+pBadge(d.p)+'">'+d.p.toFixed(0)+'%</span></td>'+
-            '<td>'+icBadge(d.p)+'</td>'+
-            '<td style="font-weight:900;color:#667eea">'+totSem[i]+'h</td>'+
-          '</tr>';
-        }).join('')+'</tbody>'+
-      '</table>'+
-    '</div>'+
-    '<div class="dcard">'+
-      '<h3>📅 Plano Semanal — 6 dias · 5h/dia</h3>'+
-      '<div style="overflow-x:auto">'+
-        '<table class="plano-tbl">'+
-          '<thead><tr><th>Dia</th><th>🔥 1ª Matéria (3h)</th><th>📘 2ª Matéria (2h)</th><th>Total</th></tr></thead>'+
-          '<tbody>'+DIAS.map((dia,di)=>{
-            const par=sf.slice(di*2,di*2+2);
-            return '<tr><td>'+dia+'</td>'+
-              par.map((mi,pos)=>{const mat=ord[mi];const cor=gc(mat.n);return '<td style="padding:8px"><div style="background:'+cor.bg+';border:2px solid '+cor.b+';border-radius:8px;padding:8px;text-align:center"><div style="font-weight:800;color:'+cor.t+';font-size:12px">'+mat.n+'</div><div style="font-size:18px;font-weight:900;color:'+cor.pill+'">'+(pos===0?3:2)+'h</div></div></td>';}).join('')+
-              '<td style="font-weight:900;color:#14532d">5h</td>'+
-            '</tr>';
-          }).join('')+
-          '<tfoot><tr><td>TOTAL/SEM</td><td colspan="2" style="text-align:center">30 horas distribuídas</td><td style="font-weight:900">30h</td></tr></tfoot>'+
-        '</table>'+
-      '</div>'+
-    '</div>'+
-  '</div>';
+  ${temAmbosDias ? `<div id="dpane2" class="dpane">
+    <div class="dcard">
+      <h3>🎯 Chances de Aprovação — Colégio Naval</h3>
+      <p class="dcard-sub">Nota de corte estimada: <strong>7.4</strong> = 100% de chance</p>
+      <div style="text-align:center;padding:28px 20px;background:${nota>=corte?'linear-gradient(135deg,#d1fae5,#a7f3d0)':'linear-gradient(135deg,#fee2e2,#fca5a5)'};border-radius:16px;border:3px solid ${nota>=corte?'#6ee7b7':'#fca5a5'};margin-bottom:20px">
+        <div style="font-size:12px;font-weight:800;color:#374151;margin-bottom:10px;text-transform:uppercase;letter-spacing:1px">Chance de Aprovação</div>
+        <div style="font-size:80px;font-weight:900;color:${nota>=corte?'#065f46':'#991b1b'};line-height:1">${chance}%</div>
+        <div style="font-size:13px;color:#6b7280;font-weight:700;margin-top:8px">${chance>=100?'🎉 Acima do corte!':chance>=85?'⭐ Muito próximo!':chance>=70?'💪 Continue!':'📚 Foco total!'}</div>
+        <div class="prog-outer" style="max-width:360px;margin:14px auto 6px"><div class="prog-inner" style="width:${chance}%;background:${nota>=corte?'#10b981':'#ef4444'}"></div></div>
+      </div>
+      <div class="sg">
+        <div class="si"><h4>Nota Estimada</h4><div class="val" style="color:${nota>=corte?'#10b981':'#ef4444'}">${nota}</div><div class="sub">escala 0–10</div></div>
+        <div class="si"><h4>Corte CN</h4><div class="val">7.40</div><div class="sub">meta mínima</div></div>
+        <div class="si"><h4>Questões Certas</h4><div class="val">${a.gtot}</div><div class="sub">de 90</div></div>
+        <div class="si"><h4>Faltam</h4><div class="val" style="color:${faltam===0?'#10b981':'#ef4444'}">${faltam===0?'✓':faltam}</div><div class="sub">${faltam===0?'meta atingida':'questões'}</div></div>
+      </div>
+    </div>
+  </div>
+  ` : ''}
 
-  // Gráfico de barras on-demand (radar não funciona com 2 pontos)
-  document.getElementById('dashTabs').onclick=function(e){
-    const btn=e.target.closest('.dash-tab');
-    if(!btn)return;
+  ${getEvoPane(temAmbosDias?'dpane3':'dpane2')}
+
+  <div id="${temAmbosDias?'dpane4':'dpane3'}" class="dpane">
+    <div class="dcard">
+      <h3>📊 Prioridades por Matéria</h3>
+      <table class="dtable">
+        <thead><tr><th>#</th><th style="text-align:left;padding-left:12px">Disciplina</th><th>Acertos</th><th>%</th><th>IC</th><th>Horas/Sem</th></tr></thead>
+        <tbody>${ord.map((d,i)=>{
+          const prio=i===0?'🔥 1º':i===1?'🔥 2º':i===2?'⚠️ 3º':`📘 ${i+1}º`;
+          return `<tr>
+            <td style="font-weight:800;color:#374151">${prio}</td>
+            <td style="text-align:left;padding-left:12px;font-weight:800">${d.n}</td>
+            <td>${d.v}/${d.tot}</td>
+            <td><span class="badge ${pBadge(d.p)}">${d.p.toFixed(0)}%</span></td>
+            <td>${icBadge(d.p)}</td>
+            <td style="font-weight:900;color:#667eea">${totSem[i]}h</td>
+          </tr>`;
+        }).join('')}</tbody>
+      </table>
+    </div>
+    <div class="dcard">
+      <h3>📅 Plano Semanal — 6 dias · 6h/dia</h3>
+      <div style="overflow-x:auto">
+        <table class="plano-tbl">
+          <thead><tr>
+            <th>Dia</th>
+            <th>🔥 1ª Matéria (2.5h)</th>
+            <th>📘 2ª Matéria (2h)</th>
+            <th>📗 3ª Matéria (1.5h)</th>
+            <th>Total</th>
+          </tr></thead>
+          <tbody>${DIAS.map((dia,di)=>{
+            const trio=sf.slice(di*3,di*3+3);
+            return `<tr>
+              <td>${dia}</td>
+              ${trio.map((mi,pos)=>{const mat=ord[mi];const cor=gc(mat.n);return `<td style="padding:8px"><div style="background:${cor.bg};border:2px solid ${cor.b};border-radius:8px;padding:8px;text-align:center"><div style="font-weight:800;color:${cor.t};font-size:12px">${mat.n}</div><div style="font-size:18px;font-weight:900;color:${cor.pill}">${DIST[pos]}h</div></div></td>`;}).join('')}
+              <td style="font-weight:900;color:#14532d">6h</td>
+            </tr>`;
+          }).join('')}</tbody>
+          <tfoot><tr><td>TOTAL/SEM</td><td colspan="3" style="text-align:center">36 horas distribuídas</td><td style="font-weight:900">36h</td></tr></tfoot>
+        </table>
+      </div>
+    </div>
+  </div>`;
+
+  // Radar on tab click
+  document.getElementById('dashTabs').onclick = function(e){
+    const btn=e.target.closest('.dash-tab'); if(!btn) return;
     const idx=Array.from(this.children).indexOf(btn);
-    if(idx!==1)return;
-    setTimeout(()=>{
-      const el=document.getElementById('barCN3');
-      if(!el)return;
-      if(activeChart){activeChart.destroy();activeChart=null;}
-      const labs=['Matemática','Inglês'];
-      const voc=[pct(a.mat,20),pct(a.ing,20)];
-      const tur=[pct(+CN3AVG.mat,20),pct(+CN3AVG.ing,20)];
-      const vocCores=voc.map(v=>v>=50?'rgba(102,126,234,0.85)':'rgba(239,68,68,0.85)');
-      activeChart=new Chart(el,{type:'bar',data:{labels:labs,datasets:[
-        {label:a.nome.split(' ')[0],data:voc,backgroundColor:vocCores,borderColor:vocCores.map(c=>c.replace('0.85','1')),borderWidth:2,borderRadius:6},
-        {label:'Média Turma',data:tur,backgroundColor:'rgba(156,163,175,0.5)',borderColor:'rgba(156,163,175,1)',borderWidth:2,borderRadius:6}
-      ]},options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',
-        scales:{
-          x:{beginAtZero:true,max:100,ticks:{callback:v=>v+'%',font:{size:11}},grid:{color:'#e5e7eb'}},
-          y:{ticks:{font:{size:13,weight:'bold'}},grid:{display:false}}
-        },
-        plugins:{
-          legend:{position:'bottom',labels:{font:{size:12,weight:'bold'},padding:14,usePointStyle:true}},
-          tooltip:{backgroundColor:'rgba(0,0,0,.82)',callbacks:{label:c=>c.dataset.label+': '+c.parsed.x.toFixed(1)+'%'}}
-        }
-      }});
-    },80);
+    if(idx===1){
+      setTimeout(()=>{
+        const el=document.getElementById('radarCN3'); if(!el) return;
+        if(activeChart){activeChart.destroy();activeChart=null;}
+        const labs=['Português','Matemática','Inglês','História','Geografia','Física','Química','Biologia'];
+        const maxs=[20,20,20,6,6,6,6,6];
+        const voc=[a.port,a.mat,a.ing,a.hist,a.geo,a.fis,a.qui,a.bio].map((v,i)=>v!=null?pct(v,maxs[i]):0);
+        const tur=[CN3AVG.port,CN3AVG.mat,CN3AVG.ing,CN3AVG.hist,CN3AVG.geo,CN3AVG.fis,CN3AVG.qui,CN3AVG.bio].map((v,i)=>pct(v,maxs[i]));
+        activeChart=new Chart(el,{type:'radar',data:{labels:labs,datasets:[
+          {label:a.nome.split(' ')[0],data:voc,backgroundColor:'rgba(102,126,234,.25)',borderColor:'#667eea',borderWidth:3,pointBackgroundColor:'#667eea',pointBorderColor:'#fff',pointBorderWidth:2,pointRadius:5},
+          {label:'Média Turma',data:tur,backgroundColor:'rgba(156,163,175,.1)',borderColor:'#9ca3af',borderWidth:2,borderDash:[5,4],pointBackgroundColor:'#9ca3af',pointRadius:4}
+        ]},options:{responsive:true,maintainAspectRatio:false,
+          scales:{r:{beginAtZero:true,max:100,ticks:{stepSize:25,font:{size:10},callback:v=>v+'%'},pointLabels:{font:{size:11,weight:'bold'}},grid:{color:'#e5e7eb'}}},
+          plugins:{legend:{position:'bottom',labels:{font:{size:12,weight:'bold'},padding:14,usePointStyle:true}},
+            tooltip:{backgroundColor:'rgba(0,0,0,.82)',callbacks:{label:c=>c.dataset.label+': '+c.parsed.r.toFixed(1)+'%'}}}
+        }});
+      },80);
+    } else if(idx===(temAmbosDias?3:2)){setupEvoCharts(a.nome);}
   };
 }
 
@@ -1964,7 +2232,7 @@ function buildDashE(nome){
   document.getElementById('dNome').textContent=a.nome;
   document.getElementById('dInfo').textContent=`#${a.rank}º lugar · EPCAr 1º Simulado · ${a.total}/48 questões · ${a.aprov?'✓ Aprovado':'✗ Reprovado'}`;
 
-  setDashTabs(['📊 Desempenho','🕸️ Radar vs Turma','🎯 Chances EPCAr']);
+  setDashTabs(['📊 Desempenho','🕸️ Radar vs Turma','🎯 Chances EPCAr','📈 Evolução']);
 
   const subjs=[
     {l:'Português',v:a.port,ok:a.ok_port,avg:avg('port')},
@@ -2072,6 +2340,8 @@ function buildDashE(nome){
       })()}
     </div>
   </div>
+
+  ${getEvoPane('dpane3')}
   `;
 
   document.getElementById('dashTabs').onclick = function(e){
@@ -2095,7 +2365,7 @@ function buildDashE(nome){
             tooltip:{backgroundColor:'rgba(0,0,0,.82)',callbacks:{label:c=>c.dataset.label+': '+c.parsed.r.toFixed(1)+'%'}}}
         }});
       }, 80);
-    }
+    } else if(idx===3){setupEvoCharts(a.nome);}
   };
 }
 
