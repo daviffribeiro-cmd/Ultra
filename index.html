@@ -1440,7 +1440,7 @@ function buildDashE2(nome){
     </div>
   </div>
 
-  ${getEvoPane('dpane3')}
+  ${getEvoEPPane('dpane3')}
   `;
   document.getElementById('dashBody').innerHTML += getClassifPane(a.nome,'dpane4');
 
@@ -1475,13 +1475,17 @@ function normN(s){
   return s.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase()
     .replace(/\b(de|da|do|dos|das)\b/g,'').replace(/\s+/g,' ').trim();
 }
-function getEvoPane(paneId){
+function getEvoCNPane(paneId){
   return `<div id="${paneId}" class="dpane">
     <div class="dcard">
       <h3>📈 Evolução — CN (Colégio Naval)</h3>
       <p class="dcard-sub">Nota estimada (0–10) por simulado · linha <span style="color:#ef4444;font-weight:900">vermelha</span> = mínimo 5.0 · linha <span style="color:#10b981;font-weight:900">verde</span> = corte 7.40</p>
       <div class="chart-wrap"><canvas id="evoCN"></canvas></div>
     </div>
+  </div>`;
+}
+function getEvoEPPane(paneId){
+  return `<div id="${paneId}" class="dpane">
     <div class="dcard">
       <h3>📈 Evolução — EPCAr</h3>
       <p class="dcard-sub">Nota estimada (0–10) por simulado · linha <span style="color:#ef4444;font-weight:900">vermelha</span> = mínimo 5.0 · linha <span style="color:#10b981;font-weight:900">verde</span> = corte 7.65</p>
@@ -1595,7 +1599,7 @@ function buildDashE3(nome){
   const avg=k=>+(EPCAr3.reduce((s,x)=>s+x[k],0)/tot).toFixed(1);
   document.getElementById('dNome').textContent=a.nome;
   document.getElementById('dInfo').textContent=`#${a.rank}º lugar · EPCAr 3º Simulado · ${a.total}/48 questões · ${a.aprov?'✓ Aprovado':'✗ Reprovado'}`;
-  setDashTabs(['📊 Desempenho','🕸️ Radar vs Turma','🎯 Chances EPCAr','🏅 Classificações']);
+  setDashTabs(['📊 Desempenho','🕸️ Radar vs Turma','🎯 Chances EPCAr','📈 Evolução','🏅 Classificações']);
   const subjs=[
     {l:'Português',v:a.port,ok:a.ok_port,avg:avg('port')},
     {l:'Matemática',v:a.mat,ok:a.ok_mat,avg:avg('mat')},
@@ -1686,7 +1690,8 @@ function buildDashE3(nome){
       })()}
     </div>
   </div>`;
-  document.getElementById('dashBody').innerHTML += getClassifPane(a.nome,'dpane3');
+  document.getElementById('dashBody').innerHTML += getEvoEPPane('dpane3');
+  document.getElementById('dashBody').innerHTML += getClassifPane(a.nome,'dpane4');
   document.getElementById('dashTabs').onclick=function(e){
     const btn=e.target.closest('.dash-tab');if(!btn)return;
     const idx=Array.from(this.children).indexOf(btn);
@@ -1704,6 +1709,7 @@ function buildDashE3(nome){
         plugins:{legend:{position:'bottom',labels:{font:{size:12,weight:'bold'},padding:14,usePointStyle:true}},
           tooltip:{backgroundColor:'rgba(0,0,0,.82)',callbacks:{label:c=>c.dataset.label+': '+c.parsed.r.toFixed(1)+'%'}}}}});
     },80);}
+    else if(idx===3){setupEvoCharts(a.nome);}
   };
 }
 
@@ -1933,7 +1939,7 @@ function buildDashCN1(nome){
   </div>
   ` : ''}
 
-  ${getEvoPane(temAmbosDias?'dpane3':'dpane2')}
+  ${getEvoCNPane(temAmbosDias?'dpane3':'dpane2')}
 
   <div id="${temAmbosDias?'dpane4':'dpane3'}" class="dpane">
     <div class="dcard">
@@ -2191,7 +2197,7 @@ function buildDashCN2(nome){
   </div>
   ` : ''}
 
-  ${getEvoPane(temAmbosDias?'dpane3':'dpane2')}
+  ${getEvoCNPane(temAmbosDias?'dpane3':'dpane2')}
 
   <div id="${temAmbosDias?'dpane4':'dpane3'}" class="dpane">
     <div class="dcard">
@@ -2450,7 +2456,7 @@ function buildDashCN3(nome){
   </div>
   ` : ''}
 
-  ${getEvoPane(temAmbosDias?'dpane3':'dpane2')}
+  ${getEvoCNPane(temAmbosDias?'dpane3':'dpane2')}
 
   <div id="${temAmbosDias?'dpane4':'dpane3'}" class="dpane">
     <div class="dcard">
@@ -2640,7 +2646,7 @@ function buildDashE(nome){
     </div>
   </div>
 
-  ${getEvoPane('dpane3')}
+  ${getEvoEPPane('dpane3')}
   `;
   document.getElementById('dashBody').innerHTML += getClassifPane(a.nome,'dpane4');
 
