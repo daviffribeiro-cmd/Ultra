@@ -172,6 +172,16 @@ table.dtable tbody tr:hover{background:var(--gbg)}
   .ranking-card{border-radius:12px}
   .hdr-title{font-size:20px}
 }
+@media print{
+  body > *{display:none!important}
+  #alunoSection{display:block!important}
+  #alunoSection .aluno-hdr-wrap,#alunoSection .dash-tabs{display:none!important}
+  #alunoSection .dpane{display:block!important}
+  #alunoSection .dash-body{padding:0!important}
+  canvas{display:block!important;max-width:100%!important}
+  .dcard{page-break-inside:avoid;box-shadow:none!important;border:1px solid #ddd!important}
+  body{background:white!important}
+}
 </style>
 </head>
 <body>
@@ -626,7 +636,10 @@ table.dtable tbody tr:hover{background:var(--gbg)}
 <div id="alunoSection" class="aluno-section" style="display:none">
   <div class="aluno-hdr-wrap">
     <div class="aluno-topbar">
-      <button class="btn-voltar" onclick="voltarLista()">← Voltar</button>
+      <div style="display:flex;align-items:center;gap:8px;flex-shrink:0">
+        <button class="btn-voltar" onclick="voltarLista()">← Voltar</button>
+        <button class="btn-voltar" onclick="imprimirDashboard()">🖨️ Imprimir</button>
+      </div>
       <div>
         <h2 id="dNome">—</h2>
         <p id="dInfo">—</p>
@@ -2668,6 +2681,30 @@ function openDash(ctx,nome){
   else if(ctx==='epcar4') buildDashE4(nome);
   else buildDashE(nome);
 }
+function imprimirDashboard(){
+  const tabs = Array.from(document.querySelectorAll('#dashTabs .dash-tab'));
+  const originalActive = document.querySelector('#dashTabs .dash-tab.active');
+  // Mostra todos os dpanes ANTES de inicializar os gráficos
+  // para que o Chart.js calcule as dimensões corretas do container
+  document.querySelectorAll('.dpane').forEach(function(p){ p.style.display='block'; });
+  let delay = 0;
+  tabs.forEach(function(tab){
+    setTimeout(function(){ tab.click(); }, delay);
+    delay += 200;
+  });
+  setTimeout(function(){
+    // Redimensiona todos os gráficos para garantir proporção correta
+    [activeChart,evoChartCN,evoChartEP].forEach(function(ch){
+      if(ch) try{ ch.resize(); }catch(e){}
+    });
+    window.print();
+    setTimeout(function(){
+      document.querySelectorAll('.dpane').forEach(function(p){ p.style.display=''; });
+      if(originalActive) originalActive.click();
+    }, 800);
+  }, delay + 1200);
+}
+
 function voltarLista(){
   if(activeChart){activeChart.destroy();activeChart=null;}
   if(evoChartCN){evoChartCN.destroy();evoChartCN=null;}
