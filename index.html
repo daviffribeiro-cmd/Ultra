@@ -5,6 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Sistema Pedagógico — Simulados Exclusivos CN Ultra</title>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 :root{
@@ -14,7 +17,7 @@
   --bg:#f5fefb;--t1:#0d1f2e;--t2:#2a3f54;--t3:#6b8ea6;
   --border:#b8e8d0;--gbg:#edf9f3;
 }
-body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--t1);min-height:100vh}
+body{font-family:'Inter','Segoe UI',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--t1);min-height:100vh}
 
 /* ── HEADER ── */
 .header{background:linear-gradient(135deg,#0b1a2b 0%,var(--navy) 55%,#1c3560 100%);padding:24px 20px 20px;position:relative;overflow:hidden}
@@ -172,15 +175,67 @@ table.dtable tbody tr:hover{background:var(--gbg)}
   .ranking-card{border-radius:12px}
   .hdr-title{font-size:20px}
 }
+/* ── AVATAR ── */
+.aluno-avatar{width:36px;height:36px;border-radius:50%;background:var(--grad135);display:inline-flex;align-items:center;justify-content:center;font-size:12px;font-weight:900;color:#fff;flex-shrink:0;letter-spacing:-0.5px}
+.name-cell{display:flex;align-items:center;gap:10px}
+
+/* ── SCORE CELL ── */
+.score-cell{min-width:90px;padding:10px 12px !important}
+.score-num{font-size:22px;font-weight:900;color:#1f2937;display:block;line-height:1.2}
+.score-bar{height:5px;border-radius:4px;background:var(--border);margin-top:4px;overflow:hidden}
+.score-bar-fill{height:100%;border-radius:4px;background:var(--grad)}
+
+/* ── SI CARD ENHANCEMENTS ── */
+.si{border-top:3px solid var(--teal) !important}
+.si:hover{box-shadow:0 6px 22px rgba(29,201,158,.22) !important;transform:translateY(-2px)}
+
+/* ── FOOTER ── */
+.footer{background:linear-gradient(135deg,#0b1a2b,var(--navy));border-top:3px solid;border-image:var(--grad) 1;padding:24px 20px;margin-top:40px}
+.footer-inner{max-width:1400px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.footer-brand{background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-size:15px;font-weight:900;letter-spacing:1px}
+.footer-info{font-size:12px;color:rgba(255,255,255,.4);font-weight:500}
+.footer-tag{background:rgba(29,201,158,.12);border:1px solid rgba(29,201,158,.3);color:rgba(255,255,255,.6);font-size:11px;font-weight:700;padding:4px 12px;border-radius:20px}
+
+/* ── RANKING HEADER IMPROVE ── */
+.ranking-header{position:relative;overflow:hidden}
+.ranking-header::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:var(--grad)}
+
+/* ── HEADER ENHANCEMENTS ── */
+.header{padding-bottom:40px}
+.header::after{content:'';position:absolute;bottom:0;left:0;right:0;height:40px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 40' preserveAspectRatio='none'%3E%3Cpath d='M0,20 C240,40 480,0 720,20 C960,40 1200,0 1440,20 L1440,40 L0,40 Z' fill='%23f5fefb'/%3E%3C/svg%3E") no-repeat bottom/100% 100%;pointer-events:none}
+.header-dots{position:absolute;inset:0;background-image:radial-gradient(circle,rgba(29,201,158,.09) 1px,transparent 1px);background-size:26px 26px;pointer-events:none}
+
+/* ── SVG LOGO ── */
+.hdr-logo-svg{width:58px;height:58px;flex-shrink:0}
+
+/* ── TABLET BREAKPOINT ── */
+@media(max-width:768px){
+  .hdr-title{font-size:18px}
+  .hdr-chips{width:100%;display:grid;grid-template-columns:1fr 1fr}
+  .filter-btn .fb-sub{display:none}
+  .si .val{font-size:24px}
+  .ranking-table{font-size:12px}
+  .ranking-table th,.ranking-row td{padding:8px 8px}
+  .footer-inner{flex-direction:column;text-align:center}
+}
+
 @media print{
+  *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
   body > *{display:none!important}
   #alunoSection{display:block!important}
-  #alunoSection .aluno-hdr-wrap,#alunoSection .dash-tabs{display:none!important}
-  #alunoSection .dpane{display:block!important}
-  #alunoSection .dash-body{padding:0!important}
-  canvas{display:block!important;max-width:100%!important}
-  .dcard{page-break-inside:avoid;box-shadow:none!important;border:1px solid #ddd!important}
+  #alunoSection .aluno-hdr-wrap{display:block!important;padding:14px 20px!important}
+  #alunoSection .dash-tabs{display:none!important}
+  #alunoSection .dpane{display:block!important;margin-bottom:16px}
+  #alunoSection .dash-body{padding:12px!important}
+  canvas{display:block!important;width:100%!important;height:auto!important;max-height:none!important}
+  .chart-wrap{height:auto!important;min-height:320px;padding:12px}
+  .dcard{page-break-inside:avoid;box-shadow:none!important;border:1.5px solid #b8e8d0!important;border-top:3px solid #1dc99e!important;margin-bottom:14px!important;padding:16px!important}
+  .dcard h3{font-size:13px!important;padding-bottom:6px;border-bottom:1.5px solid #b8e8d0;margin-bottom:10px!important}
+  .si{border:1px solid #b8e8d0!important;border-top:3px solid #1dc99e!important;box-shadow:none!important}
+  .si .val{font-size:24px!important}
   body{background:white!important}
+  /* Rodapé de impressão com identidade visual */
+  #alunoSection .dash-body::after{content:'Matriz Educação · Sistema Pedagógico CN Ultra · Simulados Exclusivos';display:block;text-align:center;font-size:10px;color:#6b8ea6;padding:14px 0 4px;border-top:1px solid #b8e8d0;margin-top:20px;font-weight:600;letter-spacing:.5px}
 }
 </style>
 </head>
@@ -188,6 +243,7 @@ table.dtable tbody tr:hover{background:var(--gbg)}
 
 <!-- ══ HEADER ══ -->
 <div class="header">
+  <div class="header-dots"></div>
   <div class="hdr-inner">
     <img src="logo.jpg" class="hdr-logo" alt="Matriz">
     <div class="hdr-text">
@@ -198,7 +254,7 @@ table.dtable tbody tr:hover{background:var(--gbg)}
     <div class="hdr-chips">
       <div class="hdr-chip">
         <div class="hdr-chip-lbl">Simulados CN</div>
-        <div class="hdr-chip-num">4</div>
+        <div class="hdr-chip-num">5</div>
         <div class="hdr-chip-sub">realizados</div>
       </div>
       <div class="hdr-chip">
@@ -235,7 +291,7 @@ table.dtable tbody tr:hover{background:var(--gbg)}
 <div id="cn1Section" class="section active">
   <div class="ranking-card">
     <div class="ranking-header">
-      <h2>🏆 CN — 1º Simulado · Ranking Geral</h2>
+      <h2>⚓ CN — 1º Simulado</h2>
       <p>Clique no nome do aluno para ver o relatório completo · Mat+Ing+Port+ES+CI (90q)</p>
     </div>
     <input class="search-box" type="text" id="searchCN1" placeholder="🔍 Buscar pelo nome..." oninput="renderCN1()">
@@ -296,7 +352,7 @@ table.dtable tbody tr:hover{background:var(--gbg)}
 <div id="cn2Section" class="section">
   <div class="ranking-card">
     <div class="ranking-header">
-      <h2>📐 CN — 2º Simulado</h2>
+      <h2>⚓ CN — 2º Simulado</h2>
       <p>Clique no nome do aluno para ver o relatório completo · Mat+Ing+Port+ES+CI (90q)</p>
     </div>
     <input class="search-box" type="text" id="searchCN2" placeholder="🔍 Buscar pelo nome..." oninput="renderCN2()">
@@ -357,7 +413,7 @@ table.dtable tbody tr:hover{background:var(--gbg)}
 <div id="cn3Section" class="section">
   <div class="ranking-card">
     <div class="ranking-header">
-      <h2>🎯 CN — 3º Simulado · Ranking Geral</h2>
+      <h2>⚓ CN — 3º Simulado</h2>
       <p>Clique no nome do aluno para ver o relatório completo · Mat+Ing+Port+ES+CI (90q)</p>
     </div>
     <input class="search-box" type="text" id="searchCN3" placeholder="🔍 Buscar pelo nome..." oninput="renderCN3()">
@@ -418,7 +474,7 @@ table.dtable tbody tr:hover{background:var(--gbg)}
 <div id="cn4Section" class="section">
   <div class="ranking-card">
     <div class="ranking-header">
-      <h2>🔵 CN — 4º Simulado · Ranking Geral</h2>
+      <h2>⚓ CN — 4º Simulado</h2>
       <p>27/04 (D1: Mat+Ing) + 04/05 (D2: Port+ES+CI) · Clique no aluno para detalhes</p>
     </div>
     <input class="search-box" type="text" id="searchCN4" placeholder="🔍 Buscar pelo nome..." oninput="renderCN4()">
@@ -479,7 +535,7 @@ table.dtable tbody tr:hover{background:var(--gbg)}
 <div id="cn5Section" class="section">
   <div class="ranking-card">
     <div class="ranking-header">
-      <h2>🏅 CN — 5º Simulado · 1º Dia (18 de Maio)</h2>
+      <h2>⚓ CN — 5º Simulado</h2>
       <p>Matemática + Inglês · 20q cada · Mín. 10 por matéria · Clique no aluno para detalhes</p>
     </div>
     <input class="search-box" type="text" id="searchCN5" placeholder="🔍 Buscar pelo nome..." oninput="renderCN5D1()">
@@ -650,7 +706,23 @@ table.dtable tbody tr:hover{background:var(--gbg)}
   <div class="dash-body" id="dashBody"></div>
 </div>
 
+<footer class="footer">
+  <div class="footer-inner">
+    <div>
+      <div class="footer-brand">Matriz Educação</div>
+      <div class="footer-info">Sistema Pedagógico · CN Ultra · Simulados Exclusivos</div>
+    </div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+      <span class="footer-tag">⚓ CN — 5 Simulados</span>
+      <span class="footer-tag">✈️ EPCAr — 4 Simulados</span>
+    </div>
+    <div class="footer-info" id="footerDate"></div>
+  </div>
+</footer>
+
 <script>
+document.getElementById('footerDate').textContent='Atualizado em: '+new Date().toLocaleDateString('pt-BR',{day:'2-digit',month:'long',year:'numeric'});
+
 // ══════════════════════════════════════════════════════
 // DADOS CN 1º SIMULADO
 // ══════════════════════════════════════════════════════
@@ -1395,8 +1467,8 @@ function renderCN4(){
     const rc='ranking-row'+(p<=3?' top3':'');
     return `<tr class="${rc}" onclick="openDash('cn4','${nm(a.nome)}')">
       <td><span class="pos-badge ${pc}">${em}</span></td>
-      <td style="text-align:left;padding-left:14px"><span class="aluno-nome">${a.nome}</span></td>
-      <td style="font-size:26px;font-weight:900;color:#1f2937">${a.gtot}</td>
+      <td style="text-align:left;padding-left:14px">${avatarCell(a.nome)}</td>
+      ${scoreBar(a.gtot,90)}
       <td>${a.aprov?'<span class="chip chip-a">✓ Aprovado</span>':'<span class="chip chip-r">✗ Reprovado</span>'}</td>
     </tr>`;
   }).join('');
@@ -1432,10 +1504,10 @@ function renderCN4D1(){
     const rc='ranking-row'+(p<=3?' top3':'');
     return `<tr class="${rc}" onclick="openDash('cn4','${nm(a.nome)}')">
       <td><span class="pos-badge ${pc}">${em}</span></td>
-      <td style="text-align:left;padding-left:14px"><span class="aluno-nome">${a.nome}</span></td>
+      <td style="text-align:left;padding-left:14px">${avatarCell(a.nome)}</td>
       <td style="font-size:20px;font-weight:900;color:${a.ok_mat?'#065f46':'#991b1b'}">${a.mat}</td>
       <td style="font-size:20px;font-weight:900;color:${a.ok_ing?'#065f46':'#991b1b'}">${a.ing}</td>
-      <td style="font-size:24px;font-weight:900">${a.mat+a.ing}</td>
+      ${scoreBar(a.mat+a.ing,40)}
       <td>${a.aprov_d1?'<span class="chip chip-a">✓ OK</span>':'<span class="chip chip-r">✗ Reprovado</span>'}</td>
     </tr>`;
   }).join('');
@@ -1451,11 +1523,11 @@ function renderCN4D2(){
     const rc='ranking-row'+(p<=3?' top3':'');
     return `<tr class="${rc}" onclick="openDash('cn4','${nm(a.nome)}')">
       <td><span class="pos-badge ${pc}">${em}</span></td>
-      <td style="text-align:left;padding-left:14px"><span class="aluno-nome">${a.nome}</span></td>
+      <td style="text-align:left;padding-left:14px">${avatarCell(a.nome)}</td>
       <td style="font-size:18px;font-weight:900;color:${a.ok_p?'#065f46':'#991b1b'}">${a.port}</td>
       <td style="font-size:18px;font-weight:900;color:${a.ok_es?'#065f46':'#991b1b'}">${a.es}</td>
       <td style="font-size:18px;font-weight:900;color:${a.ok_ci?'#065f46':'#991b1b'}">${a.ci}</td>
-      <td style="font-size:22px;font-weight:900">${a.d2tot}</td>
+      ${scoreBar(a.d2tot,50)}
       <td>${a.aprov_d2?'<span class="chip chip-a">✓ OK</span>':'<span class="chip chip-r">✗ Reprovado</span>'}</td>
     </tr>`;
   }).join('');
@@ -1477,10 +1549,10 @@ function renderCN5D1(){
     const rc='ranking-row'+(p<=3?' top3':'');
     return `<tr class="${rc}" onclick="openDash('cn5','${nm(a.nome)}')">
       <td><span class="pos-badge ${pc}">${em}</span></td>
-      <td style="text-align:left;padding-left:14px"><span class="aluno-nome">${a.nome}</span></td>
+      <td style="text-align:left;padding-left:14px">${avatarCell(a.nome)}</td>
       <td style="font-size:20px;font-weight:900;color:${a.ok_mat?'#065f46':'#991b1b'}">${a.mat}</td>
       <td style="font-size:20px;font-weight:900;color:${a.ok_ing?'#065f46':'#991b1b'}">${a.ing}</td>
-      <td style="font-size:24px;font-weight:900">${a.total}</td>
+      ${scoreBar(a.total,40)}
       <td>${a.aprov_d1?'<span class="chip chip-a">✓ OK D1</span>':'<span class="chip chip-r">✗ Reprovado D1</span>'}</td>
     </tr>`;
   }).join('');
@@ -1500,6 +1572,9 @@ let evoChartCN=null,evoChartEP=null;
 
 // ── HELPERS ──
 const pct=(v,t)=>t?+(v/t*100).toFixed(1):0;
+const ini=n=>{const p=n.split(' ').filter(x=>x.length>2);return((p[0]?.[0]||'')+(p[p.length-1]?.[0]||'')).toUpperCase();};
+const avatarCell=n=>`<div class="name-cell"><span class="aluno-avatar">${ini(n)}</span><span class="aluno-nome">${n}</span></div>`;
+const scoreBar=(v,max)=>`<td class="score-cell"><span class="score-num">${v}</span><div class="score-bar"><div class="score-bar-fill" style="width:${Math.round(v/max*100)}%"></div></div></td>`;
 const icBadge=p=>p>=70?'<span class="ic-alto">🟢 IC ALTO</span>':p>=50?'<span class="ic-medio">🟡 IC MÉDIO</span>':'<span class="ic-baixo">🔴 IC BAIXO</span>';
 const icLabel=p=>p>=70?'IC ALTO':p>=50?'IC MÉDIO':'IC BAIXO';
 const pBadge=p=>p>=70?'b-ex':p>=50?'b-bo':p>=35?'b-re':'b-ru';
@@ -1517,8 +1592,8 @@ function renderCN2(){
     const rc='ranking-row'+(p<=3?' top3':'');
     return `<tr class="${rc}" onclick="openDash('cn2','${nm(a.nome)}')">
       <td><span class="pos-badge ${pc}">${em}</span></td>
-      <td style="text-align:left;padding-left:14px"><span class="aluno-nome">${a.nome}</span></td>
-      <td style="font-size:26px;font-weight:900;color:#1f2937">${a.gtot}</td>
+      <td style="text-align:left;padding-left:14px">${avatarCell(a.nome)}</td>
+      ${scoreBar(a.gtot,90)}
       <td>${a.aprov?'<span class="chip chip-a">✓ Aprovado</span>':'<span class="chip chip-r">✗ Reprovado</span>'}</td>
     </tr>`;
   }).join('');
@@ -1554,10 +1629,10 @@ function renderCN2D1(){
     const rc='ranking-row'+(p<=3?' top3':'');
     return `<tr class="${rc}" onclick="openDash('cn2','${nm(a.nome)}')">
       <td><span class="pos-badge ${pc}">${em}</span></td>
-      <td style="text-align:left;padding-left:14px"><span class="aluno-nome">${a.nome}</span></td>
+      <td style="text-align:left;padding-left:14px">${avatarCell(a.nome)}</td>
       <td style="font-size:20px;font-weight:900;color:${a.ok_mat?'#065f46':'#991b1b'}">${a.mat}</td>
       <td style="font-size:20px;font-weight:900;color:${a.ok_ing?'#065f46':'#991b1b'}">${a.ing}</td>
-      <td style="font-size:24px;font-weight:900">${a.mat+a.ing}</td>
+      ${scoreBar(a.mat+a.ing,40)}
       <td>${a.aprov_d1?'<span class="chip chip-a">✓ OK</span>':'<span class="chip chip-r">✗ Reprovado</span>'}</td>
     </tr>`;
   }).join('');
@@ -1573,11 +1648,11 @@ function renderCN2D2(){
     const rc='ranking-row'+(p<=3?' top3':'');
     return `<tr class="${rc}" onclick="openDash('cn2','${nm(a.nome)}')">
       <td><span class="pos-badge ${pc}">${em}</span></td>
-      <td style="text-align:left;padding-left:14px"><span class="aluno-nome">${a.nome}</span></td>
+      <td style="text-align:left;padding-left:14px">${avatarCell(a.nome)}</td>
       <td style="font-size:18px;font-weight:900;color:${a.ok_p?'#065f46':'#991b1b'}">${a.port}</td>
       <td style="font-size:18px;font-weight:900;color:${a.ok_es?'#065f46':'#991b1b'}">${a.es}</td>
       <td style="font-size:18px;font-weight:900;color:${a.ok_ci?'#065f46':'#991b1b'}">${a.ci}</td>
-      <td style="font-size:22px;font-weight:900">${a.d2tot}</td>
+      ${scoreBar(a.d2tot,50)}
       <td>${a.aprov_d2?'<span class="chip chip-a">✓ OK</span>':'<span class="chip chip-r">✗ Reprovado</span>'}</td>
     </tr>`;
   }).join('');
@@ -1597,8 +1672,8 @@ function renderCN1(){
     const pAcerto=pct(a.gtot,90);
     return `<tr class="${rc}" onclick="openDash('cn1','${nm(a.nome)}')">
       <td><span class="pos-badge ${pc}">${em}</span></td>
-      <td style="text-align:left;padding-left:14px"><span class="aluno-nome">${a.nome}</span></td>
-      <td style="font-size:26px;font-weight:900;color:#1f2937">${a.gtot}</td>
+      <td style="text-align:left;padding-left:14px">${avatarCell(a.nome)}</td>
+      ${scoreBar(a.gtot,90)}
       <td>${a.aprov?'<span class="chip chip-a">✓ Aprovado</span>':'<span class="chip chip-r">✗ Reprovado</span>'}</td>
     </tr>`;
   }).join('');
@@ -1634,10 +1709,10 @@ function renderCN1D1(){
     const rc='ranking-row'+(p<=3?' top3':'');
     return `<tr class="${rc}" onclick="openDash('cn1','${nm(a.nome)}')">
       <td><span class="pos-badge ${pc}">${em}</span></td>
-      <td style="text-align:left;padding-left:14px"><span class="aluno-nome">${a.nome}</span></td>
+      <td style="text-align:left;padding-left:14px">${avatarCell(a.nome)}</td>
       <td style="font-size:20px;font-weight:900;color:${a.ok_mat?'#065f46':'#991b1b'}">${a.mat}</td>
       <td style="font-size:20px;font-weight:900;color:${a.ok_ing?'#065f46':'#991b1b'}">${a.ing}</td>
-      <td style="font-size:24px;font-weight:900">${a.mat+a.ing}</td>
+      ${scoreBar(a.mat+a.ing,40)}
       <td>${a.aprov_d1?'<span class="chip chip-a">✓ OK</span>':'<span class="chip chip-r">✗ Reprovado</span>'}</td>
     </tr>`;
   }).join('');
@@ -1653,11 +1728,11 @@ function renderCN1D2(){
     const rc='ranking-row'+(p<=3?' top3':'');
     return `<tr class="${rc}" onclick="openDash('cn1','${nm(a.nome)}')">
       <td><span class="pos-badge ${pc}">${em}</span></td>
-      <td style="text-align:left;padding-left:14px"><span class="aluno-nome">${a.nome}</span></td>
+      <td style="text-align:left;padding-left:14px">${avatarCell(a.nome)}</td>
       <td style="font-size:18px;font-weight:900;color:${a.ok_p?'#065f46':'#991b1b'}">${a.port}</td>
       <td style="font-size:18px;font-weight:900;color:${a.ok_es?'#065f46':'#991b1b'}">${a.es}</td>
       <td style="font-size:18px;font-weight:900;color:${a.ok_ci?'#065f46':'#991b1b'}">${a.ci}</td>
-      <td style="font-size:22px;font-weight:900">${a.d2tot}</td>
+      ${scoreBar(a.d2tot,50)}
       <td>${a.aprov_d2?'<span class="chip chip-a">✓ OK</span>':'<span class="chip chip-r">✗ Reprovado</span>'}</td>
     </tr>`;
   }).join('');
@@ -1676,8 +1751,8 @@ function renderCN3(){
     const rc='ranking-row'+(p<=3?' top3':'');
     return `<tr class="${rc}" onclick="openDash('cn3','${nm(a.nome)}')">
       <td><span class="pos-badge ${pc}">${em}</span></td>
-      <td style="text-align:left;padding-left:14px"><span class="aluno-nome">${a.nome}</span></td>
-      <td style="font-size:26px;font-weight:900;color:#1f2937">${a.gtot}</td>
+      <td style="text-align:left;padding-left:14px">${avatarCell(a.nome)}</td>
+      ${scoreBar(a.gtot,90)}
       <td>${a.aprov?'<span class="chip chip-a">✓ Aprovado</span>':'<span class="chip chip-r">✗ Reprovado</span>'}</td>
     </tr>`;
   }).join('');
@@ -1713,10 +1788,10 @@ function renderCN3D1(){
     const rc='ranking-row'+(p<=3?' top3':'');
     return `<tr class="${rc}" onclick="openDash('cn3','${nm(a.nome)}')">
       <td><span class="pos-badge ${pc}">${em}</span></td>
-      <td style="text-align:left;padding-left:14px"><span class="aluno-nome">${a.nome}</span></td>
+      <td style="text-align:left;padding-left:14px">${avatarCell(a.nome)}</td>
       <td style="font-size:20px;font-weight:900;color:${a.ok_mat?'#065f46':'#991b1b'}">${a.mat}</td>
       <td style="font-size:20px;font-weight:900;color:${a.ok_ing?'#065f46':'#991b1b'}">${a.ing}</td>
-      <td style="font-size:24px;font-weight:900">${a.mat+a.ing}</td>
+      ${scoreBar(a.mat+a.ing,40)}
       <td>${a.aprov_d1?'<span class="chip chip-a">✓ OK</span>':'<span class="chip chip-r">✗ Reprovado</span>'}</td>
     </tr>`;
   }).join('');
@@ -1732,11 +1807,11 @@ function renderCN3D2(){
     const rc='ranking-row'+(p<=3?' top3':'');
     return `<tr class="${rc}" onclick="openDash('cn3','${nm(a.nome)}')">
       <td><span class="pos-badge ${pc}">${em}</span></td>
-      <td style="text-align:left;padding-left:14px"><span class="aluno-nome">${a.nome}</span></td>
+      <td style="text-align:left;padding-left:14px">${avatarCell(a.nome)}</td>
       <td style="font-size:18px;font-weight:900;color:${a.ok_p?'#065f46':'#991b1b'}">${a.port}</td>
       <td style="font-size:18px;font-weight:900;color:${a.ok_es?'#065f46':'#991b1b'}">${a.es}</td>
       <td style="font-size:18px;font-weight:900;color:${a.ok_ci?'#065f46':'#991b1b'}">${a.ci}</td>
-      <td style="font-size:22px;font-weight:900">${a.d2tot}</td>
+      ${scoreBar(a.d2tot,50)}
       <td>${a.aprov_d2?'<span class="chip chip-a">✓ OK</span>':'<span class="chip chip-r">✗ Reprovado</span>'}</td>
     </tr>`;
   }).join('');
@@ -1757,11 +1832,11 @@ function renderE(){
     const ck=v=>v>=8?'#065f46':'#991b1b';
     return `<tr class="${rc}" onclick="openDash('epcar','${nm(a.nome)}')">
       <td><span class="pos-badge ${pc}">${em}</span></td>
-      <td style="text-align:left;padding-left:14px"><span class="aluno-nome">${a.nome}</span></td>
+      <td style="text-align:left;padding-left:14px">${avatarCell(a.nome)}</td>
       <td style="font-size:20px;font-weight:900;color:${ck(a.port)}">${a.port}</td>
       <td style="font-size:20px;font-weight:900;color:${ck(a.mat)}">${a.mat}</td>
       <td style="font-size:20px;font-weight:900;color:${ck(a.ing)}">${a.ing}</td>
-      <td style="font-size:26px;font-weight:900;color:#1f2937">${a.total}</td>
+      ${scoreBar(a.total,48)}
       <td>${a.aprov?'<span class="chip chip-a">✓ Aprovado</span>':'<span class="chip chip-r">✗ Reprovado</span>'}</td>
     </tr>`;
   }).join('');
@@ -1797,11 +1872,11 @@ function renderE2(){
     const ck=v=>v>=8?'#065f46':'#991b1b';
     return `<tr class="${rc}" onclick="openDash('epcar2','${nm(a.nome)}')">
       <td><span class="pos-badge ${pc}">${em}</span></td>
-      <td style="text-align:left;padding-left:14px"><span class="aluno-nome">${a.nome}</span></td>
+      <td style="text-align:left;padding-left:14px">${avatarCell(a.nome)}</td>
       <td style="font-size:20px;font-weight:900;color:${ck(a.port)}">${a.port}</td>
       <td style="font-size:20px;font-weight:900;color:${ck(a.mat)}">${a.mat}</td>
       <td style="font-size:20px;font-weight:900;color:${ck(a.ing)}">${a.ing}</td>
-      <td style="font-size:26px;font-weight:900;color:#1f2937">${a.total}</td>
+      ${scoreBar(a.total,48)}
       <td>${a.aprov?'<span class="chip chip-a">✓ Aprovado</span>':'<span class="chip chip-r">✗ Reprovado</span>'}</td>
     </tr>`;
   }).join('');
@@ -1837,11 +1912,11 @@ function renderE3(){
     const ck=v=>v>=8?'#065f46':'#991b1b';
     return `<tr class="${rc}" onclick="openDash('epcar3','${nm(a.nome)}')">
       <td><span class="pos-badge ${pc}">${em}</span></td>
-      <td style="text-align:left;padding-left:14px"><span class="aluno-nome">${a.nome}</span></td>
+      <td style="text-align:left;padding-left:14px">${avatarCell(a.nome)}</td>
       <td style="font-size:20px;font-weight:900;color:${ck(a.port)}">${a.port}</td>
       <td style="font-size:20px;font-weight:900;color:${ck(a.mat)}">${a.mat}</td>
       <td style="font-size:20px;font-weight:900;color:${ck(a.ing)}">${a.ing}</td>
-      <td style="font-size:26px;font-weight:900;color:#1f2937">${a.total}</td>
+      ${scoreBar(a.total,48)}
       <td>${a.aprov?'<span class="chip chip-a">✓ Aprovado</span>':'<span class="chip chip-r">✗ Reprovado</span>'}</td>
     </tr>`;
   }).join('');
@@ -1877,11 +1952,11 @@ function renderE4(){
     const ck=v=>v>=8?'#065f46':'#991b1b';
     return `<tr class="${rc}" onclick="openDash('epcar4','${nm(a.nome)}')">
       <td><span class="pos-badge ${pc}">${em}</span></td>
-      <td style="text-align:left;padding-left:14px"><span class="aluno-nome">${a.nome}</span></td>
+      <td style="text-align:left;padding-left:14px">${avatarCell(a.nome)}</td>
       <td style="font-size:20px;font-weight:900;color:${ck(a.port)}">${a.port}</td>
       <td style="font-size:20px;font-weight:900;color:${ck(a.mat)}">${a.mat}</td>
       <td style="font-size:20px;font-weight:900;color:${ck(a.ing)}">${a.ing}</td>
-      <td style="font-size:26px;font-weight:900;color:#1f2937">${a.total}</td>
+      ${scoreBar(a.total,48)}
       <td>${a.aprov?'<span class="chip chip-a">✓ Aprovado</span>':'<span class="chip chip-r">✗ Reprovado</span>'}</td>
     </tr>`;
   }).join('');
