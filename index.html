@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
@@ -237,6 +237,19 @@ table.dtable tbody tr:hover{background:var(--gbg)}
   /* Rodapé de impressão com identidade visual */
   #alunoSection .dash-body::after{content:'Matriz Educação · Sistema Pedagógico CN Ultra · Simulados Exclusivos';display:block;text-align:center;font-size:10px;color:#6b8ea6;padding:14px 0 4px;border-top:1px solid #b8e8d0;margin-top:20px;font-weight:600;letter-spacing:.5px}
 }
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:10px;background:none;border:none;position:fixed;top:12px;right:16px;z-index:1001}
+.hamburger span{display:block;width:24px;height:3px;background:var(--navy);border-radius:2px;transition:.3s}
+.hamburger.open span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
+.hamburger.open span:nth-child(2){opacity:0}
+.hamburger.open span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
+.sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:999}
+.sidebar-overlay.open{display:block}
+.sidebar{position:fixed;top:0;right:-280px;width:280px;height:100%;background:#fff;z-index:1000;box-shadow:-4px 0 24px rgba(0,0,0,.15);transition:right .3s cubic-bezier(.4,0,.2,1);overflow-y:auto;padding:60px 0 20px}
+.sidebar.open{right:0}
+.sidebar .nav-group-lbl{display:block;padding:8px 20px 4px;font-size:10px;font-weight:800;color:var(--teal);text-transform:uppercase;letter-spacing:1px}
+.sidebar .nav-btn{display:block;width:100%;text-align:left;padding:10px 20px;font-size:14px;font-weight:600;background:none;border:none;border-left:3px solid transparent;cursor:pointer;color:var(--navy)}
+.sidebar .nav-btn.active,.sidebar .nav-btn:hover{border-left-color:var(--teal);background:#f5fefb;color:var(--teal)}
+@media(max-width:700px){.hamburger{display:flex}.main-nav{display:none}}
 </style>
 </head>
 <body>
@@ -1491,13 +1504,13 @@ const EPCAr4=buildE4();
 
 // EPCAR 5º SIMULADO — 01 de Junho
 const RAW_EPCAR5=[
-  {n:"ALÍCIA REIS PANTOJA",                   port:8,  mat:6,  ing:10},
+  {n:"ALÍCIA REIS PANTOJA",                   port:13, mat:10, ing:10},
   {n:"ANNA CLARA DE JESUS MARINHO AMORIM",    port:11, mat:10, ing:11},
   {n:"ARTHUR DOS SANTOS COSTA",               port:null,mat:null,ing:null},
   {n:"ARTHUR RABELO PENA PEREIRA",            port:11, mat:5,  ing:5 },
   {n:"ARTHUR PEREIRA DA CONCEIÇÃO",           port:null,mat:null,ing:null},
   {n:"BERNARDO JOSÉ DE GUSMÃO MONTEIRO",      port:10, mat:12, ing:9 },
-  {n:"BRUNO FERREIRA ROCHA",                  port:10, mat:8,  ing:12},
+  {n:"BRUNO FERREIRA ROCHA",                  port:10, mat:12, ing:14},
   {n:"DANIEL GADELHA LOPES",                  port:4,  mat:9,  ing:8 },
   {n:"DAVI ALVES DE SOUZA",                   port:12, mat:10, ing:10},
   {n:"DAVI GARCIA DA SILVA",                  port:null,mat:null,ing:null},
@@ -1506,34 +1519,34 @@ const RAW_EPCAR5=[
   {n:"DAVI VALLERIOTE FENTA",                 port:null,mat:null,ing:null},
   {n:"DAVY MURILO DINIZ DE OLIVEIRA",         port:null,mat:null,ing:null},
   {n:"EDUARDA BRANDÃO MARQUES DOS SANTOS",    port:null,mat:null,ing:null},
-  {n:"EDUARDO MARQUES CHAVANTE",              port:12, mat:10, ing:9 },
+  {n:"EDUARDO MARQUES CHAVANTE",              port:12, mat:13, ing:9 },
   {n:"GABRIEL BITTENCOURT JORGE",             port:10, mat:11, ing:9 },
   {n:"GABRIEL LOURENÇO CARPINELLI",           port:13, mat:10, ing:11},
   {n:"GABRIEL DA SILVA MACIEL",               port:null,mat:null,ing:null},
   {n:"GABRIEL TAVARES DUARTE OLIVEIRA",       port:null,mat:null,ing:null},
   {n:"GIOVANNA DIAS SIMÕES",                  port:null,mat:null,ing:null},
   {n:"GIOVANNA SIMÕES SALOMÃO",               port:null,mat:null,ing:null},
-  {n:"GUILHERME BARRETO ROSA",                port:10, mat:9,  ing:8 },
-  {n:"ISAAC PEREIRA LAPROVITA",               port:9,  mat:11, ing:10},
+  {n:"GUILHERME BARRETO ROSA",                port:10, mat:11, ing:10},
+  {n:"ISAAC PEREIRA LAPROVITA",               port:11, mat:13, ing:10},
   {n:"JOÃO GABRIEL MELLO DOS SANTOS",         port:null,mat:null,ing:null},
   {n:"KAIKY CASTRO NASCIMENTO",               port:8,  mat:3,  ing:10},
   {n:"LARA MONTENEGRO DO MONTE DE MENEZES",   port:8,  mat:7,  ing:6 },
   {n:"LARA PAVÃO DE MELLO FERNANDES",         port:7,  mat:5,  ing:8 },
-  {n:"LETÍCIA MARTINS DE OLIVEIRA",           port:9,  mat:5,  ing:12},
+  {n:"LETÍCIA MARTINS DE OLIVEIRA",           port:10, mat:8,  ing:12},
   {n:"LUANA AMADI GUILHERME",                 port:11, mat:10, ing:8 },
   {n:"LUIZ BERNARDO ALBINO RAMOS",            port:null,mat:null,ing:null},
   {n:"LUKAS NUNES DA PAIXÃO PALMEIRA SILVA",  port:null,mat:null,ing:null},
   {n:"MARIA EDUARDA RAMOS DE ASSIS",          port:null,mat:null,ing:null},
   {n:"MARIO THIAGO MARINI ISAIAS PEREIRA",    port:null,mat:null,ing:null},
-  {n:"MATHEUS SCHIAVO NUNES",                 port:7,  mat:10, ing:8 },
-  {n:"MIGUEL BITTENCOURT RODRIGUES",          port:10, mat:12, ing:11},
-  {n:"MIGUEL DE SOUSA VARGAS",                port:5,  mat:12, ing:10},
-  {n:"NICOLAS SILVA CASTILHO",                port:10, mat:12, ing:10},
+  {n:"MATHEUS SCHIAVO NUNES",                 port:7,  mat:12, ing:10},
+  {n:"MIGUEL BITTENCOURT RODRIGUES",          port:10, mat:14, ing:11},
+  {n:"MIGUEL DE SOUSA VARGAS",                port:5,  mat:13, ing:13},
+  {n:"NICOLAS SILVA CASTILHO",                port:10, mat:14, ing:10},
   {n:"PEDRO BAZÍLIO NUNES DE ALMEIDA",        port:9,  mat:8,  ing:12},
   {n:"PEDRO HENRIQUE ALVES DE ALBUQUERQUE",   port:14, mat:8,  ing:7 },
   {n:"PIETRO ALMEIDA FERREIRA",               port:null,mat:null,ing:null},
   {n:"RAPHAEL FIGUEIRA RODRIGUES DE LIMA",    port:null,mat:null,ing:null},
-  {n:"SUCK MA YU LAN",                        port:14, mat:7,  ing:12},
+  {n:"SUCK MA YU LAN",                        port:14, mat:10, ing:13},
 ];
 function buildE5(){
   const list=RAW_EPCAR5.filter(r=>r.port!=null)
@@ -1556,9 +1569,11 @@ function renderCN4(){
   document.getElementById('rankCN4Body').innerHTML=lst.map(a=>{
     const p=a.rank,pc=p===1?'g1':p===2?'g2':p===3?'g3':'',em=p===1?'🥇':p===2?'🥈':p===3?'🥉':p;
     const rc='ranking-row'+(p<=3?' top3':'');
+    const prev3=CN3MAP[a.nome];const delta3=prev3?prev3.rank-p:0;
+    const deltaBadge3=delta3>0?`<span style="background:#dcfce7;color:#166534;border-radius:10px;padding:2px 8px;font-size:11px;font-weight:800;margin-left:6px">↑ +${delta3}</span>`:delta3<0?`<span style="background:#fee2e2;color:#991b1b;border-radius:10px;padding:2px 8px;font-size:11px;font-weight:800;margin-left:6px">↓ ${delta3}</span>`:'';
     return `<tr class="${rc}" onclick="openDash('cn4','${nm(a.nome)}')">
       <td><span class="pos-badge ${pc}">${em}</span></td>
-      <td style="text-align:left;padding-left:14px">${avatarCell(a.nome)}</td>
+      <td style="text-align:left;padding-left:14px">${avatarCell(a.nome)}${deltaBadge3}</td>
       ${scoreBar(a.gtot,90)}
       <td>${a.aprov?'<span class="chip chip-a">✓ Aprovado</span>':'<span class="chip chip-r">✗ Reprovado</span>'}</td>
     </tr>`;
@@ -1638,9 +1653,11 @@ function renderCN5D1(){
   document.getElementById('rankCN5Body').innerHTML=lst.map(a=>{
     const p=a.rank,pc=p===1?'g1':p===2?'g2':p===3?'g3':'',em=p===1?'🥇':p===2?'🥈':p===3?'🥉':p;
     const rc='ranking-row'+(p<=3?' top3':'');
+    const prev4=CN4MAP[a.nome];const delta4=prev4?prev4.rank-p:0;
+    const deltaBadge4=delta4>0?`<span style="background:#dcfce7;color:#166534;border-radius:10px;padding:2px 8px;font-size:11px;font-weight:800;margin-left:6px">↑ +${delta4}</span>`:delta4<0?`<span style="background:#fee2e2;color:#991b1b;border-radius:10px;padding:2px 8px;font-size:11px;font-weight:800;margin-left:6px">↓ ${delta4}</span>`:'';
     return `<tr class="${rc}" onclick="openDash('cn5','${nm(a.nome)}')">
       <td><span class="pos-badge ${pc}">${em}</span></td>
-      <td style="text-align:left;padding-left:14px">${avatarCell(a.nome)}</td>
+      <td style="text-align:left;padding-left:14px">${avatarCell(a.nome)}${deltaBadge4}</td>
       <td style="font-size:20px;font-weight:900;color:${a.ok_mat?'#065f46':'#991b1b'}">${a.mat}</td>
       <td style="font-size:20px;font-weight:900;color:${a.ok_ing?'#065f46':'#991b1b'}">${a.ing}</td>
       ${scoreBar(a.total,40)}
@@ -1681,9 +1698,11 @@ function renderCN2(){
   document.getElementById('rankCN2Body').innerHTML=lst.map(a=>{
     const p=a.rank,pc=p===1?'g1':p===2?'g2':p===3?'g3':'',em=p===1?'🥇':p===2?'🥈':p===3?'🥉':p;
     const rc='ranking-row'+(p<=3?' top3':'');
+    const prev1=CN1MAP[a.nome];const delta1=prev1?prev1.rank-p:0;
+    const deltaBadge1=delta1>0?`<span style="background:#dcfce7;color:#166534;border-radius:10px;padding:2px 8px;font-size:11px;font-weight:800;margin-left:6px">↑ +${delta1}</span>`:delta1<0?`<span style="background:#fee2e2;color:#991b1b;border-radius:10px;padding:2px 8px;font-size:11px;font-weight:800;margin-left:6px">↓ ${delta1}</span>`:'';
     return `<tr class="${rc}" onclick="openDash('cn2','${nm(a.nome)}')">
       <td><span class="pos-badge ${pc}">${em}</span></td>
-      <td style="text-align:left;padding-left:14px">${avatarCell(a.nome)}</td>
+      <td style="text-align:left;padding-left:14px">${avatarCell(a.nome)}${deltaBadge1}</td>
       ${scoreBar(a.gtot,90)}
       <td>${a.aprov?'<span class="chip chip-a">✓ Aprovado</span>':'<span class="chip chip-r">✗ Reprovado</span>'}</td>
     </tr>`;
@@ -1840,9 +1859,11 @@ function renderCN3(){
   document.getElementById('rankCN3Body').innerHTML=lst.map(a=>{
     const p=a.rank,pc=p===1?'g1':p===2?'g2':p===3?'g3':'',em=p===1?'🥇':p===2?'🥈':p===3?'🥉':p;
     const rc='ranking-row'+(p<=3?' top3':'');
+    const prev2=CN2MAP[a.nome];const delta2=prev2?prev2.rank-p:0;
+    const deltaBadge2=delta2>0?`<span style="background:#dcfce7;color:#166534;border-radius:10px;padding:2px 8px;font-size:11px;font-weight:800;margin-left:6px">↑ +${delta2}</span>`:delta2<0?`<span style="background:#fee2e2;color:#991b1b;border-radius:10px;padding:2px 8px;font-size:11px;font-weight:800;margin-left:6px">↓ ${delta2}</span>`:'';
     return `<tr class="${rc}" onclick="openDash('cn3','${nm(a.nome)}')">
       <td><span class="pos-badge ${pc}">${em}</span></td>
-      <td style="text-align:left;padding-left:14px">${avatarCell(a.nome)}</td>
+      <td style="text-align:left;padding-left:14px">${avatarCell(a.nome)}${deltaBadge2}</td>
       ${scoreBar(a.gtot,90)}
       <td>${a.aprov?'<span class="chip chip-a">✓ Aprovado</span>':'<span class="chip chip-r">✗ Reprovado</span>'}</td>
     </tr>`;
@@ -3213,6 +3234,10 @@ function buildDashCN1(nome){
           <li><strong>IC:</strong> 🟢 ≥70% Sólido · 🟡 50–69% Razoável · 🔴 &lt;50% Intervenção necessária</li>
         </ul>
       </div>
+      <div style="margin-top:16px"><p style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:#6b8ea6;margin-bottom:10px">Mapa de Calor</p>
+      <div style="display:flex;flex-wrap:wrap;gap:8px">
+        ${discs.map(d=>{const p=pct(d.v,d.tot);const bg=p>=70?'#dcfce7':p>=50?'#fef9c3':'#fee2e2';const cl=p>=70?'#166534':p>=50?'#713f12':'#991b1b';const em=p>=70?'🟢':p>=50?'🟡':'🔴';return `<div style="padding:8px 14px;border-radius:10px;font-size:13px;font-weight:800;background:${bg};color:${cl}">${em} ${d.n}<br><span style="font-size:11px;font-weight:600">${p.toFixed(0)}%</span></div>`;}).join('')}
+      </div></div>
     </div>
   </div>
 
@@ -3231,6 +3256,7 @@ function buildDashCN1(nome){
       <div style="text-align:center;padding:28px 20px;background:${nota>=corte?'linear-gradient(135deg,#d1fae5,#a7f3d0)':'linear-gradient(135deg,#fee2e2,#fca5a5)'};border-radius:16px;border:3px solid ${nota>=corte?'#6ee7b7':'#fca5a5'};margin-bottom:20px">
         <div style="font-size:12px;font-weight:800;color:#374151;margin-bottom:10px;text-transform:uppercase;letter-spacing:1px">Chance de Aprovação</div>
         <div style="font-size:80px;font-weight:900;color:${nota>=corte?'#065f46':'#991b1b'};line-height:1">${chance}%</div>
+        <div style="margin-bottom:10px">${chance>=80?'<span style="background:#dcfce7;color:#166534;padding:4px 14px;border-radius:20px;font-size:13px;font-weight:800">🟢 Alta Chance de Aprovação</span>':chance>=60?'<span style="background:#fef9c3;color:#713f12;padding:4px 14px;border-radius:20px;font-size:13px;font-weight:800">🟡 Chance Moderada</span>':'<span style="background:#fee2e2;color:#991b1b;padding:4px 14px;border-radius:20px;font-size:13px;font-weight:800">🔴 Necessita Intervenção</span>'}</div>
         <div style="font-size:13px;color:#6b7280;font-weight:700;margin-top:8px">${chance>=100?'🎉 Acima do corte!':chance>=85?'⭐ Muito próximo!':chance>=70?'💪 Continue!':'📚 Foco total!'}</div>
         <div class="prog-outer" style="max-width:360px;margin:14px auto 6px"><div class="prog-inner" style="width:${chance}%;background:${nota>=corte?'#10b981':'#ef4444'}"></div></div>
       </div>
@@ -3472,6 +3498,10 @@ function buildDashCN4(nome){
           <li><strong>IC:</strong> 🟢 ≥70% Sólido · 🟡 50–69% Razoável · 🔴 &lt;50% Intervenção necessária</li>
         </ul>
       </div>
+      <div style="margin-top:16px"><p style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:#6b8ea6;margin-bottom:10px">Mapa de Calor</p>
+      <div style="display:flex;flex-wrap:wrap;gap:8px">
+        ${discs.map(d=>{const p=pct(d.v,d.tot);const bg=p>=70?'#dcfce7':p>=50?'#fef9c3':'#fee2e2';const cl=p>=70?'#166534':p>=50?'#713f12':'#991b1b';const em=p>=70?'🟢':p>=50?'🟡':'🔴';return `<div style="padding:8px 14px;border-radius:10px;font-size:13px;font-weight:800;background:${bg};color:${cl}">${em} ${d.n}<br><span style="font-size:11px;font-weight:600">${p.toFixed(0)}%</span></div>`;}).join('')}
+      </div></div>
     </div>
   </div>
 
@@ -3490,6 +3520,7 @@ function buildDashCN4(nome){
       <div style="text-align:center;padding:28px 20px;background:${nota>=corte?'linear-gradient(135deg,#d1fae5,#a7f3d0)':'linear-gradient(135deg,#fee2e2,#fca5a5)'};border-radius:16px;border:3px solid ${nota>=corte?'#6ee7b7':'#fca5a5'};margin-bottom:20px">
         <div style="font-size:12px;font-weight:800;color:#374151;margin-bottom:10px;text-transform:uppercase;letter-spacing:1px">Chance de Aprovação</div>
         <div style="font-size:80px;font-weight:900;color:${nota>=corte?'#065f46':'#991b1b'};line-height:1">${chance}%</div>
+        <div style="margin-bottom:10px">${chance>=80?'<span style="background:#dcfce7;color:#166534;padding:4px 14px;border-radius:20px;font-size:13px;font-weight:800">🟢 Alta Chance de Aprovação</span>':chance>=60?'<span style="background:#fef9c3;color:#713f12;padding:4px 14px;border-radius:20px;font-size:13px;font-weight:800">🟡 Chance Moderada</span>':'<span style="background:#fee2e2;color:#991b1b;padding:4px 14px;border-radius:20px;font-size:13px;font-weight:800">🔴 Necessita Intervenção</span>'}</div>
         <div style="font-size:13px;color:#6b7280;font-weight:700;margin-top:8px">${chance>=100?'🎉 Acima do corte!':chance>=85?'⭐ Muito próximo!':chance>=70?'💪 Continue!':'📚 Foco total!'}</div>
         <div class="prog-outer" style="max-width:360px;margin:14px auto 6px"><div class="prog-inner" style="width:${chance}%;background:${nota>=corte?'#10b981':'#ef4444'}"></div></div>
       </div>
@@ -3807,6 +3838,10 @@ function buildDashCN2(nome){
           <li><strong>IC:</strong> 🟢 ≥70% Sólido · 🟡 50–69% Razoável · 🔴 &lt;50% Intervenção necessária</li>
         </ul>
       </div>
+      <div style="margin-top:16px"><p style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:#6b8ea6;margin-bottom:10px">Mapa de Calor</p>
+      <div style="display:flex;flex-wrap:wrap;gap:8px">
+        ${discs.map(d=>{const p=pct(d.v,d.tot);const bg=p>=70?'#dcfce7':p>=50?'#fef9c3':'#fee2e2';const cl=p>=70?'#166534':p>=50?'#713f12':'#991b1b';const em=p>=70?'🟢':p>=50?'🟡':'🔴';return `<div style="padding:8px 14px;border-radius:10px;font-size:13px;font-weight:800;background:${bg};color:${cl}">${em} ${d.n}<br><span style="font-size:11px;font-weight:600">${p.toFixed(0)}%</span></div>`;}).join('')}
+      </div></div>
     </div>
   </div>
 
@@ -3825,6 +3860,7 @@ function buildDashCN2(nome){
       <div style="text-align:center;padding:28px 20px;background:${nota>=corte?'linear-gradient(135deg,#d1fae5,#a7f3d0)':'linear-gradient(135deg,#fee2e2,#fca5a5)'};border-radius:16px;border:3px solid ${nota>=corte?'#6ee7b7':'#fca5a5'};margin-bottom:20px">
         <div style="font-size:12px;font-weight:800;color:#374151;margin-bottom:10px;text-transform:uppercase;letter-spacing:1px">Chance de Aprovação</div>
         <div style="font-size:80px;font-weight:900;color:${nota>=corte?'#065f46':'#991b1b'};line-height:1">${chance}%</div>
+        <div style="margin-bottom:10px">${chance>=80?'<span style="background:#dcfce7;color:#166534;padding:4px 14px;border-radius:20px;font-size:13px;font-weight:800">🟢 Alta Chance de Aprovação</span>':chance>=60?'<span style="background:#fef9c3;color:#713f12;padding:4px 14px;border-radius:20px;font-size:13px;font-weight:800">🟡 Chance Moderada</span>':'<span style="background:#fee2e2;color:#991b1b;padding:4px 14px;border-radius:20px;font-size:13px;font-weight:800">🔴 Necessita Intervenção</span>'}</div>
         <div style="font-size:13px;color:#6b7280;font-weight:700;margin-top:8px">${chance>=100?'🎉 Acima do corte!':chance>=85?'⭐ Muito próximo!':chance>=70?'💪 Continue!':'📚 Foco total!'}</div>
         <div class="prog-outer" style="max-width:360px;margin:14px auto 6px"><div class="prog-inner" style="width:${chance}%;background:${nota>=corte?'#10b981':'#ef4444'}"></div></div>
       </div>
@@ -4067,6 +4103,10 @@ function buildDashCN3(nome){
           <li><strong>IC:</strong> 🟢 ≥70% Sólido · 🟡 50–69% Razoável · 🔴 &lt;50% Intervenção necessária</li>
         </ul>
       </div>
+      <div style="margin-top:16px"><p style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:#6b8ea6;margin-bottom:10px">Mapa de Calor</p>
+      <div style="display:flex;flex-wrap:wrap;gap:8px">
+        ${discs.map(d=>{const p=pct(d.v,d.tot);const bg=p>=70?'#dcfce7':p>=50?'#fef9c3':'#fee2e2';const cl=p>=70?'#166534':p>=50?'#713f12':'#991b1b';const em=p>=70?'🟢':p>=50?'🟡':'🔴';return `<div style="padding:8px 14px;border-radius:10px;font-size:13px;font-weight:800;background:${bg};color:${cl}">${em} ${d.n}<br><span style="font-size:11px;font-weight:600">${p.toFixed(0)}%</span></div>`;}).join('')}
+      </div></div>
     </div>
   </div>
 
@@ -4085,6 +4125,7 @@ function buildDashCN3(nome){
       <div style="text-align:center;padding:28px 20px;background:${nota>=corte?'linear-gradient(135deg,#d1fae5,#a7f3d0)':'linear-gradient(135deg,#fee2e2,#fca5a5)'};border-radius:16px;border:3px solid ${nota>=corte?'#6ee7b7':'#fca5a5'};margin-bottom:20px">
         <div style="font-size:12px;font-weight:800;color:#374151;margin-bottom:10px;text-transform:uppercase;letter-spacing:1px">Chance de Aprovação</div>
         <div style="font-size:80px;font-weight:900;color:${nota>=corte?'#065f46':'#991b1b'};line-height:1">${chance}%</div>
+        <div style="margin-bottom:10px">${chance>=80?'<span style="background:#dcfce7;color:#166534;padding:4px 14px;border-radius:20px;font-size:13px;font-weight:800">🟢 Alta Chance de Aprovação</span>':chance>=60?'<span style="background:#fef9c3;color:#713f12;padding:4px 14px;border-radius:20px;font-size:13px;font-weight:800">🟡 Chance Moderada</span>':'<span style="background:#fee2e2;color:#991b1b;padding:4px 14px;border-radius:20px;font-size:13px;font-weight:800">🔴 Necessita Intervenção</span>'}</div>
         <div style="font-size:13px;color:#6b7280;font-weight:700;margin-top:8px">${chance>=100?'🎉 Acima do corte!':chance>=85?'⭐ Muito próximo!':chance>=70?'💪 Continue!':'📚 Foco total!'}</div>
         <div class="prog-outer" style="max-width:360px;margin:14px auto 6px"><div class="prog-inner" style="width:${chance}%;background:${nota>=corte?'#10b981':'#ef4444'}"></div></div>
       </div>
@@ -4253,6 +4294,10 @@ function buildDashE(nome){
           <li><strong>IC:</strong> 🟢 ≥70% Sólido · 🟡 50–69% Razoável · 🔴 &lt;50% Intervenção necessária</li>
         </ul>
       </div>
+      <div style="margin-top:16px"><p style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:#6b8ea6;margin-bottom:10px">Mapa de Calor</p>
+      <div style="display:flex;flex-wrap:wrap;gap:8px">
+        ${discs.map(d=>{const p=pct(d.v,d.tot);const bg=p>=70?'#dcfce7':p>=50?'#fef9c3':'#fee2e2';const cl=p>=70?'#166534':p>=50?'#713f12':'#991b1b';const em=p>=70?'🟢':p>=50?'🟡':'🔴';return `<div style="padding:8px 14px;border-radius:10px;font-size:13px;font-weight:800;background:${bg};color:${cl}">${em} ${d.n}<br><span style="font-size:11px;font-weight:600">${p.toFixed(0)}%</span></div>`;}).join('')}
+      </div></div>
     </div>
   </div>
 
@@ -4428,6 +4473,24 @@ function buildClassificacoes(){
 }
 
 renderCN1();renderCN2();renderCN3();renderCN4();renderCN5D1();renderE();renderE2();renderE3();renderE4();renderE5();
+function toggleSidebar(){document.getElementById('hamBtn').classList.toggle('open');document.getElementById('sidebar').classList.toggle('open');document.getElementById('sideOverlay').classList.toggle('open');}
+function closeSidebar(){document.getElementById('hamBtn').classList.remove('open');document.getElementById('sidebar').classList.remove('open');document.getElementById('sideOverlay').classList.remove('open');}
 </script>
+<button class="hamburger" id="hamBtn" onclick="toggleSidebar()"><span></span><span></span><span></span></button>
+<div class="sidebar-overlay" id="sideOverlay" onclick="closeSidebar()"></div>
+<div class="sidebar" id="sidebar">
+  <span class="nav-group-lbl">&#9875; CN</span>
+  <button class="nav-btn" onclick="goSec('cn1',this);closeSidebar()">1&#186; Simulado</button>
+  <button class="nav-btn" onclick="goSec('cn2',this);closeSidebar()">2&#186; Simulado</button>
+  <button class="nav-btn" onclick="goSec('cn3',this);closeSidebar()">3&#186; Simulado</button>
+  <button class="nav-btn" onclick="goSec('cn4',this);closeSidebar()">4&#186; Simulado</button>
+  <button class="nav-btn" onclick="goSec('cn5',this);closeSidebar()">5&#186; Simulado</button>
+  <span class="nav-group-lbl" style="margin-top:12px">&#9992;&#65039; EPCAr</span>
+  <button class="nav-btn" onclick="goSec('epcar',this);closeSidebar()">1&#186; Simulado</button>
+  <button class="nav-btn" onclick="goSec('epcar2',this);closeSidebar()">2&#186; Simulado</button>
+  <button class="nav-btn" onclick="goSec('epcar3',this);closeSidebar()">3&#186; Simulado</button>
+  <button class="nav-btn" onclick="goSec('epcar4',this);closeSidebar()">4&#186; Simulado</button>
+  <button class="nav-btn" onclick="goSec('epcar5',this);closeSidebar()">5&#186; Simulado</button>
+</div>
 </body>
 </html>
