@@ -169,11 +169,70 @@ table.dtable tbody tr:hover{background:var(--gbg)}
 
 /* ── RESPONSIVE ── */
 @media(max-width:640px){
-  .hdr-chips{width:100%}
-  .hdr-chip{flex:1}
-  .nav-btn{padding:12px 14px;font-size:13px}
-  .ranking-card{border-radius:12px}
-  .hdr-title{font-size:20px}
+  /* Header */
+  .header{padding:16px 14px 36px}
+  .hdr-inner{gap:10px}
+  .hdr-logo,.hdr-logo-svg{width:44px;height:44px}
+  .hdr-title{font-size:17px}
+  .hdr-sub{font-size:11px}
+  .hdr-chips{width:100%;display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-left:0}
+  .hdr-chip{padding:6px 10px}
+  .hdr-chip-num{font-size:20px}
+  /* Container */
+  .container{padding:12px 8px 60px}
+  /* Ranking card */
+  .ranking-card{border-radius:12px;overflow:visible}
+  .ranking-header{padding:16px 14px 10px}
+  .ranking-header h2{font-size:16px}
+  .ranking-filters{padding:10px 10px 0;gap:6px}
+  .filter-btn{padding:7px 10px;font-size:11px}
+  .filter-btn .fb-sub{display:none}
+  .search-box{max-width:100%;margin:10px 10px 0;width:calc(100% - 20px)}
+  /* Ranking table — scroll horizontal */
+  .ranking-card .ranking-table{font-size:11px}
+  .ranking-card .ranking-table th,.ranking-card .ranking-row td{padding:8px 6px}
+  .ranking-card>[id$="Wrap"]{overflow-x:auto;-webkit-overflow-scrolling:touch}
+  [id$="GeralWrap"],[id$="D1Wrap"],[id$="D2Wrap"]{overflow-x:auto!important;-webkit-overflow-scrolling:touch}
+  .pos-badge{width:30px;height:30px;font-size:13px}
+  .pos-badge.g1{font-size:16px}
+  .aluno-nome{font-size:12px}
+  .score-num{font-size:16px}
+  .score-cell{min-width:60px}
+  /* Stats grid */
+  .sg{grid-template-columns:1fr 1fr;gap:8px;margin:12px 10px}
+  .si .val{font-size:22px}
+  .si{padding:12px 10px}
+  /* Student detail */
+  .aluno-hdr-wrap{padding:14px 12px}
+  .aluno-topbar{gap:10px}
+  .aluno-topbar h2{font-size:18px}
+  .btn-voltar{padding:7px 14px;font-size:12px}
+  .dash-body{padding:12px 10px 60px}
+  .dcard{padding:14px 12px;margin-bottom:12px}
+  .dcard h3{font-size:14px}
+  .dcard .sg{grid-template-columns:1fr 1fr}
+  .chart-wrap{height:260px;padding:10px}
+  /* Tabelas — remove overflow:hidden para não bloquear scroll */
+  table.dtable{overflow:visible;font-size:11px}
+  table.dtable th,table.dtable td{padding:7px 6px}
+  .plano-tbl{overflow:visible;font-size:11px}
+  .plano-tbl thead th{white-space:normal}
+  .plano-tbl thead th,.plano-tbl tbody td{padding:8px 5px}
+  .plano-tbl tbody td:first-child{font-size:11px;padding-left:8px}
+  .plano-tbl thead th:first-child{padding-left:8px}
+  /* dcard com scroll horizontal para qualquer tabela dentro */
+  .dcard{overflow-x:auto;-webkit-overflow-scrolling:touch}
+  /* D1/D2 wrappers */
+  [id$="D1Wrap"],[id$="D2Wrap"]{padding:4px 0 12px;overflow-x:auto;-webkit-overflow-scrolling:touch}
+  /* Grids inline de 3 colunas viram 2 colunas no mobile */
+  [style*="repeat(3,1fr)"]{grid-template-columns:1fr 1fr!important}
+  /* Ranking card wrappers */
+  [id$="GeralWrap"],[id$="D1Wrap"],[id$="D2Wrap"]{overflow-x:auto!important;-webkit-overflow-scrolling:touch}
+  /* Sidebar */
+  .sidebar{width:260px}
+  /* Footer */
+  .footer{padding:16px 14px}
+  .footer-inner{flex-direction:column;text-align:center;gap:8px}
 }
 /* ── AVATAR ── */
 .aluno-avatar{width:36px;height:36px;border-radius:50%;background:var(--grad135);display:inline-flex;align-items:center;justify-content:center;font-size:12px;font-weight:900;color:#fff;flex-shrink:0;letter-spacing:-0.5px}
