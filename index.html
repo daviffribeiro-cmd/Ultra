@@ -3242,7 +3242,7 @@ function buildDashE2(nome){
 
   ${getEvoEPPane('dpane3')}
   `;
-  document.getElementById('dashBody').innerHTML += getClassifPane(a.nome,'dpane4');
+  document.getElementById('dashBody').innerHTML += getClassifPane(a.nome,'dpane4',2,5);
   document.getElementById('dashBody').innerHTML += getRelatorioEPPane(a,EPCAr2,EPCAr,'2º Simulado EPCAr','dpane5');
   document.getElementById('dashBody').innerHTML += makeSingleAnalisePane(getProjEPPane(a.nome,+(a.total/48*10).toFixed(2),'__tmp',2),getRoiEPPane(a.nome,EPCAr2,'__tmp2'),'dpane6');
 
@@ -3265,7 +3265,7 @@ function buildDashE2(nome){
             tooltip:{backgroundColor:'rgba(0,0,0,.82)',callbacks:{label:c=>c.dataset.label+': '+c.parsed.r.toFixed(1)+'%'}}}
         }});
       },80);
-    } else if(idx===3){setupEvoCharts(a.nome);}
+    } else if(idx===3){setupEvoCharts(a.nome,2,5);}
   };
 }
 
@@ -3825,7 +3825,7 @@ function getEvoEPPane(paneId){
     </div>
   </div>`;
 }
-function getClassifPane(nome, paneId){
+function getClassifPane(nome, paneId, epMax, cnMax){
   const nn=normN(nome);
   const f=lst=>lst.find(x=>normN(x.nome)===nn);
   const c1=f(CN1),c2=f(CN2),c3=f(CN3),c4=f(CN4),c5=f(CN5D1),e1=f(EPCAr),e2=f(EPCAr2),e3=f(EPCAr3),e4=f(EPCAr4),e5=f(EPCAr5),e6=f(EPCAr6),e7=f(EPCAr7);
@@ -3848,15 +3848,18 @@ function getClassifPane(nome, paneId){
     <th>Classificação</th><th>Variação</th><th>Acertos</th><th>Status</th>
   </tr></thead>`;
 
-  const cnRows=[
+  const _cnMax=Math.min(cnMax||5,5);
+  const cnAllRows=[
     mkRow('1º Simulado CN',c1,null,90,c=>c.gtot),
     mkRow('2º Simulado CN',c2,c1,90,c=>c.gtot),
     mkRow('3º Simulado CN',c3,c2,90,c=>c.gtot),
     mkRow('4º Simulado CN',c4,c3,90,c=>c.gtot),
-    mkRow('5º Simulado CN (1º Dia)',c5,null,40,c=>c.total),
-  ].join('');
+    mkRow('5º Simulado CN',c5,c4,90,c=>c.gtot||c.total),
+  ];
+  const cnRows=cnAllRows.slice(0,_cnMax).join('');
 
-  const epRows=[
+  const _epMax=Math.min(epMax||7,7);
+  const epAllRows=[
     mkRow('1º Simulado EPCAr',e1,null,48,c=>c.total),
     mkRow('2º Simulado EPCAr',e2,e1,48,c=>c.total),
     mkRow('3º Simulado EPCAr',e3,e2,48,c=>c.total),
@@ -3864,7 +3867,8 @@ function getClassifPane(nome, paneId){
     mkRow('5º Simulado EPCAr',e5,e4,48,c=>c.total),
     mkRow('6º Simulado EPCAr',e6,e5,48,c=>c.total),
     mkRow('7º Simulado EPCAr',e7,e6,48,c=>c.total),
-  ].join('');
+  ];
+  const epRows=epAllRows.slice(0,_epMax).join('');
 
   return`<div id="${paneId}" class="dpane">
     <div class="dcard">
@@ -4113,13 +4117,15 @@ function getRelatorioCNPane(a,curAVG,prevList,prevAVG,simLabel,paneId){
   </div>`;
 }
 
-function setupEvoCharts(nome){
+function setupEvoCharts(nome,epMax,cnMax){
   const nn=normN(nome);
   const findIn=list=>list.find(x=>normN(x.nome)===nn);
   // CN notas (só se fez os dois dias)
   const c1=findIn(CN1),c2=findIn(CN2),c3=findIn(CN3),c4cn=findIn(CN4),c5cn=findIn(CN5D1);
   const cnNota=a=>{if(!a||a.aprov_d1==null)return null;if(a.aprov_d2!=null)return+(a.gtot/90*10).toFixed(2);return+(a.total/40*10).toFixed(2);};
-  const cnNotas=[cnNota(c1),cnNota(c2),cnNota(c3),cnNota(c4cn),cnNota(c5cn)];
+  const cnNotasFull=[cnNota(c1),cnNota(c2),cnNota(c3),cnNota(c4cn),cnNota(c5cn)];
+  const _cnMax=Math.min(cnMax||5,5);
+  const cnNotas=cnNotasFull.slice(0,_cnMax);
   const cn1AvgN=+(CN1AVG.gtot/90*10).toFixed(2);
   const cn2AvgN=+(CN2AVG.gtot/90*10).toFixed(2);
   const cn3AvgN=+(CN3AVG.gtot/90*10).toFixed(2);
@@ -4128,7 +4134,9 @@ function setupEvoCharts(nome){
   // EPCAr notas
   const e1=findIn(EPCAr),e2=findIn(EPCAr2),e3ep=findIn(EPCAr3),e4ep=findIn(EPCAr4),e5ep=findIn(EPCAr5),e6ep=findIn(EPCAr6),e7ep=findIn(EPCAr7);
   const epNota=a=>a?+(a.total/48*10).toFixed(2):null;
-  const epNotas=[epNota(e1),epNota(e2),epNota(e3ep),epNota(e4ep),epNota(e5ep),epNota(e6ep),epNota(e7ep)];
+  const epNotasFull=[epNota(e1),epNota(e2),epNota(e3ep),epNota(e4ep),epNota(e5ep),epNota(e6ep),epNota(e7ep)];
+  const _epMax=Math.min(epMax||7,7);
+  const epNotas=epNotasFull.slice(0,_epMax);
   const epAvg=lst=>+(lst.reduce((s,x)=>s+x.total,0)/lst.length/48*10).toFixed(2);
   const ep1AvgN=epAvg(EPCAr),ep2AvgN=epAvg(EPCAr2),ep3AvgN=epAvg(EPCAr3),ep4AvgN=epAvg(EPCAr4),ep5AvgN=epAvg(EPCAr5),ep6AvgN=epAvg(EPCAr6),ep7AvgN=epAvg(EPCAr7);
   const chartOpts=(yMax)=>({responsive:true,maintainAspectRatio:false,
@@ -4142,23 +4150,26 @@ function setupEvoCharts(nome){
   const elCN=document.getElementById('evoCN');
   if(elCN){
     if(evoChartCN){evoChartCN.destroy();evoChartCN=null;}
-    evoChartCN=new Chart(elCN,{type:'line',data:{labels:['1º Sim','2º Sim','3º Sim','4º Sim','5º Sim'],datasets:[
+    const cnLabels=['1º Sim','2º Sim','3º Sim','4º Sim','5º Sim'].slice(0,_cnMax).slice(0,_cnMax).slice(0,_cnMax);
+    const cn1AvgArr=[cn1AvgN,cn2AvgN,cn3AvgN,cn4AvgN,cn5AvgN].slice(0,_cnMax);
+    evoChartCN=new Chart(elCN,{type:'line',data:{labels:cnLabels,datasets:[
       {label:nome.split(' ')[0],data:cnNotas,borderColor:'#667eea',backgroundColor:'rgba(102,126,234,.12)',borderWidth:3,pointRadius:6,pointBackgroundColor:cnNotas.map(v=>v==null?'transparent':v>=7.4?'#10b981':v>=5?'#f59e0b':'#ef4444'),pointBorderColor:'#fff',pointBorderWidth:2,tension:0.3,spanGaps:false},
-      {label:'Média Turma',data:[cn1AvgN,cn2AvgN,cn3AvgN,cn4AvgN,cn5AvgN],borderColor:'#9ca3af',backgroundColor:'rgba(156,163,175,.05)',borderWidth:2,borderDash:[5,4],pointRadius:4,pointBackgroundColor:'#9ca3af',tension:0.3,spanGaps:false},
-      {label:'Corte CN (7.40)',data:Array(5).fill(7.4),borderColor:'#10b981',borderWidth:2,borderDash:[8,4],pointRadius:0,fill:false,tension:0},
-      {label:'Mínimo (5.0)',data:Array(5).fill(5),borderColor:'#ef4444',borderWidth:2,borderDash:[6,4],pointRadius:0,fill:false,tension:0},
+      {label:'Média Turma',data:cn1AvgArr,borderColor:'#9ca3af',backgroundColor:'rgba(156,163,175,.05)',borderWidth:2,borderDash:[5,4],pointRadius:4,pointBackgroundColor:'#9ca3af',tension:0.3,spanGaps:false},
+      {label:'Corte CN (7.40)',data:Array(_cnMax).fill(7.4),borderColor:'#10b981',borderWidth:2,borderDash:[8,4],pointRadius:0,fill:false,tension:0},
+      {label:'Mínimo (5.0)',data:Array(_cnMax).fill(5),borderColor:'#ef4444',borderWidth:2,borderDash:[6,4],pointRadius:0,fill:false,tension:0},
     ]},options:chartOpts(10)});
   }
   // EPCAr chart
   const elEP=document.getElementById('evoEP');
   if(elEP){
     if(evoChartEP){evoChartEP.destroy();evoChartEP=null;}
-    const epLabels=['1º Sim','2º Sim','3º Sim','4º Sim','5º Sim','6º Sim','7º Sim'];
+    const epLabels=['1º Sim','2º Sim','3º Sim','4º Sim','5º Sim','6º Sim','7º Sim'].slice(0,_epMax);
+    const epAvgArr=[ep1AvgN,ep2AvgN,ep3AvgN,ep4AvgN,ep5AvgN,ep6AvgN,ep7AvgN].slice(0,_epMax);
     evoChartEP=new Chart(elEP,{type:'line',data:{labels:epLabels,datasets:[
       {label:nome.split(' ')[0],data:epNotas,borderColor:'#764ba2',backgroundColor:'rgba(118,75,162,.12)',borderWidth:3,pointRadius:7,pointBackgroundColor:epNotas.map(v=>v==null?'transparent':v>=7.65?'#10b981':v>=5?'#f59e0b':'#ef4444'),pointBorderColor:'#fff',pointBorderWidth:2,tension:0.3,spanGaps:false},
-      {label:'Média Turma',data:[ep1AvgN,ep2AvgN,ep3AvgN,ep4AvgN,ep5AvgN,ep6AvgN,ep7AvgN],borderColor:'#9ca3af',backgroundColor:'rgba(156,163,175,.05)',borderWidth:2,borderDash:[5,4],pointRadius:4,pointBackgroundColor:'#9ca3af',tension:0.3,spanGaps:false},
-      {label:'Corte EPCAr (7.65)',data:Array(7).fill(7.65),borderColor:'#10b981',borderWidth:2,borderDash:[8,4],pointRadius:0,fill:false,tension:0},
-      {label:'Mínimo (5.0)',data:Array(7).fill(5),borderColor:'#ef4444',borderWidth:2,borderDash:[6,4],pointRadius:0,fill:false,tension:0},
+      {label:'Média Turma',data:epAvgArr,borderColor:'#9ca3af',backgroundColor:'rgba(156,163,175,.05)',borderWidth:2,borderDash:[5,4],pointRadius:4,pointBackgroundColor:'#9ca3af',tension:0.3,spanGaps:false},
+      {label:'Corte EPCAr (7.65)',data:Array(_epMax).fill(7.65),borderColor:'#10b981',borderWidth:2,borderDash:[8,4],pointRadius:0,fill:false,tension:0},
+      {label:'Mínimo (5.0)',data:Array(_epMax).fill(5),borderColor:'#ef4444',borderWidth:2,borderDash:[6,4],pointRadius:0,fill:false,tension:0},
     ]},options:chartOpts(10)});
   }
 }
@@ -4264,7 +4275,7 @@ function buildDashE3(nome){
     </div>
   </div>`;
   document.getElementById('dashBody').innerHTML += getEvoEPPane('dpane3');
-  document.getElementById('dashBody').innerHTML += getClassifPane(a.nome,'dpane4');
+  document.getElementById('dashBody').innerHTML += getClassifPane(a.nome,'dpane4',3,5);
   document.getElementById('dashBody').innerHTML += getRelatorioEPPane(a,EPCAr3,EPCAr2,'3º Simulado EPCAr','dpane5');
   document.getElementById('dashBody').innerHTML += makeSingleAnalisePane(getProjEPPane(a.nome,+(a.total/48*10).toFixed(2),'__tmp',3),getRoiEPPane(a.nome,EPCAr3,'__tmp2'),'dpane6');
   document.getElementById('dashTabs').onclick=function(e){
@@ -4284,7 +4295,7 @@ function buildDashE3(nome){
         plugins:{legend:{position:'bottom',labels:{font:{size:12,weight:'bold'},padding:14,usePointStyle:true}},
           tooltip:{backgroundColor:'rgba(0,0,0,.82)',callbacks:{label:c=>c.dataset.label+': '+c.parsed.r.toFixed(1)+'%'}}}}});
     },80);}
-    else if(idx===3){setupEvoCharts(a.nome);}
+    else if(idx===3){setupEvoCharts(a.nome,3,5);}
   };
 }
 
@@ -4389,7 +4400,7 @@ function buildDashE4(nome){
     </div>
   </div>`;
   document.getElementById('dashBody').innerHTML += getEvoEPPane('dpane3');
-  document.getElementById('dashBody').innerHTML += getClassifPane(a.nome,'dpane4');
+  document.getElementById('dashBody').innerHTML += getClassifPane(a.nome,'dpane4',4,5);
   document.getElementById('dashBody').innerHTML += getRelatorioEPPane(a,EPCAr4,EPCAr3,'4º Simulado EPCAr','dpane5');
   document.getElementById('dashBody').innerHTML += makeSingleAnalisePane(getProjEPPane(a.nome,+(a.total/48*10).toFixed(2),'__tmp',4),getRoiEPPane(a.nome,EPCAr4,'__tmp2'),'dpane6');
   document.getElementById('dashTabs').onclick=function(e){
@@ -4409,7 +4420,7 @@ function buildDashE4(nome){
         plugins:{legend:{position:'bottom',labels:{font:{size:12,weight:'bold'},padding:14,usePointStyle:true}},
           tooltip:{backgroundColor:'rgba(0,0,0,.82)',callbacks:{label:c=>c.dataset.label+': '+c.parsed.r.toFixed(1)+'%'}}}}});
     },80);}
-    else if(idx===3){setupEvoCharts(a.nome);}
+    else if(idx===3){setupEvoCharts(a.nome,4,5);}
   };
 }
 
@@ -4514,7 +4525,7 @@ function buildDashE5(nome){
     </div>
   </div>`;
   document.getElementById('dashBody').innerHTML += getEvoEPPane('dpane3');
-  document.getElementById('dashBody').innerHTML += getClassifPane(a.nome,'dpane4');
+  document.getElementById('dashBody').innerHTML += getClassifPane(a.nome,'dpane4',5,5);
   document.getElementById('dashBody').innerHTML += getRelatorioEPPane(a,EPCAr5,EPCAr4,'5º Simulado EPCAr','dpane5');
   document.getElementById('dashBody').innerHTML += makeSingleAnalisePane(getProjEPPane(a.nome,+(a.total/48*10).toFixed(2),'__tmp',5),getRoiEPPane(a.nome,EPCAr5,'__tmp2'),'dpane6');
   document.getElementById('dashTabs').onclick=function(e){
@@ -4534,7 +4545,7 @@ function buildDashE5(nome){
         plugins:{legend:{position:'bottom',labels:{font:{size:12,weight:'bold'},padding:14,usePointStyle:true}},
           tooltip:{backgroundColor:'rgba(0,0,0,.82)',callbacks:{label:c=>c.dataset.label+': '+c.parsed.r.toFixed(1)+'%'}}}}});
     },80);}
-    else if(idx===3){setupEvoCharts(a.nome);}
+    else if(idx===3){setupEvoCharts(a.nome,5,5);}
   };
 }
 
@@ -4639,7 +4650,7 @@ function buildDashE6(nome){
     </div>
   </div>`;
   document.getElementById('dashBody').innerHTML += getEvoEPPane('dpane3');
-  document.getElementById('dashBody').innerHTML += getClassifPane(a.nome,'dpane4');
+  document.getElementById('dashBody').innerHTML += getClassifPane(a.nome,'dpane4',6,5);
   document.getElementById('dashBody').innerHTML += getRelatorioEPPane(a,EPCAr6,EPCAr5,'6º Simulado EPCAr','dpane5');
   document.getElementById('dashBody').innerHTML += makeSingleAnalisePane(getProjEPPane(a.nome,+(a.total/48*10).toFixed(2),'__tmp',6),getRoiEPPane(a.nome,EPCAr6,'__tmp2'),'dpane6');
   document.getElementById('dashTabs').onclick=function(e){
@@ -4659,7 +4670,7 @@ function buildDashE6(nome){
         plugins:{legend:{position:'bottom',labels:{font:{size:12,weight:'bold'},padding:14,usePointStyle:true}},
           tooltip:{backgroundColor:'rgba(0,0,0,.82)',callbacks:{label:c=>c.dataset.label+': '+c.parsed.r.toFixed(1)+'%'}}}}});
     },80);}
-    else if(idx===3){setupEvoCharts(a.nome);}
+    else if(idx===3){setupEvoCharts(a.nome,6,5);}
   };
 }
 
@@ -4764,7 +4775,7 @@ function buildDashE7(nome){
     </div>
   </div>`;
   document.getElementById('dashBody').innerHTML += getEvoEPPane('dpane3');
-  document.getElementById('dashBody').innerHTML += getClassifPane(a.nome,'dpane4');
+  document.getElementById('dashBody').innerHTML += getClassifPane(a.nome,'dpane4',7,5);
   document.getElementById('dashBody').innerHTML += getRelatorioEPPane(a,EPCAr7,EPCAr6,'7º Simulado EPCAr','dpane5');
   document.getElementById('dashBody').innerHTML += makeSingleAnalisePane(getProjEPPane(a.nome,+(a.total/48*10).toFixed(2),'__tmp',7),getRoiEPPane(a.nome,EPCAr7,'__tmp2'),'dpane6');
   document.getElementById('dashTabs').onclick=function(e){
@@ -4784,7 +4795,7 @@ function buildDashE7(nome){
         plugins:{legend:{position:'bottom',labels:{font:{size:12,weight:'bold'},padding:14,usePointStyle:true}},
           tooltip:{backgroundColor:'rgba(0,0,0,.82)',callbacks:{label:c=>c.dataset.label+': '+c.parsed.r.toFixed(1)+'%'}}}}});
     },80);}
-    else if(idx===3){setupEvoCharts(a.nome);}
+    else if(idx===3){setupEvoCharts(a.nome,7,5);}
   };
 }
 let _lastSection='cn1';
@@ -5108,7 +5119,7 @@ function buildDashCN1(nome){
     </div>
   </div>`;
 
-  document.getElementById('dashBody').innerHTML += getClassifPane(a.nome,'dpane5');
+  document.getElementById('dashBody').innerHTML += getClassifPane(a.nome,'dpane5',7,1);
   document.getElementById('dashBody').innerHTML += getRelatorioCNPane(a,CN1AVG,null,null,'1º Simulado CN','dpane6');
   (function(){
     const _proj=getProjCNPane(a.nome,1);
@@ -5139,7 +5150,7 @@ function buildDashCN1(nome){
             tooltip:{backgroundColor:'rgba(0,0,0,.82)',callbacks:{label:c=>c.dataset.label+': '+c.parsed.r.toFixed(1)+'%'}}}
         }});
       }, 80);
-    } else if(idx===3){setupEvoCharts(a.nome);}
+    } else if(idx===3){setupEvoCharts(a.nome,7,1);}
   };
 }
 // ══════════════════════════════════════════════════════
@@ -5375,7 +5386,7 @@ function buildDashCN4(nome){
     </div>
   </div>`;
 
-  document.getElementById('dashBody').innerHTML += getClassifPane(a.nome,'dpane5');
+  document.getElementById('dashBody').innerHTML += getClassifPane(a.nome,'dpane5',7,4);
   document.getElementById('dashBody').innerHTML += getRelatorioCNPane(a,CN4AVG,CN3,CN3AVG,'4º Simulado CN','dpane6');
   (function(){
     const _proj=getProjCNPane(a.nome,4);
@@ -5403,7 +5414,7 @@ function buildDashCN4(nome){
             tooltip:{backgroundColor:'rgba(0,0,0,.82)',callbacks:{label:c=>c.dataset.label+': '+c.parsed.r.toFixed(1)+'%'}}}
         }});
       },80);
-    } else if(idx===3){setupEvoCharts(a.nome);}
+    } else if(idx===3){setupEvoCharts(a.nome,7,4);}
   };
 }
 // ══════════════════════════════════════════════════════
@@ -5535,7 +5546,7 @@ function buildDashCN5D1(nome){
   ${getEvoCNPane('dpane2')}
   `;
 
-  document.getElementById('dashBody').innerHTML += getClassifPane(a.nome,'dpane3');
+  document.getElementById('dashBody').innerHTML += getClassifPane(a.nome,'dpane3',7,5);
   document.getElementById('dashBody').innerHTML += getRelatorioCNPane(a,CN5AVG,CN4,CN4AVG,'5º Simulado CN','dpane4');
   (function(){
     const _proj=getProjCNPane(a.nome,5);
@@ -5547,7 +5558,7 @@ function buildDashCN5D1(nome){
   document.getElementById('dashTabs').onclick=function(e){
     const btn=e.target.closest('.dash-tab');if(!btn)return;
     const idx=Array.from(this.children).indexOf(btn);
-    if(idx===2){setTimeout(()=>setupEvoCharts(a.nome),80);}
+    if(idx===2){setTimeout(()=>setupEvoCharts(a.nome,7,5),80);}
   };
 }
 
@@ -5785,7 +5796,7 @@ function buildDashCN2(nome){
     </div>
   </div>`;
 
-  document.getElementById('dashBody').innerHTML += getClassifPane(a.nome,'dpane5');
+  document.getElementById('dashBody').innerHTML += getClassifPane(a.nome,'dpane5',7,2);
   document.getElementById('dashBody').innerHTML += getRelatorioCNPane(a,CN2AVG,CN1,CN1AVG,'2º Simulado CN','dpane6');
   (function(){
     const _proj=getProjCNPane(a.nome,2);
@@ -5814,7 +5825,7 @@ function buildDashCN2(nome){
             tooltip:{backgroundColor:'rgba(0,0,0,.82)',callbacks:{label:c=>c.dataset.label+': '+c.parsed.r.toFixed(1)+'%'}}}
         }});
       },80);
-    } else if(idx===3){setupEvoCharts(a.nome);}
+    } else if(idx===3){setupEvoCharts(a.nome,7,2);}
   };
 }
 
@@ -6054,7 +6065,7 @@ function buildDashCN3(nome){
     </div>
   </div>`;
 
-  document.getElementById('dashBody').innerHTML += getClassifPane(a.nome,'dpane5');
+  document.getElementById('dashBody').innerHTML += getClassifPane(a.nome,'dpane5',7,3);
   document.getElementById('dashBody').innerHTML += getRelatorioCNPane(a,CN3AVG,CN2,CN2AVG,'3º Simulado CN','dpane6');
   (function(){
     const _proj=getProjCNPane(a.nome,3);
@@ -6083,7 +6094,7 @@ function buildDashCN3(nome){
             tooltip:{backgroundColor:'rgba(0,0,0,.82)',callbacks:{label:c=>c.dataset.label+': '+c.parsed.r.toFixed(1)+'%'}}}
         }});
       },80);
-    } else if(idx===3){setupEvoCharts(a.nome);}
+    } else if(idx===3){setupEvoCharts(a.nome,7,3);}
   };
 }
 
@@ -6213,7 +6224,7 @@ function buildDashE(nome){
 
   ${getEvoEPPane('dpane3')}
   `;
-  document.getElementById('dashBody').innerHTML += getClassifPane(a.nome,'dpane4');
+  document.getElementById('dashBody').innerHTML += getClassifPane(a.nome,'dpane4',1,5);
   document.getElementById('dashBody').innerHTML += getRelatorioEPPane(a,EPCAr,null,'1º Simulado EPCAr','dpane5');
   document.getElementById('dashBody').innerHTML += makeSingleAnalisePane(getProjEPPane(a.nome,+(a.total/48*10).toFixed(2),'__tmp',1),getRoiEPPane(a.nome,EPCAr,'__tmp2'),'dpane6');
 
@@ -6238,7 +6249,7 @@ function buildDashE(nome){
             tooltip:{backgroundColor:'rgba(0,0,0,.82)',callbacks:{label:c=>c.dataset.label+': '+c.parsed.r.toFixed(1)+'%'}}}
         }});
       }, 80);
-    } else if(idx===3){setupEvoCharts(a.nome);}
+    } else if(idx===3){setupEvoCharts(a.nome,1,5);}
   };
 }
 
