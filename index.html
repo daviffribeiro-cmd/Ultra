@@ -491,7 +491,7 @@ body.ep-mode{--teal:#667eea;--lime:#764af4;--grad:linear-gradient(90deg,#667eea,
     <div class="hdr-chips">
       <div class="hdr-chip">
         <div class="hdr-chip-lbl">Simulados CN</div>
-        <div class="hdr-chip-num">5</div>
+        <div class="hdr-chip-num">6</div>
         <div class="hdr-chip-sub">realizados</div>
       </div>
       <div class="hdr-chip">
@@ -525,7 +525,7 @@ body.ep-mode{--teal:#667eea;--lime:#764af4;--grad:linear-gradient(90deg,#667eea,
   <div class="hdr-chips">
     <div class="hdr-chip">
       <div class="hdr-chip-lbl">Simulados CN</div>
-      <div class="hdr-chip-num">5</div>
+      <div class="hdr-chip-num">6</div>
       <div class="hdr-chip-sub">realizados</div>
     </div>
     <div class="hdr-chip">
@@ -862,6 +862,73 @@ body.ep-mode{--teal:#667eea;--lime:#764af4;--grad:linear-gradient(90deg,#667eea,
   </div>
 </div>
 
+<!-- ══ CN 6º SIMULADO ══ -->
+<div id="cn6Section" class="section">
+  <div class="ranking-card">
+    <div class="ranking-header">
+      <div class="ranking-header-left"><h2>⚓ CN — 6º Simulado</h2><p>06/07 (D1: Mat+Ing) · Clique no aluno para detalhes</p></div>
+    </div>
+    <div class="leader-slot"></div>
+    <div class="search-wrap">
+      <input class="search-box" type="text" id="searchCN6" placeholder="Buscar pelo nome..." oninput="renderCN6D1()">
+      <button class="search-clear" onclick="clearSearch('searchCN6',renderCN6D1)" title="Limpar">✕</button>
+    </div>
+    <div class="ranking-filters">
+      <button class="filter-btn active" data-filter="todos" onclick="setFiltroCN6('todos',this)">
+        <span class="fb-icon">🏆</span><span class="fb-label"><span class="fb-title">Todos</span><span class="fb-sub">Ranking geral</span></span>
+      </button>
+      <button class="filter-btn" data-filter="aprov" onclick="setFiltroCN6('aprov',this)">
+        <span class="fb-icon">✅</span><span class="fb-label"><span class="fb-title">Aprovados</span><span class="fb-sub">Passaram em tudo</span></span>
+      </button>
+      <button class="filter-btn" data-filter="reprov" onclick="setFiltroCN6('reprov',this)">
+        <span class="fb-icon">❌</span><span class="fb-label"><span class="fb-title">Reprovados</span><span class="fb-sub">Precisam melhorar</span></span>
+      </button>
+      <button class="filter-btn" onclick="setFiltroCN6('d1',this)">
+        <span class="fb-icon">📐</span><span class="fb-label"><span class="fb-title">1º Dia</span><span class="fb-sub">Mat + Inglês</span></span>
+      </button>
+      <button class="filter-btn" onclick="setFiltroCN6('d2',this)">
+        <span class="fb-icon">📚</span><span class="fb-label"><span class="fb-title">2º Dia</span><span class="fb-sub">Port + ES + CI</span></span>
+      </button>
+    </div>
+    <div id="cn6GeralWrap">
+      <div class="table-scroll">
+      <table class="ranking-table">
+        <thead><tr>
+          <th style="width:60px">Pos.</th>
+          <th style="text-align:left;padding-left:14px">Aluno</th>
+          <th class="rank-th-sort" data-sort="cn6" data-sortby="gtot" onclick="toggleSort('cn6','gtot',this)">Total</th>
+          <th>Status</th>
+        </tr></thead>
+        <tbody id="rankCN6Body"></tbody>
+      </table>
+      </div>
+      <div class="sg" id="statsCN6"></div>
+    </div>
+    <div id="cn6D1Wrap" style="display:none">
+      <h3 style="font-size:16px;font-weight:800;color:#1f2937;margin-bottom:14px">📋 1º Dia — Matemática + Inglês (40q)</h3>
+      <table class="ranking-table">
+        <thead><tr>
+          <th style="width:60px">Pos.</th>
+          <th style="text-align:left;padding-left:14px">Aluno</th>
+          <th>Mat</th><th>Ing</th><th>Total</th><th>Status D1</th>
+        </tr></thead>
+        <tbody id="rankCN6D1Body"></tbody>
+      </table>
+    </div>
+    <div id="cn6D2Wrap" style="display:none">
+      <h3 style="font-size:16px;font-weight:800;color:#1f2937;margin-bottom:14px">📚 2º Dia — Port + Est. Sociais + Ciências (50q)</h3>
+      <table class="ranking-table">
+        <thead><tr>
+          <th style="width:60px">Pos.</th>
+          <th style="text-align:left;padding-left:14px">Aluno</th>
+          <th>Port</th><th>ES</th><th>CI</th><th>Total</th><th>Status D2</th>
+        </tr></thead>
+        <tbody id="rankCN6D2Body"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
 <!-- ══ EPCAr ══ -->
 <div id="epcarSection" class="section">
   <div class="ranking-card">
@@ -1159,7 +1226,7 @@ body.ep-mode{--teal:#667eea;--lime:#764af4;--grad:linear-gradient(90deg,#667eea,
       <div class="footer-info" style="margin-top:4px;font-size:11px;color:rgba(255,255,255,.2)">Simulados Exclusivos · Turma 2026.1</div>
     </div>
     <div class="footer-tags">
-      <span class="footer-tag">⚓ CN — 5 Simulados</span>
+      <span class="footer-tag">⚓ CN — 6 Simulados</span>
       <span class="footer-tag">✈️ EPCAr — 7 Simulados</span>
     </div>
   </div>
@@ -1474,6 +1541,32 @@ const RAW_CN5D2=[
   {n:"GABRIEL LOURENÇO CARPINELLI",          port:15, hist:4, geo:2, fis:4, qui:5, bio:2},
   {n:"MATHEUS SCHIAVO NUNES",                port:14, hist:3, geo:2, fis:2, qui:4, bio:4},
   {n:"SUCK MA YU LAN",                       port:16, hist:5, geo:3, fis:1, qui:6, bio:5},
+];
+
+// CN 6º SIMULADO — 1º DIA (06 de Julho)
+const RAW_CN6D1=[
+  {n:"ALÍCIA REIS PANTOJA",                  mat:8,  ing:12},
+  {n:"ARTHUR DOS SANTOS COSTA",              mat:7,  ing:13},
+  {n:"ARTHUR RABELO PENA PEREIRA",           mat:6,  ing:14},
+  {n:"BERNARDO JOSÉ DE GUSMÃO MONTEIRO",     mat:8,  ing:6 },
+  {n:"EDUARDA BRANDÃO MARQUES DOS SANTOS",   mat:7,  ing:13},
+  {n:"GABRIEL BITTENCOURT JORGE",            mat:8,  ing:14},
+  {n:"GABRIEL LOURENÇO CARPINELLI",          mat:17, ing:13},
+  {n:"GABRIEL TAVARES DUARTE OLIVEIRA",      mat:17, ing:18},
+  {n:"GUILHERME BARRETO ROSA",               mat:6,  ing:18},
+  {n:"ISAAC PEREIRA LAPROVITA",              mat:11, ing:17},
+  {n:"KAIKY CASTRO NASCIMENTO",              mat:5,  ing:17},
+  {n:"LETÍCIA MARTINS DE OLIVEIRA",          mat:5,  ing:17},
+  {n:"MARIO THIAGO MARINI ISAIAS PEREIRA",   mat:12, ing:19},
+  {n:"MATHEUS SCHIAVO NUNES",                mat:15, ing:13},
+  {n:"MIGUEL BITTENCOURT RODRIGUES",         mat:17, ing:16},
+  {n:"MIGUEL DE SOUSA VARGAS",               mat:11, ing:16},
+  {n:"NICOLAS SILVA CASTILHO",               mat:15, ing:15},
+  {n:"PEDRO HENRIQUE ALVES DE ALBUQUERQUE",  mat:8,  ing:13},
+  {n:"RAPHAEL FIGUEIRA RODRIGUES DE LIMA",   mat:10, ing:13},
+  {n:"SUCK MA YU LAN",                       mat:11, ing:18},
+];
+const RAW_CN6D2=[
 ];
 
 // EPCAR 1º SIMULADO
@@ -1866,6 +1959,42 @@ function buildCN5D1(){
   return {list:sorted,avgs};
 }
 const {list:CN5D1,avgs:CN5AVG}=buildCN5D1();
+
+function buildCN6D1(){
+  const m={};
+  RAW_CN6D1.forEach(r=>{
+    const ok_mat=r.mat>=10,ok_ing=r.ing>=10,aprov_d1=ok_mat&&ok_ing;
+    m[r.n]={nome:r.n,mat:r.mat,ing:r.ing,ok_mat,ok_ing,aprov_d1,total:r.mat+r.ing};
+  });
+  RAW_CN6D2.forEach(r=>{
+    const es=r.hist+r.geo,ci=r.fis+r.qui+r.bio;
+    const ok_p=r.port>=10,ok_es=es>=6,ok_ci=ci>=9;
+    if(!m[r.n])m[r.n]={nome:r.n};
+    Object.assign(m[r.n],{port:r.port,hist:r.hist,geo:r.geo,fis:r.fis,qui:r.qui,bio:r.bio,
+      es,ci,d2tot:r.port+es+ci,ok_p,ok_es,ok_ci,aprov_d2:ok_p&&ok_es&&ok_ci});
+  });
+  // Zero out D2 fields for students who didn't take D2
+  const list=Object.values(m).map(a=>{
+    if(a.aprov_d2==null){a.port=null;a.hist=null;a.geo=null;a.fis=null;a.qui=null;a.bio=null;a.es=null;a.ci=null;a.d2tot=null;}
+    a.gtot=(a.mat||0)+(a.ing||0)+(a.port||0)+(a.hist||0)+(a.geo||0)+(a.fis||0)+(a.qui||0)+(a.bio||0);
+    const fezD1=a.aprov_d1!=null,fezD2=a.aprov_d2!=null;
+    if(!fezD1){a.aprov=false;a.motivo='Não realizou o 1º dia';}
+    else if(!fezD2){a.aprov=a.aprov_d1;a.motivo=a.aprov_d1?'Aprovado no 1º dia (aguardando 2º dia)':'Reprovado no 1º dia';}
+    else{a.aprov=a.aprov_d1&&a.aprov_d2;a.motivo=!a.aprov_d1?'Reprovado no 1º dia':!a.aprov_d2?'Reprovado no 2º dia':'';}
+    return a;
+  });
+  const d1t=x=>(x.mat||0)+(x.ing||0),d2t=x=>(x.port||0)+(x.es||0)+(x.ci||0);
+  const cmp=(a,b)=>b.gtot-a.gtot||d1t(b)-d1t(a)||d2t(b)-d2t(a);
+  const apv=list.filter(a=>a.aprov).sort(cmp);
+  const rep=list.filter(a=>!a.aprov).sort(cmp);
+  const sorted=[...apv,...rep];
+  sorted.forEach((a,i)=>a.rank=i+1);
+  const avg=k=>{const v=list.map(x=>x[k]).filter(x=>x!=null&&!isNaN(x));return v.length?v.reduce((s,x)=>s+x,0)/v.length:0;};
+  const avgs={};
+  ['mat','ing','port','hist','geo','fis','qui','bio','es','ci','d2tot','gtot'].forEach(k=>avgs[k]=avg(k));
+  return {list:sorted,avgs};
+}
+const {list:CN6D1,avgs:CN6AVG}=buildCN6D1();
 
 function buildCN4(){
   const m={};
@@ -2330,7 +2459,129 @@ function renderCN5D2(){
   if(el){ el.innerHTML = rows || '<tr><td colspan="7" style="text-align:center;padding:30px;color:var(--t3)">Nenhum dado do 2º dia</td></tr>'; applyRowStagger('rankCN5D2Body'); }
 }
 
-let filtroCN1='todos',filtroCN2='todos',filtroCN3='todos',filtroCN4='todos',filtroCN5='todos',filtroE='todos',filtroE2='todos',filtroE3='todos',filtroE4='todos',filtroE5='todos',filtroE6='todos',filtroE7='todos',filtroCN2sub='geral';
+function setFiltroCN6(f,btn){
+  filtroCN6=f;
+  document.querySelectorAll('#cn6Section .filter-btn').forEach(b=>b.classList.remove('active'));
+  if(btn)btn.classList.add('active');
+  if(f==='d1'){
+    document.getElementById('cn6GeralWrap').style.display='none';
+    document.getElementById('cn6D2Wrap').style.display='none';
+    document.getElementById('cn6D1Wrap').style.display='block';
+    renderCN6D1();
+  } else if(f==='d2'){
+    document.getElementById('cn6GeralWrap').style.display='none';
+    document.getElementById('cn6D1Wrap').style.display='none';
+    document.getElementById('cn6D2Wrap').style.display='block';
+    renderCN6D2();
+  } else {
+    document.getElementById('cn6D1Wrap').style.display='none';
+    document.getElementById('cn6D2Wrap').style.display='none';
+    document.getElementById('cn6GeralWrap').style.display='block';
+    renderCN6D1();
+  }
+}
+
+function renderCN6D1(){
+  const q=(document.getElementById('searchCN6').value||'').toLowerCase();
+  const temD2=CN6D1.some(a=>a.aprov_d2!=null);
+  // Geral = alunos com ambos os dias; D1 = só primeiro dia
+  let lst=CN6D1.filter(a=>!q||a.nome.toLowerCase().includes(q));
+  if(filtroCN6==='aprov')lst=lst.filter(a=>a.aprov);
+  if(filtroCN6==='reprov')lst=lst.filter(a=>!a.aprov);
+  const _s=_sortState['cn6'];
+  if(_s)lst=[...lst].sort((a,b)=>(_s.dir==='asc'?1:-1)*(b[_s.field]-a[_s.field]));
+
+  // Geral wrap: usa gtot/90 como os demais simulados (gtot = total já lançado; dias não realizados contam 0)
+  const rows6=lst.map(a=>{
+    const p=a.rank,pc=p===1?'g1':p===2?'g2':p===3?'g3':'';
+    const em=p===1?'🥇':p===2?'🥈':p===3?'🥉':p;
+    const rc='ranking-row'+(p===1?' top3 top3-gold':p===2?' top3 top3-silver':p===3?' top3 top3-bronze':'');
+    return `<tr class="${rc}" onclick="openDash('cn6','${nm(a.nome)}')">
+      <td><span class="pos-badge ${pc}">${em}</span></td>
+      <td style="text-align:left;padding-left:14px">${avatarCell(a.nome)}</td>
+      ${scoreBar(a.total,40)}
+      <td>${a.aprov?'<span class="chip chip-a"><span style="width:6px;height:6px;border-radius:50%;background:#10b981;display:inline-block;flex-shrink:0"></span>Aprovado</span>':'<span class="chip chip-r"><span style="width:6px;height:6px;border-radius:50%;background:#ef4444;display:inline-block;flex-shrink:0"></span>Reprovado</span>'}</td>
+    </tr>`;
+  }).join('');
+  document.getElementById('rankCN6Body').innerHTML=rows6||`<tr><td colspan="4" style="text-align:center;padding:40px 20px;color:var(--t3)">Nenhum aluno encontrado</td></tr>`;
+  applyRowStagger('rankCN6Body');
+
+  // Also render D1 body (for the D1 tab)
+  const d1body = document.getElementById('rankCN6D1Body');
+  if(d1body){
+    const d1rows=CN6D1.filter(a=>!q||a.nome.toLowerCase().includes(q)).map((a,i)=>{
+      const sorted=[...CN6D1].sort((a,b)=>b.total-a.total||b.mat-a.mat||b.ing-a.ing);
+      const rank=sorted.indexOf(a)+1;
+      const rc='ranking-row'+(rank===1?' top3 top3-gold':rank===2?' top3 top3-silver':rank===3?' top3 top3-bronze':'');
+      const rpc=rank===1?'g1':rank===2?'g2':rank===3?'g3':'';
+      const rem=rank===1?'🥇':rank===2?'🥈':rank===3?'🥉':rank;
+      return `<tr class="${rc}" onclick="openDash('cn6','${nm(a.nome)}')">
+        <td><span class="pos-badge ${rpc}">${rem}</span></td>
+        <td style="text-align:left;padding-left:14px">${avatarCell(a.nome)}</td>
+        <td style="font-size:18px;font-weight:900;color:${a.ok_mat?'#065f46':'#991b1b'}">${a.mat}</td>
+        <td style="font-size:18px;font-weight:900;color:${a.ok_ing?'#065f46':'#991b1b'}">${a.ing}</td>
+        ${scoreBar(a.total,40)}
+        <td>${a.aprov_d1?'<span class="chip chip-a"><span style="width:6px;height:6px;border-radius:50%;background:#10b981;display:inline-block;flex-shrink:0"></span>Aprov. D1</span>':'<span class="chip chip-r"><span style="width:6px;height:6px;border-radius:50%;background:#ef4444;display:inline-block;flex-shrink:0"></span>Reprov. D1</span>'}</td>
+      </tr>`;
+    }).join('');
+    d1body.innerHTML = d1rows||'<tr><td colspan="6" style="text-align:center;padding:30px;color:var(--t3)">Nenhum dado D1</td></tr>';
+    applyRowStagger('rankCN6D1Body');
+  }
+
+  const _apvD1=CN6D1.filter(a=>a.aprov_d1).length;
+  const _apvD2=CN6D1.filter(a=>a.aprov_d2!=null&&a.aprov_d2).length;
+  const _apvTotal=CN6D1.filter(a=>a.aprov).length;
+  const _temD2=CN6D1.some(a=>a.aprov_d2!=null);
+  document.getElementById('statsCN6').innerHTML=`
+    <div class="si"><h4>Total Alunos</h4><div class="val">${CN6D1.length}</div><div class="sub">no simulado</div></div>
+    <div class="si si-green"><h4>Aprov. D1</h4><div class="val" style="color:#10b981">${_apvD1}</div><div class="sub">${Math.round(_apvD1/CN6D1.length*100)}% da turma</div></div>
+    ${_temD2?`<div class="si si-green"><h4>Aprov. D2</h4><div class="val" style="color:#10b981">${_apvD2}</div><div class="sub">${Math.round(_apvD2/CN6D1.length*100)}% da turma</div></div>
+    <div class="si si-blue"><h4>Aprovados Geral</h4><div class="val" style="color:#667eea">${_apvTotal}</div><div class="sub">${Math.round(_apvTotal/CN6D1.length*100)}% da turma</div></div>`:''}
+    <div class="si si-red"><h4>Reprovados D1</h4><div class="val" style="color:#ef4444">${CN6D1.filter(a=>!a.aprov_d1).length}</div><div class="sub">${Math.round(CN6D1.filter(a=>!a.aprov_d1).length/CN6D1.length*100)}%</div></div>
+    <div class="si"><h4>Maior D1</h4><div class="val" style="color:#667eea">${Math.max(...CN6D1.map(a=>a.total||0))}</div><div class="sub">de 40q D1</div></div>
+    <div class="si"><h4>Média D1</h4><div class="val">${+(CN6D1.reduce((s,a)=>s+a.total,0)/CN6D1.length).toFixed(1)}</div><div class="sub">questões certas</div></div>
+  `;
+  animateStats('statsCN6');
+  updateFilterCounts('cn6',CN6D1,a=>a.aprov);
+  const _lb_cn6=document.getElementById('cn6Section').querySelector('.leader-slot');
+  if(_lb_cn6&&CN6D1[0])_lb_cn6.innerHTML=leaderBanner(CN6D1,'total',40,'cn6');
+  (function(){
+    const _statsEl=document.getElementById('statsCN6');
+    if(!_statsEl||!_statsEl.parentNode||_statsEl.parentNode.querySelector('.quick-summary'))return;
+    const _tot=CN6D1.length,_apv=CN6D1.filter(a=>a.aprov_d1).length;
+    const _avg=+(CN6D1.reduce((s,a)=>s+a.total,0)/_tot).toFixed(1);
+    const _qsEl=document.createElement('div');_qsEl.className='quick-summary';
+    _qsEl.innerHTML=`<span class="qs-item"><span class="qs-dot" style="background:#6b7280"></span>${_tot} alunos</span><span class="qs-sep">·</span><span class="qs-item"><span class="qs-dot" style="background:#10b981"></span>${_apv} aprovados D1 (<strong>${Math.round(_apv/_tot*100)}%</strong>)</span><span class="qs-sep">·</span><span class="qs-item"><span class="qs-dot" style="background:#667eea"></span>Média D1: <strong>${_avg}/40</strong></span>`;
+    _statsEl.parentNode.insertBefore(_qsEl,_statsEl);
+  })();
+}
+
+function renderCN6D2(){
+  const temD2 = CN6D1.some(a=>a.aprov_d2!=null);
+  if(!temD2) return;
+  const d2list = CN6D1.filter(a=>a.aprov_d2!=null);
+  const sorted = [...d2list].sort((a,b)=>b.d2tot-a.d2tot||(b.port||0)-(a.port||0));
+  const rows = sorted.map((a,i)=>{
+    const p=i+1,pc=p===1?'g1':p===2?'g2':p===3?'g3':'';
+    const em=p===1?'🥇':p===2?'🥈':p===3?'🥉':p;
+    const rc='ranking-row'+(p===1?' top3 top3-gold':p===2?' top3 top3-silver':p===3?' top3 top3-bronze':'');
+    const ok_p=a.ok_p,ok_es=a.ok_es,ok_ci=a.ok_ci;
+    return `<tr class="${rc}" onclick="openDash('cn6','${nm(a.nome)}')">
+      <td><span class="pos-badge ${pc}">${em}</span></td>
+      <td style="text-align:left;padding-left:14px">${avatarCell(a.nome)}</td>
+      <td style="font-size:18px;font-weight:900;color:${ok_p?'#065f46':'#991b1b'}">${a.port||'—'}</td>
+      <td style="font-size:18px;font-weight:900;color:${ok_es?'#065f46':'#991b1b'}">${a.es||'—'}</td>
+      <td style="font-size:18px;font-weight:900;color:${ok_ci?'#065f46':'#991b1b'}">${a.ci||'—'}</td>
+      ${scoreBar(a.d2tot||0,50)}
+      <td>${a.aprov_d2?'<span class="chip chip-a"><span style="width:6px;height:6px;border-radius:50%;background:#10b981;display:inline-block;flex-shrink:0"></span>Aprov. D2</span>':'<span class="chip chip-r"><span style="width:6px;height:6px;border-radius:50%;background:#ef4444;display:inline-block;flex-shrink:0"></span>Reprov. D2</span>'}</td>
+    </tr>`;
+  }).join('');
+  const el = document.getElementById('rankCN6D2Body');
+  if(el){ el.innerHTML = rows || '<tr><td colspan="7" style="text-align:center;padding:30px;color:var(--t3)">Nenhum dado do 2º dia</td></tr>'; applyRowStagger('rankCN6D2Body'); }
+}
+
+
+let filtroCN1='todos',filtroCN2='todos',filtroCN3='todos',filtroCN4='todos',filtroCN5='todos',filtroCN6='todos',filtroE='todos',filtroE2='todos',filtroE3='todos',filtroE4='todos',filtroE5='todos',filtroE6='todos',filtroE7='todos',filtroCN2sub='geral';
 let activeChart=null;
 let evoChartCN=null,evoChartEP=null;
 
@@ -2353,7 +2604,7 @@ function animateStats(containerId){
 
 function exportarRankingCSV(){
   const ctx=_lastSection||'cn1';
-  const lists={cn1:CN1,cn2:CN2,cn3:CN3,cn4:CN4,cn5:CN5D1,epcar:EPCAr,epcar2:EPCAr2,epcar3:EPCAr3,epcar4:EPCAr4,epcar5:EPCAr5,epcar6:EPCAr6,epcar7:EPCAr7};
+  const lists={cn1:CN1,cn2:CN2,cn3:CN3,cn4:CN4,cn5:CN5D1,cn6:CN6D1,epcar:EPCAr,epcar2:EPCAr2,epcar3:EPCAr3,epcar4:EPCAr4,epcar5:EPCAr5,epcar6:EPCAr6,epcar7:EPCAr7};
   const list=lists[ctx];
   if(!list||!list.length)return;
   const keys=Object.keys(list[0]).filter(k=>k!=='aprov'&&typeof list[0][k]!=='object');
@@ -2385,7 +2636,7 @@ function toggleSort(sectionKey,field,th){
   th.closest('thead').querySelectorAll('.rank-th-sort').forEach(t=>{t.classList.remove('sort-asc','sort-desc');});
   th.classList.add(_sortState[sectionKey].dir==='asc'?'sort-asc':'sort-desc');
   // Re-render
-  const rfns={cn1:renderCN1,cn2:renderCN2,cn3:renderCN3,cn4:renderCN4,cn5:renderCN5D1,epcar:renderE,epcar2:renderE2,epcar3:renderE3,epcar4:renderE4,epcar5:renderE5,epcar6:renderE6,epcar7:renderE7};
+  const rfns={cn1:renderCN1,cn2:renderCN2,cn3:renderCN3,cn4:renderCN4,cn5:renderCN5D1,cn6:renderCN6D1,epcar:renderE,epcar2:renderE2,epcar3:renderE3,epcar4:renderE4,epcar5:renderE5,epcar6:renderE6,epcar7:renderE7};
   if(rfns[sectionKey])rfns[sectionKey]();
 }
 
@@ -3242,7 +3493,7 @@ function buildDashE2(nome){
 
   ${getEvoEPPane('dpane3')}
   `;
-  document.getElementById('dashBody').innerHTML += getClassifPane(a.nome,'dpane4',2,5);
+  document.getElementById('dashBody').innerHTML += getClassifPane(a.nome,'dpane4',2,6);
   document.getElementById('dashBody').innerHTML += getRelatorioEPPane(a,EPCAr2,EPCAr,'2º Simulado EPCAr','dpane5');
   document.getElementById('dashBody').innerHTML += makeSingleAnalisePane(getProjEPPane(a.nome,+(a.total/48*10).toFixed(2),'__tmp',2),getRoiEPPane(a.nome,EPCAr2,'__tmp2'),'dpane6');
 
@@ -3265,7 +3516,7 @@ function buildDashE2(nome){
             tooltip:{backgroundColor:'rgba(0,0,0,.82)',callbacks:{label:c=>c.dataset.label+': '+c.parsed.r.toFixed(1)+'%'}}}
         }});
       },80);
-    } else if(idx===3){setupEvoCharts(a.nome,2,5);}
+    } else if(idx===3){setupEvoCharts(a.nome,2,6);}
   };
 }
 
@@ -3828,7 +4079,7 @@ function getEvoEPPane(paneId){
 function getClassifPane(nome, paneId, epMax, cnMax){
   const nn=normN(nome);
   const f=lst=>lst.find(x=>normN(x.nome)===nn);
-  const c1=f(CN1),c2=f(CN2),c3=f(CN3),c4=f(CN4),c5=f(CN5D1),e1=f(EPCAr),e2=f(EPCAr2),e3=f(EPCAr3),e4=f(EPCAr4),e5=f(EPCAr5),e6=f(EPCAr6),e7=f(EPCAr7);
+  const c1=f(CN1),c2=f(CN2),c3=f(CN3),c4=f(CN4),c5=f(CN5D1),c6=f(CN6D1),e1=f(EPCAr),e2=f(EPCAr2),e3=f(EPCAr3),e4=f(EPCAr4),e5=f(EPCAr5),e6=f(EPCAr6),e7=f(EPCAr7);
 
   const mkRow=(label,cur,prev,max,score)=>{
     if(!cur)return`<tr style="opacity:.4"><td style="text-align:left;padding:10px 12px;font-weight:700">${label}</td><td colspan="4" style="text-align:center;color:#d1d5db;font-size:12px">Não realizado</td></tr>`;
@@ -3848,13 +4099,14 @@ function getClassifPane(nome, paneId, epMax, cnMax){
     <th>Classificação</th><th>Variação</th><th>Acertos</th><th>Status</th>
   </tr></thead>`;
 
-  const _cnMax=Math.min(cnMax||5,5);
+  const _cnMax=Math.min(cnMax||6,6);
   const cnAllRows=[
     mkRow('1º Simulado CN',c1,null,90,c=>c.gtot),
     mkRow('2º Simulado CN',c2,c1,90,c=>c.gtot),
     mkRow('3º Simulado CN',c3,c2,90,c=>c.gtot),
     mkRow('4º Simulado CN',c4,c3,90,c=>c.gtot),
     mkRow('5º Simulado CN',c5,c4,90,c=>c.gtot||c.total),
+    mkRow('6º Simulado CN',c6,c5,90,c=>c.gtot||c.total),
   ];
   const cnRows=cnAllRows.slice(0,_cnMax).join('');
 
@@ -4121,16 +4373,17 @@ function setupEvoCharts(nome,epMax,cnMax){
   const nn=normN(nome);
   const findIn=list=>list.find(x=>normN(x.nome)===nn);
   // CN notas (só se fez os dois dias)
-  const c1=findIn(CN1),c2=findIn(CN2),c3=findIn(CN3),c4cn=findIn(CN4),c5cn=findIn(CN5D1);
+  const c1=findIn(CN1),c2=findIn(CN2),c3=findIn(CN3),c4cn=findIn(CN4),c5cn=findIn(CN5D1),c6cn=findIn(CN6D1);
   const cnNota=a=>{if(!a||a.aprov_d1==null)return null;if(a.aprov_d2!=null)return+(a.gtot/90*10).toFixed(2);return+(a.total/40*10).toFixed(2);};
-  const cnNotasFull=[cnNota(c1),cnNota(c2),cnNota(c3),cnNota(c4cn),cnNota(c5cn)];
-  const _cnMax=Math.min(cnMax||5,5);
+  const cnNotasFull=[cnNota(c1),cnNota(c2),cnNota(c3),cnNota(c4cn),cnNota(c5cn),cnNota(c6cn)];
+  const _cnMax=Math.min(cnMax||6,6);
   const cnNotas=cnNotasFull.slice(0,_cnMax);
   const cn1AvgN=+(CN1AVG.gtot/90*10).toFixed(2);
   const cn2AvgN=+(CN2AVG.gtot/90*10).toFixed(2);
   const cn3AvgN=+(CN3AVG.gtot/90*10).toFixed(2);
   const cn4AvgN=+(CN4AVG.gtot/90*10).toFixed(2);
   const cn5AvgN=+(CN5AVG.gtot/90*10).toFixed(2);
+  const cn6AvgN=+(CN6AVG.gtot/90*10).toFixed(2);
   // EPCAr notas
   const e1=findIn(EPCAr),e2=findIn(EPCAr2),e3ep=findIn(EPCAr3),e4ep=findIn(EPCAr4),e5ep=findIn(EPCAr5),e6ep=findIn(EPCAr6),e7ep=findIn(EPCAr7);
   const epNota=a=>a?+(a.total/48*10).toFixed(2):null;
@@ -4150,8 +4403,8 @@ function setupEvoCharts(nome,epMax,cnMax){
   const elCN=document.getElementById('evoCN');
   if(elCN){
     if(evoChartCN){evoChartCN.destroy();evoChartCN=null;}
-    const cnLabels=['1º Sim','2º Sim','3º Sim','4º Sim','5º Sim'].slice(0,_cnMax).slice(0,_cnMax).slice(0,_cnMax);
-    const cn1AvgArr=[cn1AvgN,cn2AvgN,cn3AvgN,cn4AvgN,cn5AvgN].slice(0,_cnMax);
+    const cnLabels=['1º Sim','2º Sim','3º Sim','4º Sim','5º Sim','6º Sim'].slice(0,_cnMax).slice(0,_cnMax).slice(0,_cnMax);
+    const cn1AvgArr=[cn1AvgN,cn2AvgN,cn3AvgN,cn4AvgN,cn5AvgN,cn6AvgN].slice(0,_cnMax);
     evoChartCN=new Chart(elCN,{type:'line',data:{labels:cnLabels,datasets:[
       {label:nome.split(' ')[0],data:cnNotas,borderColor:'#667eea',backgroundColor:'rgba(102,126,234,.12)',borderWidth:3,pointRadius:6,pointBackgroundColor:cnNotas.map(v=>v==null?'transparent':v>=7.4?'#10b981':v>=5?'#f59e0b':'#ef4444'),pointBorderColor:'#fff',pointBorderWidth:2,tension:0.3,spanGaps:false},
       {label:'Média Turma',data:cn1AvgArr,borderColor:'#9ca3af',backgroundColor:'rgba(156,163,175,.05)',borderWidth:2,borderDash:[5,4],pointRadius:4,pointBackgroundColor:'#9ca3af',tension:0.3,spanGaps:false},
@@ -4275,7 +4528,7 @@ function buildDashE3(nome){
     </div>
   </div>`;
   document.getElementById('dashBody').innerHTML += getEvoEPPane('dpane3');
-  document.getElementById('dashBody').innerHTML += getClassifPane(a.nome,'dpane4',3,5);
+  document.getElementById('dashBody').innerHTML += getClassifPane(a.nome,'dpane4',3,6);
   document.getElementById('dashBody').innerHTML += getRelatorioEPPane(a,EPCAr3,EPCAr2,'3º Simulado EPCAr','dpane5');
   document.getElementById('dashBody').innerHTML += makeSingleAnalisePane(getProjEPPane(a.nome,+(a.total/48*10).toFixed(2),'__tmp',3),getRoiEPPane(a.nome,EPCAr3,'__tmp2'),'dpane6');
   document.getElementById('dashTabs').onclick=function(e){
@@ -4295,7 +4548,7 @@ function buildDashE3(nome){
         plugins:{legend:{position:'bottom',labels:{font:{size:12,weight:'bold'},padding:14,usePointStyle:true}},
           tooltip:{backgroundColor:'rgba(0,0,0,.82)',callbacks:{label:c=>c.dataset.label+': '+c.parsed.r.toFixed(1)+'%'}}}}});
     },80);}
-    else if(idx===3){setupEvoCharts(a.nome,3,5);}
+    else if(idx===3){setupEvoCharts(a.nome,3,6);}
   };
 }
 
@@ -4400,7 +4653,7 @@ function buildDashE4(nome){
     </div>
   </div>`;
   document.getElementById('dashBody').innerHTML += getEvoEPPane('dpane3');
-  document.getElementById('dashBody').innerHTML += getClassifPane(a.nome,'dpane4',4,5);
+  document.getElementById('dashBody').innerHTML += getClassifPane(a.nome,'dpane4',4,6);
   document.getElementById('dashBody').innerHTML += getRelatorioEPPane(a,EPCAr4,EPCAr3,'4º Simulado EPCAr','dpane5');
   document.getElementById('dashBody').innerHTML += makeSingleAnalisePane(getProjEPPane(a.nome,+(a.total/48*10).toFixed(2),'__tmp',4),getRoiEPPane(a.nome,EPCAr4,'__tmp2'),'dpane6');
   document.getElementById('dashTabs').onclick=function(e){
@@ -4420,7 +4673,7 @@ function buildDashE4(nome){
         plugins:{legend:{position:'bottom',labels:{font:{size:12,weight:'bold'},padding:14,usePointStyle:true}},
           tooltip:{backgroundColor:'rgba(0,0,0,.82)',callbacks:{label:c=>c.dataset.label+': '+c.parsed.r.toFixed(1)+'%'}}}}});
     },80);}
-    else if(idx===3){setupEvoCharts(a.nome,4,5);}
+    else if(idx===3){setupEvoCharts(a.nome,4,6);}
   };
 }
 
@@ -4525,7 +4778,7 @@ function buildDashE5(nome){
     </div>
   </div>`;
   document.getElementById('dashBody').innerHTML += getEvoEPPane('dpane3');
-  document.getElementById('dashBody').innerHTML += getClassifPane(a.nome,'dpane4',5,5);
+  document.getElementById('dashBody').innerHTML += getClassifPane(a.nome,'dpane4',5,6);
   document.getElementById('dashBody').innerHTML += getRelatorioEPPane(a,EPCAr5,EPCAr4,'5º Simulado EPCAr','dpane5');
   document.getElementById('dashBody').innerHTML += makeSingleAnalisePane(getProjEPPane(a.nome,+(a.total/48*10).toFixed(2),'__tmp',5),getRoiEPPane(a.nome,EPCAr5,'__tmp2'),'dpane6');
   document.getElementById('dashTabs').onclick=function(e){
@@ -4545,7 +4798,7 @@ function buildDashE5(nome){
         plugins:{legend:{position:'bottom',labels:{font:{size:12,weight:'bold'},padding:14,usePointStyle:true}},
           tooltip:{backgroundColor:'rgba(0,0,0,.82)',callbacks:{label:c=>c.dataset.label+': '+c.parsed.r.toFixed(1)+'%'}}}}});
     },80);}
-    else if(idx===3){setupEvoCharts(a.nome,5,5);}
+    else if(idx===3){setupEvoCharts(a.nome,5,6);}
   };
 }
 
@@ -4650,7 +4903,7 @@ function buildDashE6(nome){
     </div>
   </div>`;
   document.getElementById('dashBody').innerHTML += getEvoEPPane('dpane3');
-  document.getElementById('dashBody').innerHTML += getClassifPane(a.nome,'dpane4',6,5);
+  document.getElementById('dashBody').innerHTML += getClassifPane(a.nome,'dpane4',6,6);
   document.getElementById('dashBody').innerHTML += getRelatorioEPPane(a,EPCAr6,EPCAr5,'6º Simulado EPCAr','dpane5');
   document.getElementById('dashBody').innerHTML += makeSingleAnalisePane(getProjEPPane(a.nome,+(a.total/48*10).toFixed(2),'__tmp',6),getRoiEPPane(a.nome,EPCAr6,'__tmp2'),'dpane6');
   document.getElementById('dashTabs').onclick=function(e){
@@ -4670,7 +4923,7 @@ function buildDashE6(nome){
         plugins:{legend:{position:'bottom',labels:{font:{size:12,weight:'bold'},padding:14,usePointStyle:true}},
           tooltip:{backgroundColor:'rgba(0,0,0,.82)',callbacks:{label:c=>c.dataset.label+': '+c.parsed.r.toFixed(1)+'%'}}}}});
     },80);}
-    else if(idx===3){setupEvoCharts(a.nome,6,5);}
+    else if(idx===3){setupEvoCharts(a.nome,6,6);}
   };
 }
 
@@ -4775,7 +5028,7 @@ function buildDashE7(nome){
     </div>
   </div>`;
   document.getElementById('dashBody').innerHTML += getEvoEPPane('dpane3');
-  document.getElementById('dashBody').innerHTML += getClassifPane(a.nome,'dpane4',7,5);
+  document.getElementById('dashBody').innerHTML += getClassifPane(a.nome,'dpane4',7,6);
   document.getElementById('dashBody').innerHTML += getRelatorioEPPane(a,EPCAr7,EPCAr6,'7º Simulado EPCAr','dpane5');
   document.getElementById('dashBody').innerHTML += makeSingleAnalisePane(getProjEPPane(a.nome,+(a.total/48*10).toFixed(2),'__tmp',7),getRoiEPPane(a.nome,EPCAr7,'__tmp2'),'dpane6');
   document.getElementById('dashTabs').onclick=function(e){
@@ -4795,7 +5048,7 @@ function buildDashE7(nome){
         plugins:{legend:{position:'bottom',labels:{font:{size:12,weight:'bold'},padding:14,usePointStyle:true}},
           tooltip:{backgroundColor:'rgba(0,0,0,.82)',callbacks:{label:c=>c.dataset.label+': '+c.parsed.r.toFixed(1)+'%'}}}}});
     },80);}
-    else if(idx===3){setupEvoCharts(a.nome,7,5);}
+    else if(idx===3){setupEvoCharts(a.nome,7,6);}
   };
 }
 let _lastSection='cn1';
@@ -4815,13 +5068,14 @@ function openDash(ctx,nome){
   document.getElementById('dashTabs').innerHTML='';
   document.getElementById('dNome').textContent='—';
   document.getElementById('dInfo').textContent='—';
-  const _crumbMap={cn1:'⚓ CN › 1º Simulado',cn2:'⚓ CN › 2º Simulado',cn3:'⚓ CN › 3º Simulado',cn4:'⚓ CN › 4º Simulado',cn5:'⚓ CN › 5º Simulado',epcar:'✈️ EPCAr › 1º Simulado',epcar2:'✈️ EPCAr › 2º Simulado',epcar3:'✈️ EPCAr › 3º Simulado',epcar4:'✈️ EPCAr › 4º Simulado',epcar5:'✈️ EPCAr › 5º Simulado',epcar6:'✈️ EPCAr › 6º Simulado',epcar7:'✈️ EPCAr › 7º Simulado'};
+  const _crumbMap={cn1:'⚓ CN › 1º Simulado',cn2:'⚓ CN › 2º Simulado',cn3:'⚓ CN › 3º Simulado',cn4:'⚓ CN › 4º Simulado',cn5:'⚓ CN › 5º Simulado',cn6:'⚓ CN › 6º Simulado',epcar:'✈️ EPCAr › 1º Simulado',epcar2:'✈️ EPCAr › 2º Simulado',epcar3:'✈️ EPCAr › 3º Simulado',epcar4:'✈️ EPCAr › 4º Simulado',epcar5:'✈️ EPCAr › 5º Simulado',epcar6:'✈️ EPCAr › 6º Simulado',epcar7:'✈️ EPCAr › 7º Simulado'};
   const _bc=document.getElementById('alunoBreakcrumb');if(_bc)_bc.textContent=_crumbMap[ctx]||'';
   if(ctx==='cn1') buildDashCN1(nome);
   else if(ctx==='cn2') buildDashCN2(nome);
   else if(ctx==='cn3') buildDashCN3(nome);
   else if(ctx==='cn4') buildDashCN4(nome);
   else if(ctx==='cn5') buildDashCN5D1(nome);
+  else if(ctx==='cn6') buildDashCN6D1(nome);
   else if(ctx==='epcar2') buildDashE2(nome);
   else if(ctx==='epcar3') buildDashE3(nome);
   else if(ctx==='epcar4') buildDashE4(nome);
@@ -5561,6 +5815,150 @@ function buildDashCN5D1(nome){
     if(idx===2){setTimeout(()=>setupEvoCharts(a.nome,7,5),80);}
   };
 }
+// ══════════════════════════════════════════════════════
+function buildDashCN6D1(nome){
+  const a=CN6D1.find(x=>x.nome===nome)||CN6D1.find(x=>normN(x.nome)===normN(nome));
+  if(!a) return;
+  const temAmbosDias = a.aprov_d1!=null && a.aprov_d2!=null;
+  document.getElementById('dNome').textContent=a.nome;
+  document.getElementById('dInfo').textContent=`#${a.rank}º lugar · CN 6º Simulado · ${temAmbosDias?a.gtot+'/90 · ':''}${a.total}/40 D1${temAmbosDias?' · '+a.d2tot+'/50 D2':''} · ${a.aprov?'✓ Aprovado':'✗ Reprovado'}`;
+  setDashTabs(['📊 Desempenho','🎯 Chances CN','📈 Evolução','🏅 Classificações','📋 Relatório','💡 Análise']);
+
+  const discs=[
+    {n:'Matemática',v:a.mat,tot:20,avg:CN6AVG.mat,min:10,ok:a.ok_mat},
+    {n:'Inglês',    v:a.ing,tot:20,avg:CN6AVG.ing, min:10,ok:a.ok_ing},
+  ];
+  const discsD2=temAmbosDias?[
+    {n:'Português', v:a.port,tot:20,avg:CN6AVG.port||0,min:10,ok:a.ok_p},
+    {n:'Est. Sociais',v:a.es, tot:12,avg:(CN6AVG.hist||0)+(CN6AVG.geo||0),min:6,ok:a.ok_es},
+    {n:'Ciências',  v:a.ci, tot:18,avg:(CN6AVG.fis||0)+(CN6AVG.qui||0)+(CN6AVG.bio||0),min:9,ok:a.ok_ci},
+  ]:[];
+
+  document.getElementById('dashBody').innerHTML=`
+  <div id="dpane0" class="dpane active">
+    <div class="dcard">
+      <h3>📊 Resumo — 6º Simulado CN</h3>
+      <div class="sg" style="margin-top:12px">
+        <div class="si"><h4>Classificação</h4><div class="val" style="color:#667eea">#${a.rank}º</div><div class="sub">de ${CN6D1.length} alunos</div></div>
+        <div class="si"><h4>Total D1</h4><div class="val">${a.total}</div><div class="sub">de 40q</div></div>
+        ${temAmbosDias?`<div class="si"><h4>Total D2</h4><div class="val">${a.d2tot}</div><div class="sub">de 50q</div></div>
+        <div class="si"><h4>Total Geral</h4><div class="val">${a.gtot}</div><div class="sub">de 90q</div></div>`:''}
+        <div class="si"><h4>Status</h4><div class="val" style="font-size:24px;padding-top:8px">${a.aprov?'✅':'❌'}</div><div class="sub">${a.aprov?'Aprovado':'Reprovado'}</div></div>
+      </div>
+    </div>
+    <div class="dcard">
+      <h3>📋 1º Dia — Matemática + Inglês</h3>
+      <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:12px">
+        ${discs.map(d=>`<div style="background:${d.ok?'linear-gradient(135deg,#d1fae5,#a7f3d0)':'linear-gradient(135deg,#fee2e2,#fca5a5)'};padding:16px;border-radius:12px;border:3px solid ${d.ok?'#6ee7b7':'#fca5a5'};text-align:center">
+          <div style="font-size:10px;font-weight:800;text-transform:uppercase;color:#374151;margin-bottom:4px">${d.n}</div>
+          <div style="font-size:44px;font-weight:900;color:${d.ok?'#065f46':'#991b1b'};line-height:1">${d.v}</div>
+          <div style="font-size:11px;color:#6b7280;margin-top:3px">de ${d.tot} · mín.${d.min} · ${pct(d.v,d.tot).toFixed(0)}%</div>
+          <div style="margin-top:5px">${icBadge(pct(d.v,d.tot))}</div>
+        </div>`).join('')}
+      </div>
+      <table class="dtable" style="margin-top:14px">
+        <thead><tr><th style="text-align:left;padding-left:12px">Disciplina</th><th>Acertos</th><th>%</th><th>IC</th><th>Média</th><th>Δ Turma</th></tr></thead>
+        <tbody>
+          ${discs.map(d=>{const p=pct(d.v,d.tot),dif=(d.v-d.avg).toFixed(1);return`<tr style="${!d.ok?'background:#fff5f5':''}"><td style="text-align:left;padding-left:12px;font-weight:800">${d.n}<span style="font-size:10px;color:#9ca3af"> mín.${d.min}</span></td><td>${d.v}/${d.tot}</td><td><span class="badge ${pBadge(p)}">${p.toFixed(0)}%</span></td><td>${icBadge(p)}</td><td style="color:#6b7280;font-size:12px">${d.avg.toFixed(1)}</td><td class="${deltaCls(+dif)}">${(+dif>=0?'+':'')+dif}</td></tr>`;}).join('')}
+        </tbody>
+      </table>
+    </div>
+    ${temAmbosDias?`<div class="dcard">
+      <h3>📚 2º Dia — Português + Est. Sociais + Ciências</h3>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:12px">
+        ${discsD2.map(d=>`<div style="background:${d.ok?'linear-gradient(135deg,#d1fae5,#a7f3d0)':'linear-gradient(135deg,#fee2e2,#fca5a5)'};padding:14px;border-radius:12px;border:2px solid ${d.ok?'#6ee7b7':'#fca5a5'};text-align:center">
+          <div style="font-size:10px;font-weight:800;text-transform:uppercase;color:#374151;margin-bottom:3px">${d.n}</div>
+          <div style="font-size:38px;font-weight:900;color:${d.ok?'#065f46':'#991b1b'};line-height:1">${d.v}</div>
+          <div style="font-size:11px;color:#6b7280;margin-top:2px">de ${d.tot} · mín.${d.min}</div>
+        </div>`).join('')}
+      </div>
+      <table class="dtable" style="margin-top:14px">
+        <thead><tr><th style="text-align:left;padding-left:12px">Disciplina</th><th>Acertos</th><th>%</th><th>IC</th><th>Média</th><th>Δ Turma</th></tr></thead>
+        <tbody>
+          ${discsD2.map(d=>{const p=pct(d.v,d.tot),dif=(d.v-d.avg).toFixed(1);return`<tr style="${!d.ok?'background:#fff5f5':''}"><td style="text-align:left;padding-left:12px;font-weight:800">${d.n}<span style="font-size:10px;color:#9ca3af"> mín.${d.min}</span></td><td>${d.v}/${d.tot}</td><td><span class="badge ${pBadge(p)}">${p.toFixed(0)}%</span></td><td>${icBadge(p)}</td><td style="color:#6b7280;font-size:12px">${d.avg.toFixed(1)}</td><td class="${deltaCls(+dif)}">${(+dif>=0?'+':'')+dif}</td></tr>`;}).join('')}
+          <tr style="background:linear-gradient(135deg,#ede9fe,#ddd6fe);font-weight:900"><td style="text-align:left;padding-left:12px">⬛ TOTAL D2</td><td>${a.d2tot}/50</td><td><span class="badge ${pBadge(pct(a.d2tot,50))}">${pct(a.d2tot,50).toFixed(0)}%</span></td><td>${icBadge(pct(a.d2tot,50))}</td><td style="color:#6b7280;font-size:12px">${((CN6AVG.port||0)+(CN6AVG.hist||0)+(CN6AVG.geo||0)+(CN6AVG.fis||0)+(CN6AVG.qui||0)+(CN6AVG.bio||0)).toFixed(1)}</td><td class="${deltaCls(a.d2tot-((CN6AVG.port||0)+(CN6AVG.hist||0)+(CN6AVG.geo||0)+(CN6AVG.fis||0)+(CN6AVG.qui||0)+(CN6AVG.bio||0)))}">+${(a.d2tot-((CN6AVG.port||0)+(CN6AVG.hist||0)+(CN6AVG.geo||0)+(CN6AVG.fis||0)+(CN6AVG.qui||0)+(CN6AVG.bio||0))).toFixed(1)}</td></tr>
+        </tbody>
+      </table>
+      <div class="infobox" style="margin-top:12px">
+        <h5>📘 Critérios 2º Dia</h5>
+        <ul><li>Port ≥10/20 · Est. Sociais ≥6/12 · Ciências ≥9/18</li></ul>
+      </div>
+    </div>`:''}
+    <div class="dcard">
+      <h3>📚 Plano de Estudos</h3>
+      <p class="dcard-sub">Disciplinas que precisam de atenção</p>
+      ${(()=>{
+        const criticas=[
+          {n:'Matemática',v:a.mat,min:10,tot:20},
+          {n:'Inglês',v:a.ing,min:10,tot:20},
+          ...(temAmbosDias?[
+            {n:'Português',v:a.port,min:10,tot:20},
+            {n:'Est. Sociais',v:a.es,min:6,tot:12},
+            {n:'Ciências',v:a.ci,min:9,tot:18},
+          ]:[]),
+        ].filter(d=>d.v<d.min);
+        const boas=[
+          {n:'Matemática',v:a.mat,min:10,tot:20},
+          {n:'Inglês',v:a.ing,min:10,tot:20},
+          ...(temAmbosDias?[
+            {n:'Português',v:a.port,min:10,tot:20},
+            {n:'Est. Sociais',v:a.es,min:6,tot:12},
+            {n:'Ciências',v:a.ci,min:9,tot:18},
+          ]:[]),
+        ].filter(d=>d.v>=d.min);
+        return criticas.length===0
+          ? '<div style="background:linear-gradient(135deg,#d1fae5,#a7f3d0);border-radius:12px;padding:16px;text-align:center"><div style="font-size:22px;margin-bottom:6px">🎉</div><div style="font-weight:800;color:#065f46">Todas as disciplinas acima do mínimo!</div></div>'
+          : `<div style="display:flex;flex-direction:column;gap:10px">
+          ${criticas.map(d=>`<div style="background:linear-gradient(135deg,#fee2e2,#fecaca);border-radius:10px;padding:12px 16px;border-left:4px solid #ef4444;display:flex;align-items:center;justify-content:space-between">
+            <div><div style="font-weight:800;color:#991b1b">📌 ${d.n}</div><div style="font-size:12px;color:#6b7280;margin-top:2px">Abaixo do mínimo · ${d.v}/${d.tot} (mín. ${d.min})</div></div>
+            <div style="font-size:20px;font-weight:900;color:#ef4444">-${d.min-d.v}</div>
+          </div>`).join('')}
+          ${boas.length?`<div style="margin-top:4px;font-size:12px;font-weight:700;color:#10b981">✅ Em dia: ${boas.map(d=>d.n).join(', ')}</div>`:''}
+        </div>`;
+      })()}
+    </div>
+  </div>
+
+  <div id="dpane1" class="dpane">
+    <div class="dcard">
+      <h3>🎯 Chances de Aprovação — CN</h3>
+      <p class="dcard-sub">Corte CN: <strong>7.40</strong></p>
+      ${(()=>{
+        const notaG=temAmbosDias?+(a.gtot/90*10).toFixed(2):+(a.total/40*10).toFixed(2);
+        const corte=7.40,isAb=notaG>=corte,chance=Math.min(100,+(notaG/corte*100).toFixed(1));
+        const faltam=Math.max(0,Math.ceil(corte/10*(temAmbosDias?90:40))-(temAmbosDias?a.gtot:a.total));
+        return`<div style="text-align:center;padding:22px;background:${isAb?'linear-gradient(135deg,#d1fae5,#a7f3d0)':'linear-gradient(135deg,#fee2e2,#fca5a5)'};border-radius:14px;border:3px solid ${isAb?'#6ee7b7':'#fca5a5'};margin-bottom:16px">
+          <div style="font-size:11px;font-weight:800;text-transform:uppercase;color:#374151;margin-bottom:8px">Chance de Aprovação</div>
+          <div style="font-size:72px;font-weight:900;color:${isAb?'#065f46':'#991b1b'};line-height:1">${chance}%</div>
+          <div class="prog-outer" style="max-width:300px;margin:12px auto 0"><div class="prog-inner" style="width:${chance}%;background:${isAb?'#10b981':'#ef4444'}"></div></div>
+        </div>
+        <div class="sg">
+          <div class="si"><h4>Nota Estimada</h4><div class="val" style="color:${isAb?'#10b981':'#ef4444'}">${notaG}</div><div class="sub">escala 0-10</div></div>
+          <div class="si"><h4>Corte CN</h4><div class="val">7.40</div><div class="sub">meta mínima</div></div>
+          <div class="si"><h4>Total</h4><div class="val">${temAmbosDias?a.gtot:a.total}</div><div class="sub">de ${temAmbosDias?90:40}q</div></div>
+          <div class="si"><h4>Faltam</h4><div class="val" style="color:${faltam===0?'#10b981':'#ef4444'}">${faltam===0?'✓':faltam}</div><div class="sub">${faltam===0?'atingido':'questões'}</div></div>
+        </div>`;
+      })()}
+    </div>
+  </div>
+  ${getEvoCNPane('dpane2')}
+  `;
+
+  document.getElementById('dashBody').innerHTML += getClassifPane(a.nome,'dpane3',7,6);
+  document.getElementById('dashBody').innerHTML += getRelatorioCNPane(a,CN6AVG,CN5D1,CN5AVG,'6º Simulado CN','dpane4');
+  (function(){
+    const _proj=getProjCNPane(a.nome,6);
+    const _roi=getRoiCNPane(a.nome,CN6D1,CN6AVG,'__tmp');
+    const _roiInner=_roi.replace('<div id="__tmp" class="dpane">','').replace(/<\/div>\s*$/,'');
+    document.getElementById('dashBody').innerHTML += '<div id="dpane5" class="dpane"><div class="dcard">'+_proj+'</div>'+_roiInner+'</div>';
+  })();
+
+  document.getElementById('dashTabs').onclick=function(e){
+    const btn=e.target.closest('.dash-tab');if(!btn)return;
+    const idx=Array.from(this.children).indexOf(btn);
+    if(idx===2){setTimeout(()=>setupEvoCharts(a.nome,7,6),80);}
+  };
+}
 
 // ══════════════════════════════════════════════════════
 function buildDashCN2(nome){
@@ -6224,7 +6622,7 @@ function buildDashE(nome){
 
   ${getEvoEPPane('dpane3')}
   `;
-  document.getElementById('dashBody').innerHTML += getClassifPane(a.nome,'dpane4',1,5);
+  document.getElementById('dashBody').innerHTML += getClassifPane(a.nome,'dpane4',1,6);
   document.getElementById('dashBody').innerHTML += getRelatorioEPPane(a,EPCAr,null,'1º Simulado EPCAr','dpane5');
   document.getElementById('dashBody').innerHTML += makeSingleAnalisePane(getProjEPPane(a.nome,+(a.total/48*10).toFixed(2),'__tmp',1),getRoiEPPane(a.nome,EPCAr,'__tmp2'),'dpane6');
 
@@ -6249,7 +6647,7 @@ function buildDashE(nome){
             tooltip:{backgroundColor:'rgba(0,0,0,.82)',callbacks:{label:c=>c.dataset.label+': '+c.parsed.r.toFixed(1)+'%'}}}
         }});
       }, 80);
-    } else if(idx===3){setupEvoCharts(a.nome,1,5);}
+    } else if(idx===3){setupEvoCharts(a.nome,1,6);}
   };
 }
 
@@ -6286,6 +6684,7 @@ const CN_SIMS=[
   {id:'cn3',label:'3º Simulado'},
   {id:'cn4',label:'4º Simulado'},
   {id:'cn5',label:'5º Simulado'},
+  {id:'cn6',label:'6º Simulado'},
 ];
 const EP_SIMS=[
   {id:'epcar',label:'1º Simulado'},
@@ -6407,7 +6806,7 @@ function buildClassificacoes(){
     </tr>`).join('');
 }
 
-renderCN1();renderCN2();renderCN3();renderCN4();renderCN5D1();renderE();renderE2();renderE3();renderE4();renderE5();renderE6();renderE7();
+renderCN1();renderCN2();renderCN3();renderCN4();renderCN5D1();renderCN6D1();renderE();renderE2();renderE3();renderE4();renderE5();renderE6();renderE7();
 selectCourse('cn');
 function toggleSidebar(){document.getElementById('hamBtn').classList.toggle('open');document.getElementById('sidebar').classList.toggle('open');document.getElementById('sideOverlay').classList.toggle('open');}
 function closeSidebar(){document.getElementById('hamBtn').classList.remove('open');document.getElementById('sidebar').classList.remove('open');document.getElementById('sideOverlay').classList.remove('open');}
@@ -6421,6 +6820,7 @@ function closeSidebar(){document.getElementById('hamBtn').classList.remove('open
   <button class="nav-btn" onclick="goSec('cn3',this);closeSidebar()">3&#186; Simulado</button>
   <button class="nav-btn" onclick="goSec('cn4',this);closeSidebar()">4&#186; Simulado</button>
   <button class="nav-btn" onclick="goSec('cn5',this);closeSidebar()">5&#186; Simulado</button>
+  <button class="nav-btn" onclick="goSec('cn6',this);closeSidebar()">6&#186; Simulado</button>
   <span class="nav-group-lbl" style="margin-top:12px">&#9992;&#65039; EPCAr</span>
   <button class="nav-btn" onclick="goSec('epcar',this);closeSidebar()">1&#186; Simulado</button>
   <button class="nav-btn" onclick="goSec('epcar2',this);closeSidebar()">2&#186; Simulado</button>
