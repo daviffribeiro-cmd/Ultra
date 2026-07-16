@@ -1567,6 +1567,28 @@ const RAW_CN6D1=[
   {n:"SUCK MA YU LAN",                       mat:11, ing:18},
 ];
 const RAW_CN6D2=[
+  {n:"ALÍCIA REIS PANTOJA",                  port:7,  hist:4, geo:5, fis:2, qui:3, bio:2},
+  {n:"ANNA CLARA DE JESUS MARINHO AMORIM",   port:13, hist:3, geo:5, fis:1, qui:5, bio:1},
+  {n:"ARTHUR DOS SANTOS COSTA",              port:8,  hist:2, geo:3, fis:2, qui:2, bio:3},
+  {n:"ARTHUR RABELO PENA PEREIRA",           port:13, hist:6, geo:6, fis:2, qui:3, bio:3},
+  {n:"BERNARDO JOSÉ DE GUSMÃO MONTEIRO",     port:8,  hist:3, geo:5, fis:3, qui:4, bio:1},
+  {n:"DAVI GARCIA DA SILVA",                 port:12, hist:5, geo:5, fis:1, qui:6, bio:2},
+  {n:"DAVI NOVO FREITAS DE OLIVEIRA",        port:10, hist:6, geo:6, fis:3, qui:5, bio:3},
+  {n:"GABRIEL BITTENCOURT JORGE",            port:8,  hist:2, geo:3, fis:2, qui:4, bio:0},
+  {n:"GABRIEL LOURENÇO CARPINELLI",          port:8,  hist:3, geo:4, fis:2, qui:3, bio:3},
+  {n:"GABRIEL TAVARES DUARTE OLIVEIRA",      port:12, hist:5, geo:4, fis:3, qui:5, bio:4},
+  {n:"GUILHERME BARRETO ROSA",               port:14, hist:2, geo:4, fis:4, qui:3, bio:2},
+  {n:"ISAAC PEREIRA LAPROVITA",              port:11, hist:1, geo:5, fis:3, qui:6, bio:3},
+  {n:"KAIKY CASTRO NASCIMENTO",              port:9,  hist:3, geo:5, fis:3, qui:3, bio:3},
+  {n:"LETÍCIA MARTINS DE OLIVEIRA",          port:13, hist:5, geo:5, fis:3, qui:3, bio:4},
+  {n:"MARIO THIAGO MARINI ISAIAS PEREIRA",   port:11, hist:6, geo:5, fis:5, qui:4, bio:3},
+  {n:"MIGUEL BITTENCOURT RODRIGUES",         port:10, hist:5, geo:4, fis:5, qui:5, bio:3},
+  {n:"MIGUEL DE SOUSA VARGAS",               port:10, hist:5, geo:4, fis:5, qui:3, bio:1},
+  {n:"NICOLAS SILVA CASTILHO",               port:11, hist:5, geo:5, fis:4, qui:5, bio:4},
+  {n:"PEDRO BAZÍLIO NUNES DE ALMEIDA",       port:8,  hist:4, geo:4, fis:3, qui:4, bio:1},
+  {n:"PEDRO HENRIQUE ALVES DE ALBUQUERQUE",  port:10, hist:5, geo:4, fis:0, qui:0, bio:1},
+  {n:"RAPHAEL FIGUEIRA RODRIGUES DE LIMA",   port:10, hist:5, geo:5, fis:3, qui:5, bio:6},
+  {n:"SUCK MA YU LAN",                       port:10, hist:5, geo:6, fis:4, qui:5, bio:5},
 ];
 
 // EPCAR 1º SIMULADO
@@ -1979,7 +2001,7 @@ function buildCN6D1(){
     a.gtot=(a.mat||0)+(a.ing||0)+(a.port||0)+(a.hist||0)+(a.geo||0)+(a.fis||0)+(a.qui||0)+(a.bio||0);
     const fezD1=a.aprov_d1!=null,fezD2=a.aprov_d2!=null;
     if(!fezD1){a.aprov=false;a.motivo='Não realizou o 1º dia';}
-    else if(!fezD2){a.aprov=a.aprov_d1;a.motivo=a.aprov_d1?'Aprovado no 1º dia (aguardando 2º dia)':'Reprovado no 1º dia';}
+    else if(!fezD2){a.aprov=false;a.motivo='Não realizou o 2º dia';}
     else{a.aprov=a.aprov_d1&&a.aprov_d2;a.motivo=!a.aprov_d1?'Reprovado no 1º dia':!a.aprov_d2?'Reprovado no 2º dia':'';}
     return a;
   });
@@ -2491,16 +2513,19 @@ function renderCN6D1(){
   const _s=_sortState['cn6'];
   if(_s)lst=[...lst].sort((a,b)=>(_s.dir==='asc'?1:-1)*(b[_s.field]-a[_s.field]));
 
-  // Geral wrap: usa gtot/90 como os demais simulados (gtot = total já lançado; dias não realizados contam 0)
+  // Geral wrap: show full ranking with gtot when D2 available, else D1 total
+  const useGtot = temD2;
   const rows6=lst.map(a=>{
     const p=a.rank,pc=p===1?'g1':p===2?'g2':p===3?'g3':'';
     const em=p===1?'🥇':p===2?'🥈':p===3?'🥉':p;
     const rc='ranking-row'+(p===1?' top3 top3-gold':p===2?' top3 top3-silver':p===3?' top3 top3-bronze':'');
+    const score=useGtot?(a.gtot||a.total):a.total;
+    const maxScore=useGtot?90:40;
     return `<tr class="${rc}" onclick="openDash('cn6','${nm(a.nome)}')">
       <td><span class="pos-badge ${pc}">${em}</span></td>
       <td style="text-align:left;padding-left:14px">${avatarCell(a.nome)}</td>
-      ${scoreBar(a.total,40)}
-      <td>${a.aprov?'<span class="chip chip-a"><span style="width:6px;height:6px;border-radius:50%;background:#10b981;display:inline-block;flex-shrink:0"></span>Aprovado</span>':'<span class="chip chip-r"><span style="width:6px;height:6px;border-radius:50%;background:#ef4444;display:inline-block;flex-shrink:0"></span>Reprovado</span>'}</td>
+      ${scoreBar(score,maxScore)}
+      <td>${a.aprov?'<span class="chip chip-a"><span style="width:6px;height:6px;border-radius:50%;background:#10b981;display:inline-block;flex-shrink:0"></span>Aprovado</span>':a.aprov_d2!=null?'<span class="chip chip-r"><span style="width:6px;height:6px;border-radius:50%;background:#ef4444;display:inline-block;flex-shrink:0"></span>Reprovado</span>':'<span class="chip chip-r"><span style="width:6px;height:6px;border-radius:50%;background:#ef4444;display:inline-block;flex-shrink:0"></span>Reprovado</span>'}</td>
     </tr>`;
   }).join('');
   document.getElementById('rankCN6Body').innerHTML=rows6||`<tr><td colspan="4" style="text-align:center;padding:40px 20px;color:var(--t3)">Nenhum aluno encontrado</td></tr>`;
