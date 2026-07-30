@@ -933,7 +933,7 @@ body.ep-mode{--teal:#667eea;--lime:#764af4;--grad:linear-gradient(90deg,#667eea,
 <div id="cn7Section" class="section">
   <div class="ranking-card">
     <div class="ranking-header">
-      <div class="ranking-header-left"><h2>⚓ CN — 7º Simulado</h2><p>20/07 (D1: Mat+Ing) · Clique no aluno para detalhes</p></div>
+      <div class="ranking-header-left"><h2>⚓ CN — 7º Simulado</h2><p>20/07 (D1: Mat+Ing) + 27/07 (D2: Port+ES+CI) · Clique no aluno para detalhes</p></div>
     </div>
     <div class="leader-slot"></div>
     <div class="search-wrap">
@@ -1679,7 +1679,22 @@ const RAW_CN7D1=[
   {n:"NICOLAS SILVA CASTILHO",               mat:13, ing:11},
   {n:"SUCK MA YU LAN",                       mat:11, ing:16},
 ];
+// CN 7º SIMULADO — 2º DIA (27 de Julho)
 const RAW_CN7D2=[
+  {n:"ARTHUR RABELO PENA PEREIRA",           port:15, hist:6, geo:3, fis:3, qui:3, bio:3},
+  {n:"BERNARDO JOSÉ DE GUSMÃO MONTEIRO",     port:8,  hist:1, geo:2, fis:3, qui:2, bio:2},
+  {n:"BRUNO FERREIRA ROCHA",                 port:16, hist:5, geo:4, fis:2, qui:5, bio:4},
+  {n:"DAVI GARCIA DA SILVA",                 port:15, hist:5, geo:4, fis:3, qui:3, bio:3},
+  {n:"GABRIEL LOURENÇO CARPINELLI",          port:14, hist:5, geo:6, fis:3, qui:4, bio:4},
+  {n:"ISAAC PEREIRA LAPROVITA",              port:15, hist:5, geo:4, fis:3, qui:5, bio:3},
+  {n:"KAIKY CASTRO NASCIMENTO",              port:11, hist:3, geo:2, fis:2, qui:5, bio:1},
+  {n:"MARIO THIAGO MARINI ISAIAS PEREIRA",   port:12, hist:5, geo:4, fis:4, qui:6, bio:5},
+  {n:"MATHEUS SCHIAVO NUNES",                port:10, hist:5, geo:5, fis:2, qui:5, bio:3},
+  {n:"MIGUEL BITTENCOURT RODRIGUES",         port:15, hist:4, geo:5, fis:4, qui:6, bio:4},
+  {n:"MIGUEL DE SOUSA VARGAS",               port:12, hist:4, geo:3, fis:4, qui:4, bio:2},
+  {n:"NICOLAS SILVA CASTILHO",               port:19, hist:5, geo:5, fis:3, qui:5, bio:5},
+  {n:"PEDRO BAZÍLIO NUNES DE ALMEIDA",       port:8,  hist:4, geo:4, fis:3, qui:4, bio:3},
+  {n:"SUCK MA YU LAN",                       port:13, hist:6, geo:5, fis:4, qui:5, bio:4},
 ];
 
 // EPCAR 1º SIMULADO
@@ -2574,7 +2589,7 @@ function renderCN5D1(){
   animateStats('statsCN5');
   updateFilterCounts('cn5',CN5D1,a=>a.aprov);
   const _lb_cn5=document.getElementById('cn5Section').querySelector('.leader-slot');
-  if(_lb_cn5&&CN5D1[0])_lb_cn5.innerHTML=leaderBanner(CN5D1,'total',40,'cn5');
+  if(_lb_cn5&&CN5D1[0])_lb_cn5.innerHTML=leaderBanner(CN5D1,temD2?'gtot':'total',temD2?90:40,'cn5');
   (function(){
     const _statsEl=document.getElementById('statsCN5');
     if(!_statsEl||!_statsEl.parentNode||_statsEl.parentNode.querySelector('.quick-summary'))return;
@@ -2663,8 +2678,8 @@ function renderCN6D1(){
   // Also render D1 body (for the D1 tab)
   const d1body = document.getElementById('rankCN6D1Body');
   if(d1body){
-    const d1rows=CN6D1.filter(a=>!q||a.nome.toLowerCase().includes(q)).map((a,i)=>{
-      const sorted=[...CN6D1].sort((a,b)=>b.total-a.total||b.mat-a.mat||b.ing-a.ing);
+    const d1rows=CN6D1.filter(a=>a.aprov_d1!=null&&(!q||a.nome.toLowerCase().includes(q))).map((a,i)=>{
+      const sorted=[...CN6D1].filter(x=>x.aprov_d1!=null).sort((a,b)=>b.total-a.total||b.mat-a.mat||b.ing-a.ing);
       const rank=sorted.indexOf(a)+1;
       const rc='ranking-row'+(rank===1?' top3 top3-gold':rank===2?' top3 top3-silver':rank===3?' top3 top3-bronze':'');
       const rpc=rank===1?'g1':rank===2?'g2':rank===3?'g3':'';
@@ -2698,7 +2713,7 @@ function renderCN6D1(){
   animateStats('statsCN6');
   updateFilterCounts('cn6',CN6D1,a=>a.aprov);
   const _lb_cn6=document.getElementById('cn6Section').querySelector('.leader-slot');
-  if(_lb_cn6&&CN6D1[0])_lb_cn6.innerHTML=leaderBanner(CN6D1,'total',40,'cn6');
+  if(_lb_cn6&&CN6D1[0])_lb_cn6.innerHTML=leaderBanner(CN6D1,temD2?'gtot':'total',temD2?90:40,'cn6');
   (function(){
     const _statsEl=document.getElementById('statsCN6');
     if(!_statsEl||!_statsEl.parentNode||_statsEl.parentNode.querySelector('.quick-summary'))return;
@@ -2787,8 +2802,8 @@ function renderCN7D1(){
   // Also render D1 body (for the D1 tab)
   const d1body = document.getElementById('rankCN7D1Body');
   if(d1body){
-    const d1rows=CN7D1.filter(a=>!q||a.nome.toLowerCase().includes(q)).map((a,i)=>{
-      const sorted=[...CN7D1].sort((a,b)=>b.total-a.total||b.mat-a.mat||b.ing-a.ing);
+    const d1rows=CN7D1.filter(a=>a.aprov_d1!=null&&(!q||a.nome.toLowerCase().includes(q))).map((a,i)=>{
+      const sorted=[...CN7D1].filter(x=>x.aprov_d1!=null).sort((a,b)=>b.total-a.total||b.mat-a.mat||b.ing-a.ing);
       const rank=sorted.indexOf(a)+1;
       const rc='ranking-row'+(rank===1?' top3 top3-gold':rank===2?' top3 top3-silver':rank===3?' top3 top3-bronze':'');
       const rpc=rank===1?'g1':rank===2?'g2':rank===3?'g3':'';
@@ -2822,7 +2837,7 @@ function renderCN7D1(){
   animateStats('statsCN7');
   updateFilterCounts('cn7',CN7D1,a=>a.aprov);
   const _lb_cn7=document.getElementById('cn7Section').querySelector('.leader-slot');
-  if(_lb_cn7&&CN7D1[0])_lb_cn7.innerHTML=leaderBanner(CN7D1,'total',40,'cn7');
+  if(_lb_cn7&&CN7D1[0])_lb_cn7.innerHTML=leaderBanner(CN7D1,temD2?'gtot':'total',temD2?90:40,'cn7');
   (function(){
     const _statsEl=document.getElementById('statsCN7');
     if(!_statsEl||!_statsEl.parentNode||_statsEl.parentNode.querySelector('.quick-summary'))return;
